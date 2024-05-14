@@ -1,6 +1,10 @@
 <?php
 
+use App\Http\Controllers\AlternatifController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\KriteriaController;
+use App\Http\Controllers\SubkriteriaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +18,43 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [AuthController::class, 'index'])->name('login');
-Route::get('/', [AuthController::class, 'store']);
+Route::middleware('guest')->group(function () {
+    Route::get('/', [AuthController::class, 'index'])->name('login');
+    Route::post('/', [AuthController::class, 'store']);
+});
+
+Route::middleware('auth')->group(function () {
+    Route::get('logout', [AuthController::class, 'destroy'])->name('logout');
+
+    Route::group(['middleware' => 'admin'], function () {
+        Route::get('admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+
+        Route::get('admin/kriteria', [KriteriaController::class, 'index'])->name('admin.kriteria');
+        Route::post('admin/kriteria', [KriteriaController::class, 'store'])->name('admin.kriteria.store');
+        Route::put('admin/kriteria/update', [KriteriaController::class, 'update'])->name('admin.kriteria.update');
+        Route::delete('admin/kriteria/{id}', [KriteriaController::class, 'destroy'])->name('admin.kriteria.destroy');
+
+        Route::get('admin/subkriteria', [SubkriteriaController::class, 'index'])->name('admin.subkriteria');
+        Route::post('admin/subkriteria', [SubkriteriaController::class, 'store'])->name('admin.subkriteria.store');
+        Route::put('admin/subkriteria/update', [SubkriteriaController::class, 'update'])->name('admin.subkriteria.update');
+        Route::delete('admin/subkriteria/{id}', [SubkriteriaController::class, 'destroy'])->name('admin.subkriteria.destroy');
+
+        Route::get('admin/alternatif', [AlternatifController::class, 'index'])->name('admin.alternatif');
+        Route::post('admin/alternatif', [AlternatifController::class, 'store'])->name('admin.alternatif.store');
+        Route::put('admin/alternatif/update', [AlternatifController::class, 'update'])->name('admin.alternatif.update');
+        Route::delete('admin/alternatif/{id}', [AlternatifController::class, 'destroy'])->name('admin.alternatif.destroy');
+    });
+
+    Route::group(['middleware' => 'users'], function () {
+        Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+        Route::get('kriteria', [KriteriaController::class, 'index'])->name('kriteria');
+
+        Route::get('subkriteria', [SubkriteriaController::class, 'index'])->name('subkriteria');
+
+        Route::get('alternatif', [AlternatifController::class, 'index'])->name('alternatif');
+        Route::post('alternatif', [AlternatifController::class, 'store'])->name('training.store');
+        Route::put('alternatif/update', [AlternatifController::class, 'update'])->name('training.update');
+        Route::delete('alternatif/{id}', [AlternatifController::class, 'destroy'])->name('training.destroy');
+    });
+});

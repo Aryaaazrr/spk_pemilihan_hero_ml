@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('username');
-            $table->string('password');
-            $table->rememberToken();
+        Schema::create('alternatif', function (Blueprint $table) {
+            $table->id('id_alternatif');
+            $table->unsignedBigInteger('id_hero')->required();
+            $table->foreign('id_hero')->references('id_hero')->on('hero')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('alternatif');
     }
 };
