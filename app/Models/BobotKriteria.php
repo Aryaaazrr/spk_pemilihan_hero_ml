@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class GameplayType extends Model
+class BobotKriteria extends Model
 {
     use HasFactory;
-    protected $table = 'gameplay_type';
+    protected $table = 'bobot_kriteria';
     protected $primaryKey = 'id_gameplay';
     protected $guarded = [];
     protected $casts = [
@@ -16,8 +16,13 @@ class GameplayType extends Model
         'updated_at' => 'datetime',
     ];
 
-    public function bobot()
+    public function kriteria()
     {
-        return $this->hasMany(BobotKriteria::class, 'id_gameplay', 'id_gameplay');
+        return $this->belongsTo(Kriteria::class, 'id_kriteria', 'id_kriteria');
+    }
+
+    public function gameplay()
+    {
+        return $this->belongsTo(GameplayType::class, 'id_gameplay', 'id_gameplay');
     }
 }
