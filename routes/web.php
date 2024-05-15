@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\AlternatifController;
+use App\Http\Controllers\AnalisaController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KriteriaController;
+use App\Http\Controllers\PerhitunganController;
 use App\Http\Controllers\SubkriteriaController;
 use Illuminate\Support\Facades\Route;
 
@@ -43,6 +45,8 @@ Route::middleware('auth')->group(function () {
         Route::post('admin/alternatif', [AlternatifController::class, 'store'])->name('admin.alternatif.store');
         Route::put('admin/alternatif/update', [AlternatifController::class, 'update'])->name('admin.alternatif.update');
         Route::delete('admin/alternatif/{id}', [AlternatifController::class, 'destroy'])->name('admin.alternatif.destroy');
+
+        Route::get('admin/perhitungan', [PerhitunganController::class, 'index'])->name('admin.perhitungan');
     });
 
     Route::group(['middleware' => 'users'], function () {

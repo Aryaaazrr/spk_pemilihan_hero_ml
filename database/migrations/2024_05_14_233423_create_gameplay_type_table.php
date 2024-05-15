@@ -11,10 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('kriteria', function (Blueprint $table) {
-            $table->id('id_kriteria');
+        Schema::create('gameplay_type', function (Blueprint $table) {
+            $table->id('id_gameplay');
             $table->string('nama');
-            $table->string('keterangan')->nullable();
             $table->timestamps();
         });
     }
@@ -24,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('kriteria');
+        Schema::dropIfExists('gameplay_type');
     }
 };

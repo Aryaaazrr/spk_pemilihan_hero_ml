@@ -47,12 +47,6 @@
                                     <p>Subkriteria</p>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="{{ route('admin.alternatif') }}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Alternatif</p>
-                                </a>
-                            </li>
                         </ul>
                     </li>
                     <li class="nav-item">
@@ -60,14 +54,35 @@
                             <i class="nav-icon fas fa-chart-line"></i>
                             <p>
                                 Analisa
+                                <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('admin.alternatif') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Alternatif</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.perhitungan') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Hasil Perhitungan</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Hasil Akhir</p>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                     <li class="nav-item">
                         <a href="" class="nav-link">
                             <i class="nav-icon fas fa-book"></i>
                             <p>
-                                Hasil Akhir
+                                Riwayat Analisa
                             </p>
                         </a>
                     </li>
