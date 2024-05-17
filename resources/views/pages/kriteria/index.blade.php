@@ -22,11 +22,63 @@
                             <div class="card-header">
                                 <h3 class="card-title">Data Kriteria</h3>
                                 <div class="card-tools">
-                                    <button type="button" class="btn btn-success" data-toggle="modal"
-                                        data-target="#modal-default">
-                                        Tambah
+                                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                                        data-target="#modal-gameplay">
+                                        <i class="fas fa-plus"></i> Gameplay
                                     </button>
-                                    <div class="modal fade" id="modal-default">
+                                    <div class="modal fade" id="modal-gameplay">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Tambah Data Gameplay</h4>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form action="{{ route('admin.kriteria.store') }}" method="POST">
+                                                        @csrf
+                                                        <div class="card-body">
+                                                            <div class="form-group">
+                                                                <label for="nama_gameplay">Nama Gameplay</label>
+                                                                <input type="text" class="form-control"
+                                                                    name="nama_gameplay" id="nama_gameplay"
+                                                                    placeholder="Nama gameplay">
+                                                            </div>
+                                                            @foreach ($kriteria as $item)
+                                                                <div class="form-group">
+                                                                    <label for="{{ $item->nama }}_bobot">Bobot
+                                                                        {{ $item->nama }}</label>
+                                                                    <input type="text" class="form-control"
+                                                                        name="{{ $item->nama }}_bobot"
+                                                                        id="{{ $item->nama }}_bobot"
+                                                                        placeholder="Masukkan Bobot {{ $item->nama }}">
+                                                                </div>
+                                                            @endforeach
+                                                            <div class="form-group">
+                                                                <label for="keterangan_kriteria">Keterangan Kriteria</label>
+                                                                <input type="text" class="form-control"
+                                                                    name="keterangan_kriteria" id="keterangan_kriteria"
+                                                                    placeholder="Keterangan Kriteria">
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer justify-content-between">
+                                                            <button type="button" class="btn btn-default"
+                                                                data-dismiss="modal">Close</button>
+                                                            <button type="submit" class="btn btn-primary">Simpan</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-secondary" data-toggle="modal"
+                                        data-target="#modal-kriteria">
+                                        <i class="fas fa-plus"></i>
+                                        Kriteria
+                                    </button>
+                                    <div class="modal fade" id="modal-kriteria">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -41,19 +93,26 @@
                                                         @csrf
                                                         <div class="card-body">
                                                             <div class="form-group">
-                                                                <label for="nama">Nama</label>
-                                                                <input type="text" class="form-control" name="nama"
-                                                                    id="nama" placeholder="Nama">
+                                                                <label for="nama_kriteria">Nama Kriteria</label>
+                                                                <input type="text" class="form-control"
+                                                                    name="nama_kriteria" id="nama_kriteria"
+                                                                    placeholder="Nama Kriteria">
                                                             </div>
+                                                            @foreach ($gameplay as $item)
+                                                                <div class="form-group">
+                                                                    <label for="{{ $item->nama }}_bobot">Bobot
+                                                                        {{ $item->nama }}</label>
+                                                                    <input type="text" class="form-control"
+                                                                        name="{{ $item->nama }}_bobot"
+                                                                        id="{{ $item->nama }}_bobot"
+                                                                        placeholder="Masukkan Bobot {{ $item->nama }}">
+                                                                </div>
+                                                            @endforeach
                                                             <div class="form-group">
-                                                                <label for="bobot">Bobot</label>
-                                                                <input type="text" class="form-control" name="bobot"
-                                                                    id="bobot" placeholder="Bobot">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="keterangan">Keterangan</label>
-                                                                <input type="text" class="form-control" name="keterangan"
-                                                                    id="keterangan" placeholder="Keterangan">
+                                                                <label for="keterangan_kriteria">Keterangan Kriteria</label>
+                                                                <input type="text" class="form-control"
+                                                                    name="keterangan_kriteria" id="keterangan_kriteria"
+                                                                    placeholder="Keterangan Kriteria">
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer justify-content-between">
@@ -72,14 +131,36 @@
                                 <table id="myTable" class="table table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <th>No</th>
-                                            <th>Nama</th>
-                                            <th>Bobot</th>
-                                            <th>Keterangan</th>
-                                            <th class="w-25">Opsi</th>
+                                            <th>Tipe Gameplay</th>
+                                            @foreach ($kriteria as $k)
+                                                <th>{{ $k->nama }} ({{ $k->keterangan }})</th>
+                                            @endforeach
+                                            <th class="w-10">Opsi</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody class="text-center">
+                                        @foreach ($gameplay as $g)
+                                            <tr>
+                                                <td>{{ $g->nama }}</td>
+                                                @foreach ($kriteria as $k)
+                                                    <td>{{ $bobot[$g->id_gameplay][$k->id_kriteria] ?? 'N/A' }}</td>
+                                                @endforeach
+                                                <td>
+                                                    <div class="row justify-content-center">
+                                                        <div class="col-auto">
+                                                            <button type="button" class="btn btn-warning m-1"
+                                                                data-toggle="modal"
+                                                                data-target="#modal-edit-{{ $g->id_gameplay }}">
+                                                                <i class="fas fa-edit"></i>
+                                                            </button>
+                                                            <button type="button" class="btn btn-danger m-1"
+                                                                onclick="confirmDelete({{ $g->id_gameplay }})"><i
+                                                                    class="fas fa-trash"></i></button>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -92,48 +173,73 @@
                 <!-- /.row -->
             </div>
             <!-- /.container-fluid -->
-        </section>
-        <!-- /.content -->
-        <div class="modal fade" id="modal-edit">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Edit Data Kriteria</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="{{ route('admin.kriteria.update') }}" method="POST">
-                            @csrf
-                            @method('PUT')
-                            <div class="card-body">
-                                <input type="hidden" name="id_kriteria" id="id_kriteria">
-                                <div class="form-group">
-                                    <label for="nama">Nama</label>
-                                    <input type="text" class="form-control" name="nama" id="nama"
-                                        placeholder="Nama">
-                                </div>
-                                <div class="form-group">
-                                    <label for="bobot">Bobot</label>
-                                    <input type="text" class="form-control" name="bobot" id="bobot"
-                                        placeholder="Bobot">
-                                </div>
-                                <div class="form-group">
-                                    <label for="keterangan">Keterangan</label>
-                                    <input type="text" class="form-control" name="keterangan" id="keterangan"
-                                        placeholder="Keterangan">
-                                </div>
+            @foreach ($gameplay as $type)
+                <div class="modal fade" id="modal-edit-{{ $type->id_gameplay }}">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Edit Data Kriteria</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
                             </div>
-                            <div class="modal-footer justify-content-between">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Simpan</button>
+                            <div class="modal-body">
+                                <form action="{{ route('admin.kriteria.update') }}" method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                    <div class="card-body">
+                                        <input type="hidden" name="id_gameplay"
+                                            id="id_gameplay_{{ $type->id_gameplay }}" value="{{ $type->id_gameplay }}">
+                                        <div class="form-group">
+                                            <label for="nama_{{ $type->id_gameplay }}">Gameplay</label>
+                                            <input type="text" class="form-control" name="nama_gameplay"
+                                                id="nama_{{ $type->id_gameplay }}" value="{{ $type->nama }}">
+                                        </div>
+                                        <hr>
+                                        <label for="nama_kriteria">Nama Kriteria</label>
+                                        @foreach ($kriteria as $item)
+                                            <div class="form-group">
+                                                <input type="text" class="form-control"
+                                                    name="nama_kriteria[{{ $item->id_kriteria }}]"
+                                                    value="{{ $item->nama }}" id="nama_{{ $item->id_kriteria }}">
+                                            </div>
+                                        @endforeach
+                                        <hr>
+                                        @foreach ($kriteria as $item)
+                                            <label for="keterangan_kriteria">Keterangan {{ $item->nama }}</label>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control"
+                                                    name="keterangan_kriteria[{{ $item->id_kriteria }}]"
+                                                    value="{{ $item->keterangan }}"
+                                                    id="keterangan_{{ $item->id_kriteria }}">
+                                            </div>
+                                        @endforeach
+                                        <hr>
+                                        @foreach ($kriteria as $item)
+                                            <div class="form-group">
+                                                <label for="{{ $item->nama }}_bobot">Bobot
+                                                    {{ $item->nama }}</label>
+                                                <input type="text" class="form-control"
+                                                    name="{{ $item->nama }}_bobot" id="{{ $item->nama }}_bobot"
+                                                    placeholder="Masukkan Bobot {{ $item->nama }}">
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                    <div class="modal-footer justify-content-between">
+                                        <button type="button" class="btn btn-default"
+                                            data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Simpan</button>
+                                    </div>
+                                </form>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            @endforeach
+
+        </section>
+        <!-- /.content -->
+
     </div>
 
     @if (session('success'))
@@ -158,53 +264,53 @@
     <script>
         $(document).ready(function() {
             $("#myTable").DataTable({
-                processing: true,
-                ordering: true,
-                responsive: true,
-                serverSide: true,
-                ajax: "{{ route('admin.kriteria') }}",
-                columns: [{
-                        data: 'DT_RowIndex',
-                        name: 'DT_RowIndex'
-                    },
-                    {
-                        data: 'nama',
-                        name: 'nama'
-                    },
-                    {
-                        data: 'bobot',
-                        name: 'bobot'
-                    },
-                    {
-                        data: 'keterangan',
-                        name: 'keterangan'
-                    },
-                    {
-                        data: null,
-                        render: function(data) {
-                            return '<div class="row justify-content-center">' +
-                                '<div class="col-auto">' +
-                                '<button type="button" class="btn btn-warning m-1" data-toggle="modal"' +
-                                'data-target="#modal-edit" data-id="' + data
-                                .id_kriteria + '" data-nama="' + data.nama + '" data-bobot="' +
-                                data.bobot + '" data-keterangan="' +
-                                data.keterangan + '">' +
-                                'Edit' +
-                                '</button>' +
-                                '<button type="button" class="btn btn-danger m-1" onclick="confirmDelete(' +
-                                data.id_kriteria + ')"' +
-                                'data-id="' + data.id_kriteria +
-                                '">Hapus</button>' +
-                                '</div>' +
-                                '</div>';
-                        }
-                    }
-                ],
-                rowCallback: function(row, data, index) {
-                    var dt = this.api();
-                    $(row).attr('data-id', data.id);
-                    $('td:eq(0)', row).html(dt.page.info().start + index + 1);
-                }
+                // processing: true,
+                // ordering: true,
+                // responsive: true,
+                // serverSide: true,
+                // ajax: "{{ route('admin.kriteria') }}",
+                // columns: [{
+                //         data: 'DT_RowIndex',
+                //         name: 'DT_RowIndex'
+                //     },
+                //     {
+                //         data: 'gameplay',
+                //         name: 'gameplay'
+                //     },
+                //     {
+                //         data: 'bobot',
+                //         name: 'bobot'
+                //     },
+                //     {
+                //         data: 'keterangan',
+                //         name: 'keterangan'
+                //     },
+                //     {
+                //         data: null,
+                //         render: function(data) {
+                //             return '<div class="row justify-content-center">' +
+                //                 '<div class="col-auto">' +
+                //                 '<button type="button" class="btn btn-warning m-1" data-toggle="modal"' +
+                //                 'data-target="#modal-edit" data-id="' + data
+                //                 .id_kriteria + '" data-nama="' + data.nama + '" data-bobot="' +
+                //                 data.bobot + '" data-keterangan="' +
+                //                 data.keterangan + '">' +
+                //                 'Edit' +
+                //                 '</button>' +
+                //                 '<button type="button" class="btn btn-danger m-1" onclick="confirmDelete(' +
+                //                 data.id_kriteria + ')"' +
+                //                 'data-id="' + data.id_kriteria +
+                //                 '">Hapus</button>' +
+                //                 '</div>' +
+                //                 '</div>';
+                //         }
+                //     }
+                // ],
+                // rowCallback: function(row, data, index) {
+                //     var dt = this.api();
+                //     $(row).attr('data-id', data.id);
+                //     $('td:eq(0)', row).html(dt.page.info().start + index + 1);
+                // }
             });
             $('#modal-edit').on('show.bs.modal', function(event) {
                 var button = $(event.relatedTarget);

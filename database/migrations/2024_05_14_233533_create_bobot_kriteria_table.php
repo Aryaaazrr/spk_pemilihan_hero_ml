@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('bobot_kriteria', function (Blueprint $table) {
-            $table->id();
+            $table->id('id_bobot_kriteria');
             $table->unsignedBigInteger('id_kriteria')->required();
             $table->foreign('id_kriteria')->references('id_kriteria')->on('kriteria')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedBigInteger('id_gameplay')->required();

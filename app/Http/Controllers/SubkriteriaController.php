@@ -122,7 +122,6 @@ class SubkriteriaController extends Controller
         $detail = Subkriteria::where('id_subkriteria', $request->id_subkriteria)->first();
         $detail->id_kriteria = $request->kriteria;
         $detail->subkriteria = $request->subkriteria;
-        $detail->kriteria = $nama;
         $detail->nilai = $request->nilai;
         $detail->save();
 

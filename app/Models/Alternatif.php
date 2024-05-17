@@ -20,4 +20,9 @@ class Alternatif extends Model
     {
         return $this->belongsTo(Hero::class, 'id_hero', 'id_hero');
     }
+
+    public function riwayat_analisa()
+    {
+        return $this->hasMany(RiwayatAnalisa::class, 'id_alternatif', 'id_alternatif');
+    }
 }

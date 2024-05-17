@@ -20,4 +20,9 @@ class GameplayType extends Model
     {
         return $this->hasMany(BobotKriteria::class, 'id_gameplay', 'id_gameplay');
     }
+    
+    public function analisa()
+    {
+        return $this->hasMany(Analisa::class, 'id_gameplay', 'id_gameplay');
+    }
 }

@@ -52,7 +52,7 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        $kriteria = ['Durability', 'Offense', 'Control Effect', 'Difficulty'];
+        $kriteria = ['Durability', 'Offense', 'Control Effect', 'Movement Speed'];
         foreach ($kriteria as $k) {
             Kriteria::create([
                 'nama' => $k
@@ -90,23 +90,23 @@ class DatabaseSeeder extends Seeder
                 ['subkriteria' => 'Lemah', 'nilai' => 3],
                 ['subkriteria' => 'Cukup Lemah', 'nilai' => 4],
                 ['subkriteria' => 'Sedang', 'nilai' => 5],
-                ['subkriteria' => 'Cukup Kuat', 'nxilai' => 6],
+                ['subkriteria' => 'Cukup Kuat', 'nilai' => 6],
                 ['subkriteria' => 'Kuat', 'nilai' => 7],
                 ['subkriteria' => 'Sangat Kuat', 'nilai' => 8],
                 ['subkriteria' => 'Sangat Kuat Sekali', 'nilai' => 9],
                 ['subkriteria' => 'Sangat Sangat Kuat Sekali', 'nilai' => 10],
             ],
             4 => [
-                ['subkriteria' => 'Sangat Mudah Sekali', 'nilai' => 1],
-                ['subkriteria' => 'Sangat Mudah', 'nilai' => 2],
-                ['subkriteria' => 'Mudah', 'nilai' => 3],
-                ['subkriteria' => 'Cukup Mudah', 'nilai' => 4],
+                ['subkriteria' => 'Sangat lambet Sekali', 'nilai' => 1],
+                ['subkriteria' => 'Sangat lambet', 'nilai' => 2],
+                ['subkriteria' => 'Lambet', 'nilai' => 3],
+                ['subkriteria' => 'Cukup lambet', 'nilai' => 4],
                 ['subkriteria' => 'Sedang', 'nilai' => 5],
-                ['subkriteria' => 'Cukup Sulit', 'nilai' => 6],
-                ['subkriteria' => 'Sulit', 'nilai' => 7],
-                ['subkriteria' => 'Sangat Sulit', 'nilai' => 8],
-                ['subkriteria' => 'Sangat Sulit Sekali', 'nilai' => 9],
-                ['subkriteria' => 'Sangat Sangat Sulit Sekali', 'nilai' => 10],
+                ['subkriteria' => 'Cukup cepat', 'nilai' => 6],
+                ['subkriteria' => 'Cepat', 'nilai' => 7],
+                ['subkriteria' => 'Sangat cepat', 'nilai' => 8],
+                ['subkriteria' => 'Sangat cepat Sekali', 'nilai' => 9],
+                ['subkriteria' => 'Sangat Sangat cepat Sekali', 'nilai' => 10],
             ]
         ];
 

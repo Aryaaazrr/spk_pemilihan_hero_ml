@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Alternatif;
+use App\Models\Analisa;
 use App\Models\DetailHero;
+use App\Models\GameplayType;
 use App\Models\Hero;
 use App\Models\Kriteria;
 use App\Models\Subkriteria;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -22,6 +25,7 @@ class AlternatifController extends Controller
     {
         $kriteria = Kriteria::all();
         $detailKriteria = Subkriteria::all();
+        $gameplay = GameplayType::all();
 
         if ($request->ajax()) {
             $alternatif = Alternatif::with('hero')->get();
@@ -55,7 +59,7 @@ class AlternatifController extends Controller
             return DataTables::of($rowData)->toJson();
         }
 
-        return view('pages.alternatif.index', ['kriteria' => $kriteria, 'detailKriteria' => $detailKriteria]);
+        return view('pages.alternatif.index', ['kriteria' => $kriteria, 'detailKriteria' => $detailKriteria, 'gameplay' => $gameplay]);
     }
 
     /**
@@ -72,7 +76,7 @@ class AlternatifController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'foto' => 'required|required|image|mimes:jpeg,png,jpg',
+            'foto' => 'required|image|mimes:jpeg,png,jpg,webp',
             'nama' => 'required|unique:hero',
             'role' => 'required',
             'laning' => 'required',
@@ -98,7 +102,33 @@ class AlternatifController extends Controller
 
             if ($request->file('foto')) {
                 $foto = $request->file('foto');
-                $foto_path = $foto->storePublicly($file_path_foto, 'public');
+                $foto_path = $foto->store($file_path_foto, 'public');
+            }
+
+            $alternatif = Alternatif::where('id_users', Auth::id())->with('hero')->get();
+
+            $goldLane = $alternatif->filter(function ($item) {
+                return $item->hero->laning == 'Gold Lane';
+            })->count();
+
+            $roam = $alternatif->filter(function ($item) {
+                return $item->hero->laning == 'Roam';
+            })->count();
+
+            $jungler = $alternatif->filter(function ($item) {
+                return $item->hero->laning == 'Jungle';
+            })->count();
+
+            $midLane = $alternatif->filter(function ($item) {
+                return $item->hero->laning == 'Mid Lane';
+            })->count();
+
+            $expLane = $alternatif->filter(function ($item) {
+                return $item->hero->laning == 'EXP Lane';
+            })->count();
+
+            if ($goldLane >= 10 && $roam >= 10 && $jungler >= 10 && $midLane >= 10 && $expLane >= 10) {
+                throw new \Exception('Jumlah hero di setiap lane sudah maksimal.');
             }
 
             $hero = new Hero();
@@ -107,30 +137,31 @@ class AlternatifController extends Controller
             $hero->role = $request->role;
             $hero->laning = $request->laning;
 
-            if ($hero->save()) {
-                foreach ($request->all() as $key => $value) {
-                    if (strpos($key, '_kriteria') !== false) {
-                        $kriteriaNama = str_replace('_', ' ', preg_replace("/_kriteria$/", "", $key));
-                        $kriteria = Kriteria::where('nama', $kriteriaNama)->first();
-                        if ($kriteria) {
-                            $detailHero = new DetailHero();
-                            $detailHero->id_hero = $hero->id_hero;
-                            $detailHero->id_kriteria = $kriteria->id_kriteria;
-                            $detailHero->id_subkriteria = $value;
-                            if (!$detailHero->save()) {
-                                throw new \Exception('Gagal menyimpan detail hero.');
-                            }
-                        } else {
-                            throw new \Exception('Kriteria tidak ditemukan. Silahkan coba kembali.');
+            if (!$hero->save()) {
+                throw new \Exception('Gagal menyimpan data hero. Silahkan coba kembali.');
+            }
+
+            foreach ($request->all() as $key => $value) {
+                if (strpos($key, '_kriteria') !== false) {
+                    $kriteriaNama = str_replace('_', ' ', preg_replace("/_kriteria$/", "", $key));
+                    $kriteria = Kriteria::where('nama', $kriteriaNama)->first();
+                    if ($kriteria) {
+                        $detailHero = new DetailHero();
+                        $detailHero->id_hero = $hero->id_hero;
+                        $detailHero->id_kriteria = $kriteria->id_kriteria;
+                        $detailHero->id_subkriteria = $value;
+                        if (!$detailHero->save()) {
+                            throw new \Exception('Gagal menyimpan detail hero.');
                         }
+                    } else {
+                        throw new \Exception('Kriteria tidak ditemukan. Silahkan coba kembali.');
                     }
                 }
-            } else {
-                throw new \Exception('Gagal menyimpan data hero. Silahkan coba kembali.');
             }
 
             $alternatif = new Alternatif();
             $alternatif->id_hero = $hero->id_hero;
+            $alternatif->id_users = Auth::id();
 
             if (!$alternatif->save()) {
                 throw new \Exception('Gagal menyimpan data alternatif. Silahkan coba kembali.');
@@ -144,6 +175,7 @@ class AlternatifController extends Controller
             return back()->withErrors(['error' => $e->getMessage()]);
         }
     }
+
 
     /**
      * Display the specified resource.
@@ -167,7 +199,7 @@ class AlternatifController extends Controller
     public function update(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,webp',
             'nama' => 'required',
             'role' => 'required',
             'laning' => 'required',

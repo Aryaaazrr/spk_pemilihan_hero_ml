@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id('id_alternatif');
             $table->unsignedBigInteger('id_hero')->required();
             $table->foreign('id_hero')->references('id_hero')->on('hero')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedBigInteger('id_users')->required();
+            $table->foreign('id_users')->references('id_users')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

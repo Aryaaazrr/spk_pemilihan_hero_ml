@@ -47,6 +47,9 @@ Route::middleware('auth')->group(function () {
         Route::delete('admin/alternatif/{id}', [AlternatifController::class, 'destroy'])->name('admin.alternatif.destroy');
 
         Route::get('admin/perhitungan', [PerhitunganController::class, 'index'])->name('admin.perhitungan');
+        Route::post('admin/perhitungan/add', [PerhitunganController::class, 'store'])->name('admin.perhitungan.store');
+        Route::get('admin/perhitungan/normalisasi', [PerhitunganController::class, 'normalisasi'])->name('admin.perhitungan.normalisasi');
+        Route::get('admin/perhitungan/pembobotan', [PerhitunganController::class, 'pembobotan'])->name('admin.perhitungan.pembobotan');
     });
 
     Route::group(['middleware' => 'users'], function () {

@@ -20,9 +20,14 @@ class Kriteria extends Model
     {
         return $this->hasMany(Subkriteria::class, 'id_kriteria', 'id_kriteria');
     }
-    
+
     public function detail_hero()
     {
         return $this->hasMany(DetailHero::class, 'id_kriteria', 'id_kriteria');
+    }
+
+    public function bobot()
+    {
+        return $this->hasMany(BobotKriteria::class, 'id_kriteria', 'id_kriteria');
     }
 }

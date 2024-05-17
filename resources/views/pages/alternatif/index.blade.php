@@ -7,7 +7,7 @@
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
-                    <div class="col-sm-6">
+                    <div class="col-md-12">
                         <h1 class="m-0">Alternatif</h1>
                     </div>
                 </div>
@@ -22,8 +22,50 @@
                                 <h3 class="card-title">Data Alternatif</h3>
                                 <div class="card-tools">
                                     <button type="button" class="btn btn-success" data-toggle="modal"
+                                        data-target="#modal-perhitungan">
+                                        <i class="fas fa-chart-line"></i>
+                                        Cek Hasil Perhitungan
+                                    </button>
+                                    <div class="modal fade" id="modal-perhitungan">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Cek Hasil Perhitungan</h4>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form action="{{ route('admin.perhitungan.store') }}" method="POST">
+                                                        @csrf
+                                                        <div class="card-body">
+                                                            <div class="form-group">
+                                                                <label for="gameplay">Strategi Permainan</label>
+                                                                <select class="form-control select2" style="width: 100%;"
+                                                                    name="gameplay" id="gameplay">
+                                                                    <option value="" selected disabled>Pilih Strategi
+                                                                    </option>
+                                                                    @foreach ($gameplay as $item)
+                                                                        <option value="{{ $item->id_gameplay }}">
+                                                                            {{ $item->nama }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer justify-content-between">
+                                                            <button type="button" class="btn btn-default"
+                                                                data-dismiss="modal">Close</button>
+                                                            <button type="submit" class="btn btn-primary">Simpan</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal"
                                         data-target="#modal-default">
-                                        Tambah
+                                        <i class="fas fa-plus"></i> Tambah
                                     </button>
                                     <div class="modal fade" id="modal-default">
                                         <div class="modal-dialog modal-lg">
