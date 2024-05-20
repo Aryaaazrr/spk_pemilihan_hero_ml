@@ -7,8 +7,143 @@
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
-                    <div class="col-md-12">
+                    <div class="col-md-6 col-sm-12 d-flex justify-content-start">
                         <h1 class="m-0">Alternatif</h1>
+                    </div>
+                    <div class="col-md-6 col-sm-12 d-flex justify-content-end">
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-success" data-toggle="modal"
+                                data-target="#modal-perhitungan">
+                                <i class="fas fa-chart-line"></i>
+                                Cek Hasil Perhitungan
+                            </button>
+                            <div class="modal fade" id="modal-perhitungan">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Cek Hasil Perhitungan</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="{{ route('admin.perhitungan.store') }}" method="POST">
+                                                @csrf
+                                                <div class="card-body">
+                                                    <div class="form-group">
+                                                        <label for="gameplay">Strategi Permainan</label>
+                                                        <select class="form-control select2" style="width: 100%;"
+                                                            name="gameplay" id="gameplay">
+                                                            <option value="" selected disabled>Pilih Strategi
+                                                            </option>
+                                                            @foreach ($gameplay as $item)
+                                                                <option value="{{ $item->id_gameplay }}">
+                                                                    {{ $item->nama }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer justify-content-between">
+                                                    <button type="button" class="btn btn-default"
+                                                        data-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary">Simpan</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">
+                                <i class="fas fa-plus"></i> Tambah
+                            </button>
+                            <div class="modal fade" id="modal-default">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Tambah Data Alternatif</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="{{ route('admin.alternatif.store') }}" method="POST"
+                                                onsubmit="return validateForm()" enctype="multipart/form-data">
+                                                @csrf
+                                                <div class="card-body">
+                                                    <div class="form-group">
+                                                        <label for="exampleInputFile">Foto Hero</label>
+                                                        <div class="input-group">
+                                                            <div class="custom-file">
+                                                                <input type="file" class="custom-file-input"
+                                                                    id="exampleInputFile" name="foto" accept="image/*">
+                                                                <label class="custom-file-label"
+                                                                    for="exampleInputFile">Choose
+                                                                    file</label>
+                                                            </div>
+                                                            <div class="input-group-append">
+                                                                <span class="input-group-text">Upload</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="nama">Nama Hero</label>
+                                                        <input type="text" class="form-control" name="nama"
+                                                            id="nama" placeholder="Nama">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="role">Role Hero</label>
+                                                        <select class="form-control select2" id="role" name="role"
+                                                            style="width: 100%;" required>
+                                                            <option disabled selected>Pilih Role Hero</option>
+                                                            <option value="Tank">Tank</option>
+                                                            <option value="Fighter">Fighter</option>
+                                                            <option value="Assassin">Assassin</option>
+                                                            <option value="Mage">Mage</option>
+                                                            <option value="Marksman">Marksman</option>
+                                                            <option value="Support">Support</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="laning">Laning</label>
+                                                        <select class="form-control select2" id="laning" name="laning"
+                                                            style="width: 100%;" required>
+                                                            <option disabled selected>Pilih Laning</option>
+                                                            <option value="Roam">Roam</option>
+                                                            <option value="Jungle">Jungle</option>
+                                                            <option value="Gold Lane">Gold Lane</option>
+                                                            <option value="EXP Lane">EXP Lane</option>
+                                                            <option value="Mid Lane">Mid Lane</option>
+                                                        </select>
+                                                    </div>
+                                                    @foreach ($kriteria as $kriteriaItem)
+                                                        <div class="form-group">
+                                                            <label
+                                                                for="{{ $kriteriaItem->nama }}">{{ $kriteriaItem->nama }}</label>
+                                                            <select class="form-control select2" id="select2"
+                                                                name="{{ str_replace(' ', '_', $kriteriaItem->nama) }}_kriteria"
+                                                                style="width: 100%;" required>
+                                                                <option disabled selected>Pilih
+                                                                    {{ $kriteriaItem->nama }}</option>
+                                                                @foreach ($detailKriteria->where('id_kriteria', $kriteriaItem->id_kriteria) as $detail)
+                                                                    <option value="{{ $detail->id_subkriteria }}">
+                                                                        ({{ $detail->nilai }})
+                                                                        {{ $detail->subkriteria }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                                <div class="modal-footer justify-content-between">
+                                                    <button type="button" class="btn btn-default"
+                                                        data-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary">Simpan</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -17,148 +152,14 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
+
+                        {{-- gold lane --}}
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Data Alternatif</h3>
-                                <div class="card-tools">
-                                    <button type="button" class="btn btn-success" data-toggle="modal"
-                                        data-target="#modal-perhitungan">
-                                        <i class="fas fa-chart-line"></i>
-                                        Cek Hasil Perhitungan
-                                    </button>
-                                    <div class="modal fade" id="modal-perhitungan">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h4 class="modal-title">Cek Hasil Perhitungan</h4>
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <form action="{{ route('admin.perhitungan.store') }}" method="POST">
-                                                        @csrf
-                                                        <div class="card-body">
-                                                            <div class="form-group">
-                                                                <label for="gameplay">Strategi Permainan</label>
-                                                                <select class="form-control select2" style="width: 100%;"
-                                                                    name="gameplay" id="gameplay">
-                                                                    <option value="" selected disabled>Pilih Strategi
-                                                                    </option>
-                                                                    @foreach ($gameplay as $item)
-                                                                        <option value="{{ $item->id_gameplay }}">
-                                                                            {{ $item->nama }}</option>
-                                                                    @endforeach
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer justify-content-between">
-                                                            <button type="button" class="btn btn-default"
-                                                                data-dismiss="modal">Close</button>
-                                                            <button type="submit" class="btn btn-primary">Simpan</button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <button type="button" class="btn btn-primary" data-toggle="modal"
-                                        data-target="#modal-default">
-                                        <i class="fas fa-plus"></i> Tambah
-                                    </button>
-                                    <div class="modal fade" id="modal-default">
-                                        <div class="modal-dialog modal-lg">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h4 class="modal-title">Tambah Data Alternatif</h4>
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <form action="{{ route('admin.alternatif.store') }}" method="POST"
-                                                        onsubmit="return validateForm()" enctype="multipart/form-data">
-                                                        @csrf
-                                                        <div class="card-body">
-                                                            <div class="form-group">
-                                                                <label for="exampleInputFile">Foto Hero</label>
-                                                                <div class="input-group">
-                                                                    <div class="custom-file">
-                                                                        <input type="file" class="custom-file-input"
-                                                                            id="exampleInputFile" name="foto"
-                                                                            accept="image/*">
-                                                                        <label class="custom-file-label"
-                                                                            for="exampleInputFile">Choose file</label>
-                                                                    </div>
-                                                                    <div class="input-group-append">
-                                                                        <span class="input-group-text">Upload</span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="nama">Nama Hero</label>
-                                                                <input type="text" class="form-control" name="nama"
-                                                                    id="nama" placeholder="Nama">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="role">Role Hero</label>
-                                                                <select class="form-control select2" id="role"
-                                                                    name="role" style="width: 100%;" required>
-                                                                    <option disabled selected>Pilih Role Hero</option>
-                                                                    <option value="Tank">Tank</option>
-                                                                    <option value="Fighter">Fighter</option>
-                                                                    <option value="Assassin">Assassin</option>
-                                                                    <option value="Mage">Mage</option>
-                                                                    <option value="Marksman">Marksman</option>
-                                                                    <option value="Support">Support</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="laning">Laning</label>
-                                                                <select class="form-control select2" id="laning"
-                                                                    name="laning" style="width: 100%;" required>
-                                                                    <option disabled selected>Pilih Laning</option>
-                                                                    <option value="Roam">Roam</option>
-                                                                    <option value="Jungle">Jungle</option>
-                                                                    <option value="Gold Lane">Gold Lane</option>
-                                                                    <option value="EXP Lane">EXP Lane</option>
-                                                                    <option value="Mid Lane">Mid Lane</option>
-                                                                </select>
-                                                            </div>
-                                                            @foreach ($kriteria as $kriteriaItem)
-                                                                <div class="form-group">
-                                                                    <label
-                                                                        for="{{ $kriteriaItem->nama }}">{{ $kriteriaItem->nama }}</label>
-                                                                    <select class="form-control select2" id="select2"
-                                                                        name="{{ str_replace(' ', '_', $kriteriaItem->nama) }}_kriteria"
-                                                                        style="width: 100%;" required>
-                                                                        <option disabled selected>Pilih
-                                                                            {{ $kriteriaItem->nama }}</option>
-                                                                        @foreach ($detailKriteria->where('id_kriteria', $kriteriaItem->id_kriteria) as $detail)
-                                                                            <option value="{{ $detail->id_subkriteria }}">
-                                                                                ({{ $detail->nilai }})
-                                                                                {{ $detail->subkriteria }}</option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                </div>
-                                                            @endforeach
-                                                        </div>
-                                                        <div class="modal-footer justify-content-between">
-                                                            <button type="button" class="btn btn-default"
-                                                                data-dismiss="modal">Close</button>
-                                                            <button type="submit" class="btn btn-primary">Simpan</button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <h3 class="card-title">Data Alternatif Gold Lane</h3>
                             </div>
                             <div class="card-body">
-                                <table id="myTable" class="table table-bordered table-hover">
+                                <table id="myTableGoldLane" class="table table-bordered table-hover">
                                     <thead>
                                         <tr>
                                             <th>No</th>
@@ -178,6 +179,115 @@
                             </div>
                             <!-- /.card-body -->
                         </div>
+
+                        {{-- mid lane --}}
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Data Alternatif Mid Lane</h3>
+                            </div>
+                            <div class="card-body">
+                                <table id="myTableMidLane" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Foto</th>
+                                            <th>Nama Hero</th>
+                                            <th>Role</th>
+                                            <th>Laning</th>
+                                            @foreach ($kriteria as $item)
+                                                <th>{{ $item->nama }}</th>
+                                            @endforeach
+                                            <th>Opsi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+
+                        {{-- exp lane --}}
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Data Alternatif EXP Lane</h3>
+                            </div>
+                            <div class="card-body">
+                                <table id="myTableEXPLane" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Foto</th>
+                                            <th>Nama Hero</th>
+                                            <th>Role</th>
+                                            <th>Laning</th>
+                                            @foreach ($kriteria as $item)
+                                                <th>{{ $item->nama }}</th>
+                                            @endforeach
+                                            <th>Opsi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+
+                        {{-- Roam --}}
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Data Alternatif Roam</h3>
+                            </div>
+                            <div class="card-body">
+                                <table id="myTableRoam" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Foto</th>
+                                            <th>Nama Hero</th>
+                                            <th>Role</th>
+                                            <th>Laning</th>
+                                            @foreach ($kriteria as $item)
+                                                <th>{{ $item->nama }}</th>
+                                            @endforeach
+                                            <th>Opsi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+
+                        {{-- Jungle --}}
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Data Alternatif Jungle</h3>
+                            </div>
+                            <div class="card-body">
+                                <table id="myTableJungle" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Foto</th>
+                                            <th>Nama Hero</th>
+                                            <th>Role</th>
+                                            <th>Laning</th>
+                                            @foreach ($kriteria as $item)
+                                                <th>{{ $item->nama }}</th>
+                                            @endforeach
+                                            <th>Opsi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+
                         <!-- /.card -->
                     </div>
                     <!-- /.col -->
@@ -289,7 +399,7 @@
     @if ($errors->any())
         <script>
             Swal.fire({
-                icon: 'error',
+                icon: 'warning',
                 title: 'Oopss...',
                 text: '{{ $errors->first() }}'
             });
@@ -298,12 +408,313 @@
 
     <script>
         $(document).ready(function() {
-            $("#myTable").DataTable({
+            $("#myTableGoldLane").DataTable({
                 processing: true,
                 ordering: true,
                 responsive: true,
                 serverSide: true,
-                ajax: "{{ route('admin.alternatif') }}",
+                ajax: {
+                    url: '{{ route('admin.alternatif') }}',
+                    data: {
+                        laning: 'Gold Lane'
+                    }
+                },
+                columns: [{
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex'
+                    },
+                    {
+                        data: 'foto',
+                        name: 'foto',
+                        render: function(data) {
+                            return '<img src="{{ asset('storage') }}/' + data +
+                                '" alt="" style="width: 50px; height: 50px;">';
+                        }
+                    },
+                    {
+                        data: 'nama',
+                        name: 'nama'
+                    },
+                    {
+                        data: 'role',
+                        name: 'role'
+                    },
+                    {
+                        data: 'laning',
+                        name: 'laning'
+                    },
+                    @foreach ($kriteria as $kriteriaItem)
+                        {
+                            data: 'subkriteria.{{ $kriteriaItem->nama }}',
+                            name: '{{ $kriteriaItem->nama }}',
+                            render: function(data) {
+                                return data ? data : 'N/A';
+                            }
+                        },
+                    @endforeach {
+                        data: null,
+                        render: function(data) {
+                            var subkriteriaString = JSON.stringify(data.subkriteria);
+
+                            return '<div class="row justify-content-center">' +
+                                '<div class="col-auto">' +
+                                '<button type="button" class="btn btn-warning m-1" data-toggle="modal"' +
+                                'data-target="#modal-edit" data-id=' + data.DT_RowIndex +
+                                ' data-foto="' + data.foto + '" data-role="' + data.role +
+                                '" data-nama="' + data.nama + '" data-laning="' + data.laning +
+                                '" data-subkriteria=\'' +
+                                subkriteriaString + '\' data-nilai="' + data.nilai +
+                                '">' + 'Edit' +
+                                '</button>' +
+                                '<button type="button" class="btn btn-danger m-1" onclick="confirmDelete(' +
+                                data.DT_RowIndex + ')"' +
+                                'data-id="' + data.DT_RowIndex +
+                                '">Hapus</button>' +
+                                '</div>' +
+                                '</div>';
+                        }
+                    }
+                ],
+                rowCallback: function(row, data, index) {
+                    var dt = this.api();
+                    $(row).attr('data-id', data.id);
+                    $('td:eq(0)', row).html(dt.page.info().start + index + 1);
+                }
+            });
+
+            $("#myTableMidLane").DataTable({
+                processing: true,
+                ordering: true,
+                responsive: true,
+                serverSide: true,
+                ajax: {
+                    url: '{{ route('admin.alternatif') }}',
+                    data: {
+                        laning: 'Mid Lane'
+                    }
+                },
+                columns: [{
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex'
+                    },
+                    {
+                        data: 'foto',
+                        name: 'foto',
+                        render: function(data) {
+                            return '<img src="{{ asset('storage') }}/' + data +
+                                '" alt="" style="width: 50px; height: 50px;">';
+                        }
+                    },
+                    {
+                        data: 'nama',
+                        name: 'nama'
+                    },
+                    {
+                        data: 'role',
+                        name: 'role'
+                    },
+                    {
+                        data: 'laning',
+                        name: 'laning'
+                    },
+                    @foreach ($kriteria as $kriteriaItem)
+                        {
+                            data: 'subkriteria.{{ $kriteriaItem->nama }}',
+                            name: '{{ $kriteriaItem->nama }}',
+                            render: function(data) {
+                                return data ? data : 'N/A';
+                            }
+                        },
+                    @endforeach {
+                        data: null,
+                        render: function(data) {
+                            var subkriteriaString = JSON.stringify(data.subkriteria);
+
+                            return '<div class="row justify-content-center">' +
+                                '<div class="col-auto">' +
+                                '<button type="button" class="btn btn-warning m-1" data-toggle="modal"' +
+                                'data-target="#modal-edit" data-id=' + data.DT_RowIndex +
+                                ' data-foto="' + data.foto + '" data-role="' + data.role +
+                                '" data-nama="' + data.nama + '" data-laning="' + data.laning +
+                                '" data-subkriteria=\'' +
+                                subkriteriaString + '\' data-nilai="' + data.nilai +
+                                '">' + 'Edit' +
+                                '</button>' +
+                                '<button type="button" class="btn btn-danger m-1" onclick="confirmDelete(' +
+                                data.DT_RowIndex + ')"' +
+                                'data-id="' + data.DT_RowIndex +
+                                '">Hapus</button>' +
+                                '</div>' +
+                                '</div>';
+                        }
+                    }
+                ],
+                rowCallback: function(row, data, index) {
+                    var dt = this.api();
+                    $(row).attr('data-id', data.id);
+                    $('td:eq(0)', row).html(dt.page.info().start + index + 1);
+                }
+            });
+
+            $("#myTableEXPLane").DataTable({
+                processing: true,
+                ordering: true,
+                responsive: true,
+                serverSide: true,
+                ajax: {
+                    url: '{{ route('admin.alternatif') }}',
+                    data: {
+                        laning: 'EXP Lane'
+                    }
+                },
+                columns: [{
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex'
+                    },
+                    {
+                        data: 'foto',
+                        name: 'foto',
+                        render: function(data) {
+                            return '<img src="{{ asset('storage') }}/' + data +
+                                '" alt="" style="width: 50px; height: 50px;">';
+                        }
+                    },
+                    {
+                        data: 'nama',
+                        name: 'nama'
+                    },
+                    {
+                        data: 'role',
+                        name: 'role'
+                    },
+                    {
+                        data: 'laning',
+                        name: 'laning'
+                    },
+                    @foreach ($kriteria as $kriteriaItem)
+                        {
+                            data: 'subkriteria.{{ $kriteriaItem->nama }}',
+                            name: '{{ $kriteriaItem->nama }}',
+                            render: function(data) {
+                                return data ? data : 'N/A';
+                            }
+                        },
+                    @endforeach {
+                        data: null,
+                        render: function(data) {
+                            var subkriteriaString = JSON.stringify(data.subkriteria);
+
+                            return '<div class="row justify-content-center">' +
+                                '<div class="col-auto">' +
+                                '<button type="button" class="btn btn-warning m-1" data-toggle="modal"' +
+                                'data-target="#modal-edit" data-id=' + data.DT_RowIndex +
+                                ' data-foto="' + data.foto + '" data-role="' + data.role +
+                                '" data-nama="' + data.nama + '" data-laning="' + data.laning +
+                                '" data-subkriteria=\'' +
+                                subkriteriaString + '\' data-nilai="' + data.nilai +
+                                '">' + 'Edit' +
+                                '</button>' +
+                                '<button type="button" class="btn btn-danger m-1" onclick="confirmDelete(' +
+                                data.DT_RowIndex + ')"' +
+                                'data-id="' + data.DT_RowIndex +
+                                '">Hapus</button>' +
+                                '</div>' +
+                                '</div>';
+                        }
+                    }
+                ],
+                rowCallback: function(row, data, index) {
+                    var dt = this.api();
+                    $(row).attr('data-id', data.id);
+                    $('td:eq(0)', row).html(dt.page.info().start + index + 1);
+                }
+            });
+
+            $("#myTableRoam").DataTable({
+                processing: true,
+                ordering: true,
+                responsive: true,
+                serverSide: true,
+                ajax: {
+                    url: '{{ route('admin.alternatif') }}',
+                    data: {
+                        laning: 'Roam'
+                    }
+                },
+                columns: [{
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex'
+                    },
+                    {
+                        data: 'foto',
+                        name: 'foto',
+                        render: function(data) {
+                            return '<img src="{{ asset('storage') }}/' + data +
+                                '" alt="" style="width: 50px; height: 50px;">';
+                        }
+                    },
+                    {
+                        data: 'nama',
+                        name: 'nama'
+                    },
+                    {
+                        data: 'role',
+                        name: 'role'
+                    },
+                    {
+                        data: 'laning',
+                        name: 'laning'
+                    },
+                    @foreach ($kriteria as $kriteriaItem)
+                        {
+                            data: 'subkriteria.{{ $kriteriaItem->nama }}',
+                            name: '{{ $kriteriaItem->nama }}',
+                            render: function(data) {
+                                return data ? data : 'N/A';
+                            }
+                        },
+                    @endforeach {
+                        data: null,
+                        render: function(data) {
+                            var subkriteriaString = JSON.stringify(data.subkriteria);
+
+                            return '<div class="row justify-content-center">' +
+                                '<div class="col-auto">' +
+                                '<button type="button" class="btn btn-warning m-1" data-toggle="modal"' +
+                                'data-target="#modal-edit" data-id=' + data.DT_RowIndex +
+                                ' data-foto="' + data.foto + '" data-role="' + data.role +
+                                '" data-nama="' + data.nama + '" data-laning="' + data.laning +
+                                '" data-subkriteria=\'' +
+                                subkriteriaString + '\' data-nilai="' + data.nilai +
+                                '">' + 'Edit' +
+                                '</button>' +
+                                '<button type="button" class="btn btn-danger m-1" onclick="confirmDelete(' +
+                                data.DT_RowIndex + ')"' +
+                                'data-id="' + data.DT_RowIndex +
+                                '">Hapus</button>' +
+                                '</div>' +
+                                '</div>';
+                        }
+                    }
+                ],
+                rowCallback: function(row, data, index) {
+                    var dt = this.api();
+                    $(row).attr('data-id', data.id);
+                    $('td:eq(0)', row).html(dt.page.info().start + index + 1);
+                }
+            });
+
+            $("#myTableJungle").DataTable({
+                processing: true,
+                ordering: true,
+                responsive: true,
+                serverSide: true,
+                ajax: {
+                    url: '{{ route('admin.alternatif') }}',
+                    data: {
+                        laning: 'Jungle'
+                    }
+                },
                 columns: [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex'

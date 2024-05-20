@@ -16,13 +16,18 @@ class Alternatif extends Model
         'updated_at' => 'datetime',
     ];
 
-    public function hero()
+    public function detail_alternatif()
     {
-        return $this->belongsTo(Hero::class, 'id_hero', 'id_hero');
+        return $this->hasMany(DetailAlternatif::class, 'id_alternatif', 'id_alternatif');
     }
 
     public function riwayat_analisa()
     {
         return $this->hasMany(RiwayatAnalisa::class, 'id_alternatif', 'id_alternatif');
+    }
+    
+    public function users()
+    {
+        return $this->belongsTo(User::class, 'id_users', 'id_users');
     }
 }

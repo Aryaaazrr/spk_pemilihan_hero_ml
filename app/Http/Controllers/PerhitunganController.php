@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Alternatif;
 use App\Models\Analisa;
 use App\Models\BobotKriteria;
+use App\Models\GameplayType;
 use App\Models\Hero;
 use App\Models\Kriteria;
 use App\Models\RiwayatAnalisa;
@@ -24,42 +25,53 @@ class PerhitunganController extends Controller
     {
         $kriteria = Kriteria::all();
         $subkriteria = Subkriteria::all();
+        $gameplay = GameplayType::all();
 
-        $alternatif = Alternatif::with('hero')->where('id_users', Auth::id())->get();
+        $cekAlternatif = Alternatif::where('id_users', Auth::id())->get();
 
-        $goldLane = $alternatif->filter(function ($item) {
-            return $item->hero->laning == 'Gold Lane';
+        $goldLane = $cekAlternatif->filter(function ($item) {
+            return $item->laning == 'Gold Lane';
         })->count();
 
-        $roam = $alternatif->filter(function ($item) {
-            return $item->hero->laning == 'Roam';
+        $roam = $cekAlternatif->filter(function ($item) {
+            return $item->laning == 'Roam';
         })->count();
 
-        $jungler = $alternatif->filter(function ($item) {
-            return $item->hero->laning == 'Jungle';
+        $jungler = $cekAlternatif->filter(function ($item) {
+            return $item->laning == 'Jungle';
         })->count();
 
-        $midLane = $alternatif->filter(function ($item) {
-            return $item->hero->laning == 'Mid Lane';
+        $midLane = $cekAlternatif->filter(function ($item) {
+            return $item->laning == 'Mid Lane';
         })->count();
 
-        $expLane = $alternatif->filter(function ($item) {
-            return $item->hero->laning == 'EXP Lane';
+        $expLane = $cekAlternatif->filter(function ($item) {
+            return $item->laning == 'EXP Lane';
         })->count();
 
         if ($goldLane < 5 || $roam < 5 || $jungler < 5 || $midLane < 5 || $expLane < 5) {
             return redirect()->route('admin.alternatif')->withErrors(['Lengkapi Data Alternatif dahulu. Setiap laning minimal 5 Hero.']);
         }
 
+        $laning = $request->get('laning');
+        $alternatif = Alternatif::with('detail_alternatif')
+            ->where('laning', $laning)
+            ->where('id_users', Auth::id())
+            ->get();
+
+        $alternatif_gold_lane = Alternatif::with('detail_alternatif')
+            ->where('laning', 'Gold Lane')
+            ->where('id_users', Auth::id())
+            ->get();
+
         if ($request->ajax()) {
             $rowData = [];
 
             foreach ($alternatif as $row) {
-                $hero = $row->hero;
-                $detailHero = $hero->detail_hero;
+                $detailAlternatif = $row->detail_alternatif;
                 $subkriteriaData = [];
 
-                foreach ($detailHero as $detail) {
+                foreach ($detailAlternatif as $detail) {
                     $kriteria = Kriteria::find($detail->id_kriteria);
                     $subkriteria = Subkriteria::find($detail->id_subkriteria);
 
@@ -70,11 +82,11 @@ class PerhitunganController extends Controller
 
                 $rowData[] = [
                     'DT_RowIndex' => $row->id_alternatif,
-                    'id_hero' => $hero->id_hero,
-                    'foto' => $hero->foto,
-                    'nama' => $hero->nama,
-                    'role' => $hero->role,
-                    'laning' => $hero->laning,
+                    'id_alternatif' => $row->id_alternatif,
+                    'foto' => $row->foto,
+                    'nama' => $row->nama,
+                    'role' => $row->role,
+                    'laning' => $row->laning,
                     'subkriteria' => $subkriteriaData,
                 ];
             }
@@ -82,7 +94,7 @@ class PerhitunganController extends Controller
             return DataTables::of($rowData)->toJson();
         }
 
-        return view('pages.perhitungan.index', ['kriteria' => $kriteria, 'detailKriteria' => $subkriteria]);
+        return view('pages.perhitungan.index', ['kriteria' => $kriteria, 'detailKriteria' => $subkriteria, 'gameplay' => $gameplay, 'alternatif_gold_lane' => $alternatif_gold_lane]);
     }
 
     public function store(Request $request)
@@ -114,30 +126,30 @@ class PerhitunganController extends Controller
                 throw new \Exception('Gagal menyimpan data analisa. Silahkan coba kembali.');
             }
 
-            $alternatif = Alternatif::with('hero')->where('id_users', Auth::id())->get();
+            $alternatif = Alternatif::where('id_users', Auth::id())->get();
 
             $goldLane = $alternatif->filter(function ($item) {
-                return $item->hero->laning == 'Gold Lane';
+                return $item->laning == 'Gold Lane';
             })->count();
 
             $roam = $alternatif->filter(function ($item) {
-                return $item->hero->laning == 'Roam';
+                return $item->laning == 'Roam';
             })->count();
 
             $jungler = $alternatif->filter(function ($item) {
-                return $item->hero->laning == 'Jungle';
+                return $item->laning == 'Jungle';
             })->count();
 
             $midLane = $alternatif->filter(function ($item) {
-                return $item->hero->laning == 'Mid Lane';
+                return $item->laning == 'Mid Lane';
             })->count();
 
             $expLane = $alternatif->filter(function ($item) {
-                return $item->hero->laning == 'EXP Lane';
+                return $item->laning == 'EXP Lane';
             })->count();
 
             if ($goldLane < 5 || $roam < 5 || $jungler < 5 || $midLane < 5 || $expLane < 5) {
-                throw new \Exception('Setiap laning minimal 5 Hero.');
+                throw new \Exception('Setiap laning minimal 5 Data Alternatif.');
             }
 
             foreach ($alternatif as $value) {
@@ -163,19 +175,22 @@ class PerhitunganController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function normalisasi()
+    public function normalisasi(Request $request)
     {
-        $alternatif = Alternatif::with('hero.detail_hero')->where('id_users', Auth::id())->get();
-        $heroes = $alternatif->pluck('hero');
+        $laning = $request->get('laning');
+        $alternatif = Alternatif::with('detail_alternatif')
+            ->where('laning', $laning)
+            ->where('id_users', Auth::id())
+            ->get();
+
         $kriteria = Kriteria::all();
-        $weights = $kriteria->pluck('bobot')->toArray();
 
         $matrix = [];
-        foreach ($heroes as $hero) {
+        foreach ($alternatif as $alt) {
             $row = [];
             foreach ($kriteria as $krit) {
-                $detailHero = $hero->detail_hero()->where('id_kriteria', $krit->id_kriteria)->first();
-                $subkriteria = Subkriteria::where('id_subkriteria', $detailHero->id_subkriteria)->first();
+                $detailAlternatif = $alt->detail_alternatif()->where('id_kriteria', $krit->id_kriteria)->first();
+                $subkriteria = Subkriteria::where('id_subkriteria', $detailAlternatif->id_subkriteria)->first();
                 $row[] = $subkriteria ? $subkriteria->nilai : 0;
             }
             $matrix[] = $row;
@@ -184,7 +199,7 @@ class PerhitunganController extends Controller
         $normalisasiMatrix = $this->normalisasiMatrix($matrix);
         $rowData = [];
 
-        foreach ($heroes as $index => $hero) {
+        foreach ($alternatif as $index => $hero) {
             $subkriteriaData = [];
             foreach ($kriteria as $kIndex => $krit) {
                 $subkriteriaData[$krit->nama] = $normalisasiMatrix[$index][$kIndex];
@@ -203,10 +218,14 @@ class PerhitunganController extends Controller
         return DataTables::of($rowData)->toJson();
     }
 
-    public function pembobotan()
+
+    public function pembobotan(Request $request)
     {
-        $alternatif = Alternatif::with('hero.detail_hero')->where('id_users', Auth::id())->get();
-        $heroes = $alternatif->pluck('hero')->unique('id_hero');
+        $laning = $request->get('laning');
+        $alternatif = Alternatif::with('detail_alternatif')
+            ->where('laning', $laning)
+            ->where('id_users', Auth::id())
+            ->get();
 
         $analisa = Analisa::where('id_users', Auth::id())->first();
         if (!$analisa) {
@@ -219,11 +238,11 @@ class PerhitunganController extends Controller
         $weights = $bobotKriteria->pluck('bobot')->toArray();
 
         $matrix = [];
-        foreach ($heroes as $hero) {
+        foreach ($alternatif as $alt) {
             $row = [];
             foreach ($kriteria as $krit) {
-                $detailHero = $hero->detail_hero()->where('id_kriteria', $krit->id_kriteria)->first();
-                $subkriteria = Subkriteria::where('id_subkriteria', $detailHero->id_subkriteria)->first();
+                $detailAlternatif = $alt->detail_alternatif()->where('id_kriteria', $krit->id_kriteria)->first();
+                $subkriteria = Subkriteria::where('id_subkriteria', $detailAlternatif->id_subkriteria)->first();
                 $row[] = $subkriteria ? $subkriteria->nilai : 0;
             }
             $matrix[] = $row;
@@ -233,23 +252,93 @@ class PerhitunganController extends Controller
         $weightedMatrix = $this->pembobotanNormalisasiMatrix($normalisasiMatrix, $weights);
         $rowData = [];
 
-        foreach ($heroes as $index => $hero) {
+        foreach ($alternatif as $index => $value) {
             $subkriteriaData = [];
             foreach ($kriteria as $kIndex => $krit) {
                 $subkriteriaData[$krit->nama] = $weightedMatrix[$index][$kIndex];
             }
             $rowData[] = [
                 'DT_RowIndex' => $index + 1,
-                'id_hero' => $hero->id_hero,
-                'foto' => $hero->foto,
-                'nama' => $hero->nama,
-                'role' => $hero->role,
-                'laning' => $hero->laning,
+                'id_alternatif' => $value->id_alternatif,
+                'foto' => $value->foto,
+                'nama' => $value->nama,
+                'role' => $value->role,
+                'laning' => $value->laning,
                 'subkriteria' => $subkriteriaData,
             ];
         }
 
         return DataTables::of($rowData)->toJson();
+    }
+
+
+    public function concordance(Request $request)
+    {
+        $laning = $request->get('laning');
+        $alternatif = Alternatif::with('detail_alternatif')
+            ->where('laning', $laning)
+            ->where('id_users', Auth::id())
+            ->get();
+
+        if ($alternatif->isEmpty()) {
+            return response()->json([]);
+        }
+
+        $analisa = Analisa::where('id_users', Auth::id())->first();
+
+        if (!$analisa) {
+            return back()->withErrors(['error' => 'Analisa tidak ditemukan.']);
+        }
+
+        $gameplay = $analisa->id_gameplay;
+        $kriteria = Kriteria::all();
+        $bobotKriteria = BobotKriteria::where('id_gameplay', $gameplay)->get();
+        $weights = $bobotKriteria->pluck('bobot')->toArray();
+
+        $matrix = [];
+        foreach ($alternatif as $alt) {
+            $row = [];
+            foreach ($kriteria as $krit) {
+                $detailAlternatif = $alt->detail_alternatif()->where('id_kriteria', $krit->id_kriteria)->first();
+                $subkriteria = Subkriteria::where('id_subkriteria', $detailAlternatif->id_subkriteria)->first();
+                $row[] = $subkriteria ? $subkriteria->nilai : 0;
+            }
+            $matrix[] = $row;
+        }
+
+        $normalisasiMatrix = $this->normalisasiMatrix($matrix);
+
+        $weightedMatrix = $this->pembobotanNormalisasiMatrix($normalisasiMatrix, $weights);
+
+        $concordanceMatrix = $this->generateConcordanceSubset($weightedMatrix);
+
+        $rowData = [];
+        foreach ($alternatif as $alt) {
+            $rowData = [
+                'DT_RowIndex' => $alt->id_alternatif,
+                'nama_hero' => $alt->nama,
+                'true_kriteria' => [],
+            ];
+
+            foreach ($kriteria as $krit) {
+                $kriteriaIndex = $krit->id_kriteria - 1;
+                $trueKriteria = [];
+                foreach ($concordanceMatrix as $pair => $concordance) {
+                    list($a, $b) = explode('-', $pair);
+                    if ($a == $alt->id_alternatif) {
+                        $trueKriteria = [];
+                        foreach ($concordance as $kriteriaIndex => $isTrue) {
+                            if (isset($concordance[$kriteriaIndex]) && $concordance[$kriteriaIndex]) {
+                                $trueKriteria[] = $kriteria[$kriteriaIndex]->nama;
+                            }
+                        }
+                        $rowData['true_kriteria'] = $trueKriteria;
+                    }
+                }
+            }
+            $tableData[] = $rowData;
+        }
+        return DataTables::of($tableData)->toJson();
     }
 
     private function normalisasiMatrix($matrix)
@@ -277,5 +366,51 @@ class PerhitunganController extends Controller
             }
         }
         return $weightedMatrix;
+    }
+
+    private function generateConcordanceSubset($weightedMatrix)
+    {
+        $concordanceSubset = [];
+        $n = count($weightedMatrix);
+        $kriteria = Kriteria::all();
+
+        for ($k = 0; $k < $n; $k++) {
+            for ($l = 0; $l < $n; $l++) {
+                if ($k != $l) {
+                    $concordance = [];
+
+                    foreach ($kriteria as $krit) {
+                        if ($weightedMatrix[$k][$krit->id_kriteria - 1] >= $weightedMatrix[$l][$krit->id_kriteria - 1]) {
+                            $concordance[] = $krit->nama;
+                        }
+                    }
+                    $concordanceSubset["$k-$l"] = $concordance;
+                }
+            }
+        }
+        return $concordanceSubset;
+    }
+
+
+    private function indexConcordanceSubset($concordanceSubset)
+    {
+        $indexedConcordanceSubset = [];
+        foreach ($concordanceSubset as $key => $subset) {
+            foreach ($subset as $index) {
+                $indexedConcordanceSubset[$index][] = $key;
+            }
+        }
+        return $indexedConcordanceSubset;
+    }
+
+    private function indexDiscordanceSubset($discordanceSubset)
+    {
+        $indexedDiscordanceSubset = [];
+        foreach ($discordanceSubset as $key => $subset) {
+            foreach ($subset as $index) {
+                $indexedDiscordanceSubset[$index][] = $key;
+            }
+        }
+        return $indexedDiscordanceSubset;
     }
 }

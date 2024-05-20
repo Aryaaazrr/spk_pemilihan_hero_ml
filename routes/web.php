@@ -50,6 +50,7 @@ Route::middleware('auth')->group(function () {
         Route::post('admin/perhitungan/add', [PerhitunganController::class, 'store'])->name('admin.perhitungan.store');
         Route::get('admin/perhitungan/normalisasi', [PerhitunganController::class, 'normalisasi'])->name('admin.perhitungan.normalisasi');
         Route::get('admin/perhitungan/pembobotan', [PerhitunganController::class, 'pembobotan'])->name('admin.perhitungan.pembobotan');
+        Route::get('admin/perhitungan/concordance', [PerhitunganController::class, 'concordance'])->name('admin.perhitungan.concordance');
     });
 
     Route::group(['middleware' => 'users'], function () {

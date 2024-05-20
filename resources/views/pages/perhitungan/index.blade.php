@@ -7,8 +7,51 @@
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
-                    <div class="col-sm-6">
+                    <div class="col-md-6 col-sm-12 d-flex justify-content-start">
                         <h1 class="m-0">Perhitungan</h1>
+                    </div>
+                    <div class="col-md-6 col-sm-12 d-flex justify-content-end">
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-gameplay">
+                                <i class="fas fa-book"></i> Strategi
+                            </button>
+                            <div class="modal fade" id="modal-gameplay">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Ganti Strategi</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="{{ route('admin.kriteria.store') }}" method="POST">
+                                                @csrf
+                                                <div class="card-body">
+                                                    <div class="form-group">
+                                                        <label for="gameplay">Strategi Permainan</label>
+                                                        <select class="form-control select2" style="width: 100%;"
+                                                            name="gameplay" id="gameplay">
+                                                            <option value="" selected disabled>Pilih Strategi
+                                                            </option>
+                                                            @foreach ($gameplay as $item)
+                                                                <option value="{{ $item->id_gameplay }}">
+                                                                    {{ $item->nama }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer justify-content-between">
+                                                    <button type="button" class="btn btn-default"
+                                                        data-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary">Simpan</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -19,70 +62,18 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
+                        {{-- gold lane --}}
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Data Alternatif</h3>
-                                <div class="card-tools">
-                                    <button type="button" class="btn btn-primary" data-toggle="modal"
-                                        data-target="#modal-gameplay">
-                                        <i class="fas fa-book"></i> Strategi
-                                    </button>
-                                    <div class="modal fade" id="modal-gameplay">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h4 class="modal-title">Tambah Data Gameplay</h4>
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <form action="{{ route('admin.kriteria.store') }}" method="POST">
-                                                        @csrf
-                                                        <div class="card-body">
-                                                            <div class="form-group">
-                                                                <label for="nama_gameplay">Nama Gameplay</label>
-                                                                <input type="text" class="form-control"
-                                                                    name="nama_gameplay" id="nama_gameplay"
-                                                                    placeholder="Nama gameplay">
-                                                            </div>
-                                                            @foreach ($kriteria as $item)
-                                                                <div class="form-group">
-                                                                    <label for="{{ $item->nama }}_bobot">Bobot
-                                                                        {{ $item->nama }}</label>
-                                                                    <input type="text" class="form-control"
-                                                                        name="{{ $item->nama }}_bobot"
-                                                                        id="{{ $item->nama }}_bobot"
-                                                                        placeholder="Masukkan Bobot {{ $item->nama }}">
-                                                                </div>
-                                                            @endforeach
-                                                            <div class="form-group">
-                                                                <label for="keterangan_kriteria">Keterangan Kriteria</label>
-                                                                <input type="text" class="form-control"
-                                                                    name="keterangan_kriteria" id="keterangan_kriteria"
-                                                                    placeholder="Keterangan Kriteria">
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer justify-content-between">
-                                                            <button type="button" class="btn btn-default"
-                                                                data-dismiss="modal">Close</button>
-                                                            <button type="submit" class="btn btn-primary">Simpan</button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <h3 class="card-title">Data Alternatif Gold Lane</h3>
                             </div>
                             <div class="card-body">
-                                <table id="myTableAlternatif" class="table table-bordered table-hover">
-                                    <thead class="text-center">
+                                <table id="myTableGoldLane" class="table table-bordered table-hover">
+                                    <thead>
                                         <tr>
                                             <th>No</th>
                                             <th>Foto</th>
-                                            <th>Nama</th>
+                                            <th>Nama Hero</th>
                                             <th>Role</th>
                                             <th>Laning</th>
                                             @foreach ($kriteria as $item)
@@ -96,6 +87,111 @@
                             </div>
                             <!-- /.card-body -->
                         </div>
+
+                        {{-- mid lane --}}
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Data Alternatif Mid Lane</h3>
+                            </div>
+                            <div class="card-body">
+                                <table id="myTableMidLane" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Foto</th>
+                                            <th>Nama Hero</th>
+                                            <th>Role</th>
+                                            <th>Laning</th>
+                                            @foreach ($kriteria as $item)
+                                                <th>{{ $item->nama }}</th>
+                                            @endforeach
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+
+                        {{-- exp lane --}}
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Data Alternatif EXP Lane</h3>
+                            </div>
+                            <div class="card-body">
+                                <table id="myTableEXPLane" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Foto</th>
+                                            <th>Nama Hero</th>
+                                            <th>Role</th>
+                                            <th>Laning</th>
+                                            @foreach ($kriteria as $item)
+                                                <th>{{ $item->nama }}</th>
+                                            @endforeach
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+
+                        {{-- Roam --}}
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Data Alternatif Roam</h3>
+                            </div>
+                            <div class="card-body">
+                                <table id="myTableRoam" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Foto</th>
+                                            <th>Nama Hero</th>
+                                            <th>Role</th>
+                                            <th>Laning</th>
+                                            @foreach ($kriteria as $item)
+                                                <th>{{ $item->nama }}</th>
+                                            @endforeach
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+
+                        {{-- Jungle --}}
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Data Alternatif Jungle</h3>
+                            </div>
+                            <div class="card-body">
+                                <table id="myTableJungle" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Foto</th>
+                                            <th>Nama Hero</th>
+                                            <th>Role</th>
+                                            <th>Laning</th>
+                                            @foreach ($kriteria as $item)
+                                                <th>{{ $item->nama }}</th>
+                                            @endforeach
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+
                         <!-- /.card -->
                     </div>
                     <!-- /.col -->
@@ -111,12 +207,14 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
+
+                        {{-- normalisasi gold lane --}}
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Normalisasi</h3>
+                                <h3 class="card-title">Normalisasi Gold Lane</h3>
                             </div>
                             <div class="card-body">
-                                <table id="myTableNormalisasi" class="table table-bordered table-hover">
+                                <table id="myTableNormalisasiGoldLane" class="table table-bordered table-hover">
                                     <thead class="text-center">
                                         <tr>
                                             <th>No</th>
@@ -135,6 +233,111 @@
                             </div>
                             <!-- /.card-body -->
                         </div>
+
+                        {{-- normalisasi mid lane --}}
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Normalisasi Mid Lane</h3>
+                            </div>
+                            <div class="card-body">
+                                <table id="myTableNormalisasiMidLane" class="table table-bordered table-hover">
+                                    <thead class="text-center">
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Foto</th>
+                                            <th>Nama</th>
+                                            <th>Role</th>
+                                            <th>Laning</th>
+                                            @foreach ($kriteria as $item)
+                                                <th>{{ $item->nama }}</th>
+                                            @endforeach
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+
+                        {{-- normalisasi exp lane --}}
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Normalisasi EXP Lane</h3>
+                            </div>
+                            <div class="card-body">
+                                <table id="myTableNormalisasiEXPLane" class="table table-bordered table-hover">
+                                    <thead class="text-center">
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Foto</th>
+                                            <th>Nama</th>
+                                            <th>Role</th>
+                                            <th>Laning</th>
+                                            @foreach ($kriteria as $item)
+                                                <th>{{ $item->nama }}</th>
+                                            @endforeach
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+
+                        {{-- normalisasi roam --}}
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Normalisasi Roam</h3>
+                            </div>
+                            <div class="card-body">
+                                <table id="myTableNormalisasiRoam" class="table table-bordered table-hover">
+                                    <thead class="text-center">
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Foto</th>
+                                            <th>Nama</th>
+                                            <th>Role</th>
+                                            <th>Laning</th>
+                                            @foreach ($kriteria as $item)
+                                                <th>{{ $item->nama }}</th>
+                                            @endforeach
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+
+                        {{-- normalisasi jungle --}}
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Normalisasi Jungle</h3>
+                            </div>
+                            <div class="card-body">
+                                <table id="myTableNormalisasiJungle" class="table table-bordered table-hover">
+                                    <thead class="text-center">
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Foto</th>
+                                            <th>Nama</th>
+                                            <th>Role</th>
+                                            <th>Laning</th>
+                                            @foreach ($kriteria as $item)
+                                                <th>{{ $item->nama }}</th>
+                                            @endforeach
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+
                         <!-- /.card -->
                     </div>
                     <!-- /.col -->
@@ -150,12 +353,14 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
+
+                        {{-- pembobotan gold lane --}}
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Pembobotan</h3>
+                                <h3 class="card-title">Pembobotan Gold Lane</h3>
                             </div>
                             <div class="card-body">
-                                <table id="myTablePembobotan" class="table table-bordered table-hover">
+                                <table id="myTablePembobotanGoldLane" class="table table-bordered table-hover">
                                     <thead>
                                         <tr>
                                             <th>No</th>
@@ -174,6 +379,111 @@
                             </div>
                             <!-- /.card-body -->
                         </div>
+
+                        {{-- pembobotan mid lane --}}
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Pembobotan Mid Lane</h3>
+                            </div>
+                            <div class="card-body">
+                                <table id="myTablePembobotanMidLane" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Foto</th>
+                                            <th>Nama</th>
+                                            <th>Role</th>
+                                            <th>Laning</th>
+                                            @foreach ($kriteria as $item)
+                                                <th>{{ $item->nama }}</th>
+                                            @endforeach
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+
+                        {{-- pembobotan exp lane --}}
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Pembobotan EXP Lane</h3>
+                            </div>
+                            <div class="card-body">
+                                <table id="myTablePembobotanEXPLane" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Foto</th>
+                                            <th>Nama</th>
+                                            <th>Role</th>
+                                            <th>Laning</th>
+                                            @foreach ($kriteria as $item)
+                                                <th>{{ $item->nama }}</th>
+                                            @endforeach
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+
+                        {{-- pembobotan roam --}}
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Pembobotan Roam</h3>
+                            </div>
+                            <div class="card-body">
+                                <table id="myTablePembobotanRoam" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Foto</th>
+                                            <th>Nama</th>
+                                            <th>Role</th>
+                                            <th>Laning</th>
+                                            @foreach ($kriteria as $item)
+                                                <th>{{ $item->nama }}</th>
+                                            @endforeach
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+
+                        {{-- pembobotan jungle --}}
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Pembobotan Jungle</h3>
+                            </div>
+                            <div class="card-body">
+                                <table id="myTablePembobotanJungle" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Foto</th>
+                                            <th>Nama</th>
+                                            <th>Role</th>
+                                            <th>Laning</th>
+                                            @foreach ($kriteria as $item)
+                                                <th>{{ $item->nama }}</th>
+                                            @endforeach
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+
                         <!-- /.card -->
                     </div>
                     <!-- /.col -->
@@ -189,30 +499,44 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
+
+                        {{-- concordance gold lane --}}
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Himpunan Concordance</h3>
+                                <h3 class="card-title">Himpunan Concordance Gold Lane</h3>
                             </div>
                             <div class="card-body">
-                                <table id="myTableEncludean" class="table table-bordered table-hover">
+                                <table id="myTableConcordanceGoldLane" class="table table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <th>No</th>
-                                            <th>Foto</th>
-                                            <th>Nama</th>
-                                            <th>Role</th>
-                                            <th>Laning</th>
-                                            @foreach ($kriteria as $item)
+                                            <th>Nama Hero</th>
+                                            @foreach ($alternatif_gold_lane as $item)
                                                 <th>{{ $item->nama }}</th>
                                             @endforeach
                                         </tr>
                                     </thead>
                                     <tbody class="text-center">
+                                        {{-- @foreach ($tableData as $data)
+                                            <tr>
+                                                <td>{{ $data['nama_hero'] }}</td>
+                                                @foreach ($alternatif_gold_lane as $alternatif)
+                                                    <td>
+                                                        @foreach ($data['true_kriteria'][$alternatif->nama] as $true_kriteria)
+                                                            {{ $true_kriteria }}
+                                                            @if (!$loop->last)
+                                                                ,
+                                                            @endif
+                                                        @endforeach
+                                                    </td>
+                                                @endforeach
+                                            </tr>
+                                        @endforeach --}}
                                     </tbody>
                                 </table>
                             </div>
                             <!-- /.card-body -->
                         </div>
+
                         <!-- /.card -->
                     </div>
                     <!-- /.col -->
@@ -459,12 +783,17 @@
 
         <script>
             $(document).ready(function() {
-                $("#myTableAlternatif").DataTable({
+                $("#myTableGoldLane").DataTable({
                     processing: true,
                     ordering: true,
                     responsive: true,
                     serverSide: true,
-                    ajax: "{{ route('admin.perhitungan') }}",
+                    ajax: {
+                        url: '{{ route('admin.perhitungan') }}',
+                        data: {
+                            laning: 'Gold Lane'
+                        }
+                    },
                     columns: [{
                             data: 'DT_RowIndex',
                             name: 'DT_RowIndex'
@@ -506,12 +835,17 @@
                     }
                 });
 
-                $("#myTableNormalisasi").DataTable({
+                $("#myTableMidLane").DataTable({
                     processing: true,
                     ordering: true,
                     responsive: true,
                     serverSide: true,
-                    ajax: "{{ route('admin.perhitungan.normalisasi') }}",
+                    ajax: {
+                        url: '{{ route('admin.perhitungan') }}',
+                        data: {
+                            laning: 'Mid Lane'
+                        }
+                    },
                     columns: [{
                             data: 'DT_RowIndex',
                             name: 'DT_RowIndex'
@@ -553,12 +887,17 @@
                     }
                 });
 
-                $("#myTablePembobotan").DataTable({
+                $("#myTableEXPLane").DataTable({
                     processing: true,
                     ordering: true,
                     responsive: true,
                     serverSide: true,
-                    ajax: "{{ route('admin.perhitungan.pembobotan') }}",
+                    ajax: {
+                        url: '{{ route('admin.perhitungan') }}',
+                        data: {
+                            laning: 'EXP Lane'
+                        }
+                    },
                     columns: [{
                             data: 'DT_RowIndex',
                             name: 'DT_RowIndex'
@@ -598,6 +937,654 @@
                         $(row).attr('data-id', data.id);
                         $('td:eq(0)', row).html(dt.page.info().start + index + 1);
                     }
+                });
+
+                $("#myTableRoam").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.perhitungan') }}',
+                        data: {
+                            laning: 'Roam'
+                        }
+                    },
+                    columns: [{
+                            data: 'DT_RowIndex',
+                            name: 'DT_RowIndex'
+                        },
+                        {
+                            data: 'foto',
+                            name: 'foto',
+                            render: function(data) {
+                                return '<img src="{{ asset('storage') }}/' + data +
+                                    '" alt="" style="width: 50px; height: 50px;">';
+                            }
+                        },
+                        {
+                            data: 'nama',
+                            name: 'nama'
+                        },
+                        {
+                            data: 'role',
+                            name: 'role'
+                        },
+                        {
+                            data: 'laning',
+                            name: 'laning'
+                        },
+                        @foreach ($kriteria as $kriteriaItem)
+                            {
+                                data: 'subkriteria.{{ $kriteriaItem->nama }}',
+                                name: '{{ $kriteriaItem->nama }}',
+                                render: function(data) {
+                                    return data ? data : 'N/A';
+                                }
+                            },
+                        @endforeach
+                    ],
+                    rowCallback: function(row, data, index) {
+                        var dt = this.api();
+                        $(row).attr('data-id', data.id);
+                        $('td:eq(0)', row).html(dt.page.info().start + index + 1);
+                    }
+                });
+
+                $("#myTableJungle").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.perhitungan') }}',
+                        data: {
+                            laning: 'Jungle'
+                        }
+                    },
+                    columns: [{
+                            data: 'DT_RowIndex',
+                            name: 'DT_RowIndex'
+                        },
+                        {
+                            data: 'foto',
+                            name: 'foto',
+                            render: function(data) {
+                                return '<img src="{{ asset('storage') }}/' + data +
+                                    '" alt="" style="width: 50px; height: 50px;">';
+                            }
+                        },
+                        {
+                            data: 'nama',
+                            name: 'nama'
+                        },
+                        {
+                            data: 'role',
+                            name: 'role'
+                        },
+                        {
+                            data: 'laning',
+                            name: 'laning'
+                        },
+                        @foreach ($kriteria as $kriteriaItem)
+                            {
+                                data: 'subkriteria.{{ $kriteriaItem->nama }}',
+                                name: '{{ $kriteriaItem->nama }}',
+                                render: function(data) {
+                                    return data ? data : 'N/A';
+                                }
+                            },
+                        @endforeach
+                    ],
+                    rowCallback: function(row, data, index) {
+                        var dt = this.api();
+                        $(row).attr('data-id', data.id);
+                        $('td:eq(0)', row).html(dt.page.info().start + index + 1);
+                    }
+                });
+
+                $("#myTableNormalisasiGoldLane").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.perhitungan.normalisasi') }}',
+                        data: {
+                            laning: 'Gold Lane'
+                        }
+                    },
+                    columns: [{
+                            data: 'DT_RowIndex',
+                            name: 'DT_RowIndex'
+                        },
+                        {
+                            data: 'foto',
+                            name: 'foto',
+                            render: function(data) {
+                                return '<img src="{{ asset('storage') }}/' + data +
+                                    '" alt="" style="width: 50px; height: 50px;">';
+                            }
+                        },
+                        {
+                            data: 'nama',
+                            name: 'nama'
+                        },
+                        {
+                            data: 'role',
+                            name: 'role'
+                        },
+                        {
+                            data: 'laning',
+                            name: 'laning'
+                        },
+                        @foreach ($kriteria as $kriteriaItem)
+                            {
+                                data: 'subkriteria.{{ $kriteriaItem->nama }}',
+                                name: '{{ $kriteriaItem->nama }}',
+                                render: function(data) {
+                                    return data ? data : 'N/A';
+                                }
+                            },
+                        @endforeach
+                    ],
+                    rowCallback: function(row, data, index) {
+                        var dt = this.api();
+                        $(row).attr('data-id', data.id);
+                        $('td:eq(0)', row).html(dt.page.info().start + index + 1);
+                    }
+                });
+
+                $("#myTableNormalisasiMidLane").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.perhitungan.normalisasi') }}',
+                        data: {
+                            laning: 'Mid Lane'
+                        }
+                    },
+                    columns: [{
+                            data: 'DT_RowIndex',
+                            name: 'DT_RowIndex'
+                        },
+                        {
+                            data: 'foto',
+                            name: 'foto',
+                            render: function(data) {
+                                return '<img src="{{ asset('storage') }}/' + data +
+                                    '" alt="" style="width: 50px; height: 50px;">';
+                            }
+                        },
+                        {
+                            data: 'nama',
+                            name: 'nama'
+                        },
+                        {
+                            data: 'role',
+                            name: 'role'
+                        },
+                        {
+                            data: 'laning',
+                            name: 'laning'
+                        },
+                        @foreach ($kriteria as $kriteriaItem)
+                            {
+                                data: 'subkriteria.{{ $kriteriaItem->nama }}',
+                                name: '{{ $kriteriaItem->nama }}',
+                                render: function(data) {
+                                    return data ? data : 'N/A';
+                                }
+                            },
+                        @endforeach
+                    ],
+                    rowCallback: function(row, data, index) {
+                        var dt = this.api();
+                        $(row).attr('data-id', data.id);
+                        $('td:eq(0)', row).html(dt.page.info().start + index + 1);
+                    }
+                });
+
+                $("#myTableNormalisasiEXPLane").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.perhitungan.normalisasi') }}',
+                        data: {
+                            laning: 'EXP Lane'
+                        }
+                    },
+                    columns: [{
+                            data: 'DT_RowIndex',
+                            name: 'DT_RowIndex'
+                        },
+                        {
+                            data: 'foto',
+                            name: 'foto',
+                            render: function(data) {
+                                return '<img src="{{ asset('storage') }}/' + data +
+                                    '" alt="" style="width: 50px; height: 50px;">';
+                            }
+                        },
+                        {
+                            data: 'nama',
+                            name: 'nama'
+                        },
+                        {
+                            data: 'role',
+                            name: 'role'
+                        },
+                        {
+                            data: 'laning',
+                            name: 'laning'
+                        },
+                        @foreach ($kriteria as $kriteriaItem)
+                            {
+                                data: 'subkriteria.{{ $kriteriaItem->nama }}',
+                                name: '{{ $kriteriaItem->nama }}',
+                                render: function(data) {
+                                    return data ? data : 'N/A';
+                                }
+                            },
+                        @endforeach
+                    ],
+                    rowCallback: function(row, data, index) {
+                        var dt = this.api();
+                        $(row).attr('data-id', data.id);
+                        $('td:eq(0)', row).html(dt.page.info().start + index + 1);
+                    }
+                });
+
+                $("#myTableNormalisasiRoam").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.perhitungan.normalisasi') }}',
+                        data: {
+                            laning: 'Roam'
+                        }
+                    },
+                    columns: [{
+                            data: 'DT_RowIndex',
+                            name: 'DT_RowIndex'
+                        },
+                        {
+                            data: 'foto',
+                            name: 'foto',
+                            render: function(data) {
+                                return '<img src="{{ asset('storage') }}/' + data +
+                                    '" alt="" style="width: 50px; height: 50px;">';
+                            }
+                        },
+                        {
+                            data: 'nama',
+                            name: 'nama'
+                        },
+                        {
+                            data: 'role',
+                            name: 'role'
+                        },
+                        {
+                            data: 'laning',
+                            name: 'laning'
+                        },
+                        @foreach ($kriteria as $kriteriaItem)
+                            {
+                                data: 'subkriteria.{{ $kriteriaItem->nama }}',
+                                name: '{{ $kriteriaItem->nama }}',
+                                render: function(data) {
+                                    return data ? data : 'N/A';
+                                }
+                            },
+                        @endforeach
+                    ],
+                    rowCallback: function(row, data, index) {
+                        var dt = this.api();
+                        $(row).attr('data-id', data.id);
+                        $('td:eq(0)', row).html(dt.page.info().start + index + 1);
+                    }
+                });
+
+                $("#myTableNormalisasiJungle").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.perhitungan.normalisasi') }}',
+                        data: {
+                            laning: 'Jungle'
+                        }
+                    },
+                    columns: [{
+                            data: 'DT_RowIndex',
+                            name: 'DT_RowIndex'
+                        },
+                        {
+                            data: 'foto',
+                            name: 'foto',
+                            render: function(data) {
+                                return '<img src="{{ asset('storage') }}/' + data +
+                                    '" alt="" style="width: 50px; height: 50px;">';
+                            }
+                        },
+                        {
+                            data: 'nama',
+                            name: 'nama'
+                        },
+                        {
+                            data: 'role',
+                            name: 'role'
+                        },
+                        {
+                            data: 'laning',
+                            name: 'laning'
+                        },
+                        @foreach ($kriteria as $kriteriaItem)
+                            {
+                                data: 'subkriteria.{{ $kriteriaItem->nama }}',
+                                name: '{{ $kriteriaItem->nama }}',
+                                render: function(data) {
+                                    return data ? data : 'N/A';
+                                }
+                            },
+                        @endforeach
+                    ],
+                    rowCallback: function(row, data, index) {
+                        var dt = this.api();
+                        $(row).attr('data-id', data.id);
+                        $('td:eq(0)', row).html(dt.page.info().start + index + 1);
+                    }
+                });
+
+                $("#myTablePembobotanGoldLane").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.perhitungan.pembobotan') }}',
+                        data: {
+                            laning: 'Gold Lane'
+                        }
+                    },
+                    columns: [{
+                            data: 'DT_RowIndex',
+                            name: 'DT_RowIndex'
+                        },
+                        {
+                            data: 'foto',
+                            name: 'foto',
+                            render: function(data) {
+                                return '<img src="{{ asset('storage') }}/' + data +
+                                    '" alt="" style="width: 50px; height: 50px;">';
+                            }
+                        },
+                        {
+                            data: 'nama',
+                            name: 'nama'
+                        },
+                        {
+                            data: 'role',
+                            name: 'role'
+                        },
+                        {
+                            data: 'laning',
+                            name: 'laning'
+                        },
+                        @foreach ($kriteria as $kriteriaItem)
+                            {
+                                data: 'subkriteria.{{ $kriteriaItem->nama }}',
+                                name: '{{ $kriteriaItem->nama }}',
+                                render: function(data) {
+                                    return data ? data : 'N/A';
+                                }
+                            },
+                        @endforeach
+                    ],
+                    rowCallback: function(row, data, index) {
+                        var dt = this.api();
+                        $(row).attr('data-id', data.id);
+                        $('td:eq(0)', row).html(dt.page.info().start + index + 1);
+                    }
+                });
+
+                $("#myTablePembobotanMidLane").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.perhitungan.pembobotan') }}',
+                        data: {
+                            laning: 'Mid Lane'
+                        }
+                    },
+                    columns: [{
+                            data: 'DT_RowIndex',
+                            name: 'DT_RowIndex'
+                        },
+                        {
+                            data: 'foto',
+                            name: 'foto',
+                            render: function(data) {
+                                return '<img src="{{ asset('storage') }}/' + data +
+                                    '" alt="" style="width: 50px; height: 50px;">';
+                            }
+                        },
+                        {
+                            data: 'nama',
+                            name: 'nama'
+                        },
+                        {
+                            data: 'role',
+                            name: 'role'
+                        },
+                        {
+                            data: 'laning',
+                            name: 'laning'
+                        },
+                        @foreach ($kriteria as $kriteriaItem)
+                            {
+                                data: 'subkriteria.{{ $kriteriaItem->nama }}',
+                                name: '{{ $kriteriaItem->nama }}',
+                                render: function(data) {
+                                    return data ? data : 'N/A';
+                                }
+                            },
+                        @endforeach
+                    ],
+                    rowCallback: function(row, data, index) {
+                        var dt = this.api();
+                        $(row).attr('data-id', data.id);
+                        $('td:eq(0)', row).html(dt.page.info().start + index + 1);
+                    }
+                });
+
+                $("#myTablePembobotanEXPLane").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.perhitungan.pembobotan') }}',
+                        data: {
+                            laning: 'EXP Lane'
+                        }
+                    },
+                    columns: [{
+                            data: 'DT_RowIndex',
+                            name: 'DT_RowIndex'
+                        },
+                        {
+                            data: 'foto',
+                            name: 'foto',
+                            render: function(data) {
+                                return '<img src="{{ asset('storage') }}/' + data +
+                                    '" alt="" style="width: 50px; height: 50px;">';
+                            }
+                        },
+                        {
+                            data: 'nama',
+                            name: 'nama'
+                        },
+                        {
+                            data: 'role',
+                            name: 'role'
+                        },
+                        {
+                            data: 'laning',
+                            name: 'laning'
+                        },
+                        @foreach ($kriteria as $kriteriaItem)
+                            {
+                                data: 'subkriteria.{{ $kriteriaItem->nama }}',
+                                name: '{{ $kriteriaItem->nama }}',
+                                render: function(data) {
+                                    return data ? data : 'N/A';
+                                }
+                            },
+                        @endforeach
+                    ],
+                    rowCallback: function(row, data, index) {
+                        var dt = this.api();
+                        $(row).attr('data-id', data.id);
+                        $('td:eq(0)', row).html(dt.page.info().start + index + 1);
+                    }
+                });
+
+                $("#myTablePembobotanRoam").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.perhitungan.pembobotan') }}',
+                        data: {
+                            laning: 'Roam'
+                        }
+                    },
+                    columns: [{
+                            data: 'DT_RowIndex',
+                            name: 'DT_RowIndex'
+                        },
+                        {
+                            data: 'foto',
+                            name: 'foto',
+                            render: function(data) {
+                                return '<img src="{{ asset('storage') }}/' + data +
+                                    '" alt="" style="width: 50px; height: 50px;">';
+                            }
+                        },
+                        {
+                            data: 'nama',
+                            name: 'nama'
+                        },
+                        {
+                            data: 'role',
+                            name: 'role'
+                        },
+                        {
+                            data: 'laning',
+                            name: 'laning'
+                        },
+                        @foreach ($kriteria as $kriteriaItem)
+                            {
+                                data: 'subkriteria.{{ $kriteriaItem->nama }}',
+                                name: '{{ $kriteriaItem->nama }}',
+                                render: function(data) {
+                                    return data ? data : 'N/A';
+                                }
+                            },
+                        @endforeach
+                    ],
+                    rowCallback: function(row, data, index) {
+                        var dt = this.api();
+                        $(row).attr('data-id', data.id);
+                        $('td:eq(0)', row).html(dt.page.info().start + index + 1);
+                    }
+                });
+
+                $("#myTablePembobotanJungle").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.perhitungan.pembobotan') }}',
+                        data: {
+                            laning: 'Jungle'
+                        }
+                    },
+                    columns: [{
+                            data: 'DT_RowIndex',
+                            name: 'DT_RowIndex'
+                        },
+                        {
+                            data: 'foto',
+                            name: 'foto',
+                            render: function(data) {
+                                return '<img src="{{ asset('storage') }}/' + data +
+                                    '" alt="" style="width: 50px; height: 50px;">';
+                            }
+                        },
+                        {
+                            data: 'nama',
+                            name: 'nama'
+                        },
+                        {
+                            data: 'role',
+                            name: 'role'
+                        },
+                        {
+                            data: 'laning',
+                            name: 'laning'
+                        },
+                        @foreach ($kriteria as $kriteriaItem)
+                            {
+                                data: 'subkriteria.{{ $kriteriaItem->nama }}',
+                                name: '{{ $kriteriaItem->nama }}',
+                                render: function(data) {
+                                    return data ? data : 'N/A';
+                                }
+                            },
+                        @endforeach
+                    ],
+                    rowCallback: function(row, data, index) {
+                        var dt = this.api();
+                        $(row).attr('data-id', data.id);
+                        $('td:eq(0)', row).html(dt.page.info().start + index + 1);
+                    }
+                });
+
+                $("#myTableConcordanceGoldLane").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.perhitungan.concordance') }}',
+                        data: {
+                            laning: 'Gold Lane'
+                        }
+                    },
+                    columns: [{
+                            data: 'nama_hero',
+                            name: 'nama_hero'
+                        },
+                        {
+                            data: 'true_kriteria',
+                            render: function(data) {
+                                return data.join(', ');
+                            }
+                        }
+                    ]
                 });
 
                 $('.datatable-input').on('input', function() {

@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Alternatif;
 use App\Models\Analisa;
-use App\Models\DetailHero;
+use App\Models\DetailAlternatif;
 use App\Models\GameplayType;
-use App\Models\Hero;
 use App\Models\Kriteria;
 use App\Models\Subkriteria;
 use Illuminate\Http\Request;
@@ -27,16 +26,20 @@ class AlternatifController extends Controller
         $detailKriteria = Subkriteria::all();
         $gameplay = GameplayType::all();
 
-        if ($request->ajax()) {
-            $alternatif = Alternatif::with('hero')->get();
+        $laning = $request->get('laning');
+        $alternatif = Alternatif::with('detail_alternatif')
+            ->where('laning', $laning)
+            ->where('id_users', Auth::id())
+            ->get();
 
+        if ($request->ajax()) {
             $rowData = [];
+
             foreach ($alternatif as $row) {
-                $hero = $row->hero;
-                $detailHero = $hero->detail_hero;
+                $detailAlternatif = $row->detail_alternatif;
                 $subkriteriaData = [];
 
-                foreach ($detailHero as $detail) {
+                foreach ($detailAlternatif as $detail) {
                     $kriteria = Kriteria::find($detail->id_kriteria);
                     $subkriteria = Subkriteria::find($detail->id_subkriteria);
 
@@ -47,11 +50,11 @@ class AlternatifController extends Controller
 
                 $rowData[] = [
                     'DT_RowIndex' => $row->id_alternatif,
-                    'id_hero' => $hero->id_hero,
-                    'foto' => $hero->foto,
-                    'nama' => $hero->nama,
-                    'role' => $hero->role,
-                    'laning' => $hero->laning,
+                    'id_alternatif' => $row->id_alternatif,
+                    'foto' => $row->foto,
+                    'nama' => $row->nama,
+                    'role' => $row->role,
+                    'laning' => $row->laning,
                     'subkriteria' => $subkriteriaData
                 ];
             }
@@ -77,7 +80,7 @@ class AlternatifController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'foto' => 'required|image|mimes:jpeg,png,jpg,webp',
-            'nama' => 'required|unique:hero',
+            'nama' => 'required|unique:alternatif',
             'role' => 'required',
             'laning' => 'required',
         ]);
@@ -105,40 +108,41 @@ class AlternatifController extends Controller
                 $foto_path = $foto->store($file_path_foto, 'public');
             }
 
-            $alternatif = Alternatif::where('id_users', Auth::id())->with('hero')->get();
+            $alternatif = Alternatif::where('id_users', Auth::id())->get();
 
             $goldLane = $alternatif->filter(function ($item) {
-                return $item->hero->laning == 'Gold Lane';
+                return $item->laning == 'Gold Lane';
             })->count();
 
             $roam = $alternatif->filter(function ($item) {
-                return $item->hero->laning == 'Roam';
+                return $item->laning == 'Roam';
             })->count();
 
             $jungler = $alternatif->filter(function ($item) {
-                return $item->hero->laning == 'Jungle';
+                return $item->laning == 'Jungle';
             })->count();
 
             $midLane = $alternatif->filter(function ($item) {
-                return $item->hero->laning == 'Mid Lane';
+                return $item->laning == 'Mid Lane';
             })->count();
 
             $expLane = $alternatif->filter(function ($item) {
-                return $item->hero->laning == 'EXP Lane';
+                return $item->laning == 'EXP Lane';
             })->count();
 
             if ($goldLane >= 10 && $roam >= 10 && $jungler >= 10 && $midLane >= 10 && $expLane >= 10) {
-                throw new \Exception('Jumlah hero di setiap lane sudah maksimal.');
+                throw new \Exception('Jumlah alternatif di setiap laning sudah maksimal.');
             }
 
-            $hero = new Hero();
-            $hero->nama = $request->nama;
-            $hero->foto = $foto_path;
-            $hero->role = $request->role;
-            $hero->laning = $request->laning;
+            $alternatif = new Alternatif();
+            $alternatif->id_users = Auth::id();
+            $alternatif->nama = $request->nama;
+            $alternatif->foto = $foto_path;
+            $alternatif->role = $request->role;
+            $alternatif->laning = $request->laning;
 
-            if (!$hero->save()) {
-                throw new \Exception('Gagal menyimpan data hero. Silahkan coba kembali.');
+            if (!$alternatif->save()) {
+                throw new \Exception('Gagal menyimpan data alternatif. Silahkan coba kembali.');
             }
 
             foreach ($request->all() as $key => $value) {
@@ -146,25 +150,17 @@ class AlternatifController extends Controller
                     $kriteriaNama = str_replace('_', ' ', preg_replace("/_kriteria$/", "", $key));
                     $kriteria = Kriteria::where('nama', $kriteriaNama)->first();
                     if ($kriteria) {
-                        $detailHero = new DetailHero();
-                        $detailHero->id_hero = $hero->id_hero;
-                        $detailHero->id_kriteria = $kriteria->id_kriteria;
-                        $detailHero->id_subkriteria = $value;
-                        if (!$detailHero->save()) {
-                            throw new \Exception('Gagal menyimpan detail hero.');
+                        $detailAlternatif = new DetailAlternatif();
+                        $detailAlternatif->id_alternatif = $alternatif->id_alternatif;
+                        $detailAlternatif->id_kriteria = $kriteria->id_kriteria;
+                        $detailAlternatif->id_subkriteria = $value;
+                        if (!$detailAlternatif->save()) {
+                            throw new \Exception('Gagal menyimpan detail alternatif.');
                         }
                     } else {
                         throw new \Exception('Kriteria tidak ditemukan. Silahkan coba kembali.');
                     }
                 }
-            }
-
-            $alternatif = new Alternatif();
-            $alternatif->id_hero = $hero->id_hero;
-            $alternatif->id_users = Auth::id();
-
-            if (!$alternatif->save()) {
-                throw new \Exception('Gagal menyimpan data alternatif. Silahkan coba kembali.');
             }
 
             DB::commit();
@@ -214,19 +210,13 @@ class AlternatifController extends Controller
         try {
             $alternatif = Alternatif::find($request->id_alternatif);
 
-            if ($alternatif == null) {
-                throw new \Exception('Data kriteria masih kosong. Silahkan isi terlebih dahulu.');
+            if (!$alternatif) {
+                throw new \Exception('Alternatif tidak ditemukan. Silahkan coba kembali.');
             }
 
             DB::beginTransaction();
 
-            $hero = Hero::find($alternatif->id_hero);
-
-            if (!$hero) {
-                throw new \Exception('Hero tidak ditemukan. Silahkan coba kembali.');
-            }
-
-            $foto_path = $hero->foto;
+            $foto_path = $alternatif->foto;
             $file_path_foto = 'uploads/foto';
 
             if ($request->hasFile('foto')) {
@@ -238,24 +228,24 @@ class AlternatifController extends Controller
                 $foto_path = $foto->store($file_path_foto, 'public');
             }
 
-            $hero->nama = $request->nama;
-            $hero->foto = $foto_path;
-            $hero->role = $request->role;
-            $hero->laning = $request->laning;
+            $alternatif->nama = $request->nama;
+            $alternatif->foto = $foto_path;
+            $alternatif->role = $request->role;
+            $alternatif->laning = $request->laning;
 
-            if ($hero->save()) {
-                DetailHero::where('id_hero', $hero->id_hero)->delete();
+            if ($alternatif->save()) {
+                DetailAlternatif::where('id_hero', $alternatif->id_alternatif)->delete();
 
                 foreach ($request->all() as $key => $value) {
                     if (strpos($key, '_kriteria') !== false) {
                         $kriteriaNama = str_replace('_', ' ', preg_replace("/_kriteria$/", "", $key));
                         $kriteria = Kriteria::where('nama', $kriteriaNama)->first();
                         if ($kriteria) {
-                            $detailHero = new DetailHero();
-                            $detailHero->id_hero = $hero->id_hero;
-                            $detailHero->id_kriteria = $kriteria->id_kriteria;
-                            $detailHero->id_subkriteria = $value;
-                            if (!$detailHero->save()) {
+                            $detailAlternatif = new DetailAlternatif();
+                            $detailAlternatif->id_alternatif = $alternatif->id_alternatif;
+                            $detailAlternatif->id_kriteria = $kriteria->id_kriteria;
+                            $detailAlternatif->id_subkriteria = $value;
+                            if (!$detailAlternatif->save()) {
                                 throw new \Exception('Gagal menyimpan detail hero.');
                             }
                         } else {
@@ -282,10 +272,9 @@ class AlternatifController extends Controller
     public function destroy(string $id)
     {
         try {
-            $alternatif = Alternatif::find($id);
-            $hero = Hero::where('id_hero', $alternatif->id_hero)->first();
-            $hero->delete();
-            return response()->json(['message' => 'Data training berhasil dihapus'], 200);
+            $alternatif = Alternatif::where('id_alternatif', $id)->first();
+            $alternatif->delete();
+            return response()->json(['message' => 'Data alternatif berhasil dihapus'], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Terjadi kesalahan saat menghapus data'], 500);
         }

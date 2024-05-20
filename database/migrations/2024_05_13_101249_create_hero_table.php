@@ -11,8 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('hero', function (Blueprint $table) {
-            $table->id('id_hero');
+        Schema::create('alternatif', function (Blueprint $table) {
+            $table->id('id_alternatif');
+            $table->unsignedBigInteger('id_users')->required();
+            $table->foreign('id_users')->references('id_users')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->string('nama')->notNull();
             $table->string('foto')->notNull();
             $table->enum('role', ['Tank', 'Fighter', 'Assassin', 'Mage', 'Marksman', 'Support'])->notNull();

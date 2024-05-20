@@ -21,8 +21,8 @@ class Subkriteria extends Model
         return $this->belongsTo(Kriteria::class, 'id_kriteria', 'id_kriteria');
     }
 
-    public function detail_hero()
+    public function detail_alternatif()
     {
-        return $this->hasMany(DetailHero::class, 'id_subkriteria', 'id_subkriteria');
+        return $this->hasMany(DetailAlternatif::class, 'id_subkriteria', 'id_subkriteria');
     }
 }

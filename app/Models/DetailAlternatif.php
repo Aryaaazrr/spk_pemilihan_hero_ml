@@ -5,20 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class DetailHero extends Model
+class DetailAlternatif extends Model
 {
     use HasFactory;
-    protected $table = 'detail_hero';
-    protected $primaryKey = 'id';
+    protected $table = 'detail_alternatif';
+    protected $primaryKey = 'id_detail_alternatif';
     protected $guarded = [];
     protected $casts = [
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
 
-    public function hero()
+    public function alternatif()
     {
-        return $this->belongsTo(Hero::class, 'id_hero', 'id_hero');
+        return $this->belongsTo(Alternatif::class, 'id_alternatif', 'id_alternatif');
     }
 
     public function kriteria()
