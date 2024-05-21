@@ -509,10 +509,178 @@
                                 <table id="myTableConcordanceGoldLane" class="table table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <th>Nama Hero</th>
-                                            @foreach ($alternatif_gold_lane as $item)
+                                            {{-- <th>Nama Hero</th> --}}
+                                            <th>Alternatif 1</th>
+                                            <th>Alternatif 2</th>
+                                            <th>Kriteria yang Memenuhi</th>
+                                            {{-- @foreach ($alternatif_gold_lane as $item)
                                                 <th>{{ $item->nama }}</th>
-                                            @endforeach
+                                            @endforeach --}}
+
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                        {{-- @foreach ($tableData as $data)
+                                            <tr>
+                                                <td>{{ $data['nama_hero'] }}</td>
+                                                @foreach ($alternatif_gold_lane as $alternatif)
+                                                    <td>
+                                                        @foreach ($data['true_kriteria'][$alternatif->nama] as $true_kriteria)
+                                                            {{ $true_kriteria }}
+                                                            @if (!$loop->last)
+                                                                ,
+                                                            @endif
+                                                        @endforeach
+                                                    </td>
+                                                @endforeach
+                                            </tr>
+                                        @endforeach --}}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+
+                        {{-- concordance mid lane --}}
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Himpunan Concordance Mid Lane</h3>
+                            </div>
+                            <div class="card-body">
+                                <table id="myTableConcordanceMidLane" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            {{-- <th>Nama Hero</th> --}}
+                                            <th>Alternatif 1</th>
+                                            <th>Alternatif 2</th>
+                                            <th>Kriteria yang Memenuhi</th>
+                                            {{-- @foreach ($alternatif_gold_lane as $item)
+                                                <th>{{ $item->nama }}</th>
+                                            @endforeach --}}
+
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                        {{-- @foreach ($tableData as $data)
+                                            <tr>
+                                                <td>{{ $data['nama_hero'] }}</td>
+                                                @foreach ($alternatif_gold_lane as $alternatif)
+                                                    <td>
+                                                        @foreach ($data['true_kriteria'][$alternatif->nama] as $true_kriteria)
+                                                            {{ $true_kriteria }}
+                                                            @if (!$loop->last)
+                                                                ,
+                                                            @endif
+                                                        @endforeach
+                                                    </td>
+                                                @endforeach
+                                            </tr>
+                                        @endforeach --}}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+
+                        {{-- concordance exp lane --}}
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Himpunan Concordance EXP Lane</h3>
+                            </div>
+                            <div class="card-body">
+                                <table id="myTableConcordanceEXPLane" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            {{-- <th>Nama Hero</th> --}}
+                                            <th>Alternatif 1</th>
+                                            <th>Alternatif 2</th>
+                                            <th>Kriteria yang Memenuhi</th>
+                                            {{-- @foreach ($alternatif_gold_lane as $item)
+                                                <th>{{ $item->nama }}</th>
+                                            @endforeach --}}
+
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                        {{-- @foreach ($tableData as $data)
+                                            <tr>
+                                                <td>{{ $data['nama_hero'] }}</td>
+                                                @foreach ($alternatif_gold_lane as $alternatif)
+                                                    <td>
+                                                        @foreach ($data['true_kriteria'][$alternatif->nama] as $true_kriteria)
+                                                            {{ $true_kriteria }}
+                                                            @if (!$loop->last)
+                                                                ,
+                                                            @endif
+                                                        @endforeach
+                                                    </td>
+                                                @endforeach
+                                            </tr>
+                                        @endforeach --}}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+
+                        {{-- concordance roam --}}
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Himpunan Concordance Roam</h3>
+                            </div>
+                            <div class="card-body">
+                                <table id="myTableConcordanceRoam" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            {{-- <th>Nama Hero</th> --}}
+                                            <th>Alternatif 1</th>
+                                            <th>Alternatif 2</th>
+                                            <th>Kriteria yang Memenuhi</th>
+                                            {{-- @foreach ($alternatif_gold_lane as $item)
+                                                <th>{{ $item->nama }}</th>
+                                            @endforeach --}}
+
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                        {{-- @foreach ($tableData as $data)
+                                            <tr>
+                                                <td>{{ $data['nama_hero'] }}</td>
+                                                @foreach ($alternatif_gold_lane as $alternatif)
+                                                    <td>
+                                                        @foreach ($data['true_kriteria'][$alternatif->nama] as $true_kriteria)
+                                                            {{ $true_kriteria }}
+                                                            @if (!$loop->last)
+                                                                ,
+                                                            @endif
+                                                        @endforeach
+                                                    </td>
+                                                @endforeach
+                                            </tr>
+                                        @endforeach --}}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+
+                        {{-- concordance jungle --}}
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Himpunan Concordance Jungle</h3>
+                            </div>
+                            <div class="card-body">
+                                <table id="myTableConcordanceJungle" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            {{-- <th>Nama Hero</th> --}}
+                                            <th>Alternatif 1</th>
+                                            <th>Alternatif 2</th>
+                                            <th>Kriteria yang Memenuhi</th>
+                                            {{-- @foreach ($alternatif_gold_lane as $item)
+                                                <th>{{ $item->nama }}</th>
+                                            @endforeach --}}
+
                                         </tr>
                                     </thead>
                                     <tbody class="text-center">
@@ -557,17 +725,15 @@
                                 <h3 class="card-title">Himpunan Discordance</h3>
                             </div>
                             <div class="card-body">
-                                <table id="myTableKlasifikasi" class="table table-bordered table-hover">
+                                <table id="myTableConcordanceGoldLane" class="table table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <th>No</th>
-                                            <th>Foto</th>
-                                            <th>Nama</th>
-                                            <th>Role</th>
-                                            <th>Laning</th>
-                                            @foreach ($kriteria as $item)
+                                            <th>Alternatif 1</th>
+                                            <th>Alternatif 2</th>
+                                            <th>Kriteria yang Memenuhi</th>
+                                            {{-- @foreach ($kriteria as $item)
                                                 <th>{{ $item->nama }}</th>
-                                            @endforeach
+                                            @endforeach --}}
                                         </tr>
                                     </thead>
                                     <tbody class="text-center">
@@ -1575,14 +1741,120 @@
                         }
                     },
                     columns: [{
-                            data: 'nama_hero',
-                            name: 'nama_hero'
+                            data: 'alternatif_1',
+                            name: 'alternatif_1'
+                        },
+                        {
+                            data: 'alternatif_2',
+                            name: 'alternatif_2'
                         },
                         {
                             data: 'true_kriteria',
-                            render: function(data) {
-                                return data.join(', ');
-                            }
+                            name: 'true_kriteria'
+                        }
+                    ]
+                });
+
+                $("#myTableConcordanceMidLane").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.perhitungan.concordance') }}',
+                        data: {
+                            laning: 'Mid Lane'
+                        }
+                    },
+                    columns: [{
+                            data: 'alternatif_1',
+                            name: 'alternatif_1'
+                        },
+                        {
+                            data: 'alternatif_2',
+                            name: 'alternatif_2'
+                        },
+                        {
+                            data: 'true_kriteria',
+                            name: 'true_kriteria'
+                        }
+                    ]
+                });
+
+                $("#myTableConcordanceEXPLane").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.perhitungan.concordance') }}',
+                        data: {
+                            laning: 'EXP Lane'
+                        }
+                    },
+                    columns: [{
+                            data: 'alternatif_1',
+                            name: 'alternatif_1'
+                        },
+                        {
+                            data: 'alternatif_2',
+                            name: 'alternatif_2'
+                        },
+                        {
+                            data: 'true_kriteria',
+                            name: 'true_kriteria'
+                        }
+                    ]
+                });
+
+                $("#myTableConcordanceRoam").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.perhitungan.concordance') }}',
+                        data: {
+                            laning: 'Roam'
+                        }
+                    },
+                    columns: [{
+                            data: 'alternatif_1',
+                            name: 'alternatif_1'
+                        },
+                        {
+                            data: 'alternatif_2',
+                            name: 'alternatif_2'
+                        },
+                        {
+                            data: 'true_kriteria',
+                            name: 'true_kriteria'
+                        }
+                    ]
+                });
+
+                $("#myTableConcordanceJungle").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.perhitungan.concordance') }}',
+                        data: {
+                            laning: 'Jungle'
+                        }
+                    },
+                    columns: [{
+                            data: 'alternatif_1',
+                            name: 'alternatif_1'
+                        },
+                        {
+                            data: 'alternatif_2',
+                            name: 'alternatif_2'
+                        },
+                        {
+                            data: 'true_kriteria',
+                            name: 'true_kriteria'
                         }
                     ]
                 });

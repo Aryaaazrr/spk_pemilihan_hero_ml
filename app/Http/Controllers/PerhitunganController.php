@@ -310,35 +310,28 @@ class PerhitunganController extends Controller
 
         $weightedMatrix = $this->pembobotanNormalisasiMatrix($normalisasiMatrix, $weights);
 
-        $concordanceMatrix = $this->generateConcordanceSubset($weightedMatrix);
-
+        $concordanceMatrix = $this->calculateConcordanceMatrix($weightedMatrix);
+        // dd($concordanceMatrix);
         $rowData = [];
-        foreach ($alternatif as $alt) {
-            $rowData = [
-                'DT_RowIndex' => $alt->id_alternatif,
-                'nama_hero' => $alt->nama,
-                'true_kriteria' => [],
-            ];
+        foreach ($concordanceMatrix as $pair => $concordance) {
+            list($alt1, $alt2) = explode('-', $pair);
+            $trueKriteria = [];
 
-            foreach ($kriteria as $krit) {
-                $kriteriaIndex = $krit->id_kriteria - 1;
-                $trueKriteria = [];
-                foreach ($concordanceMatrix as $pair => $concordance) {
-                    list($a, $b) = explode('-', $pair);
-                    if ($a == $alt->id_alternatif) {
-                        $trueKriteria = [];
-                        foreach ($concordance as $kriteriaIndex => $isTrue) {
-                            if (isset($concordance[$kriteriaIndex]) && $concordance[$kriteriaIndex]) {
-                                $trueKriteria[] = $kriteria[$kriteriaIndex]->nama;
-                            }
-                        }
-                        $rowData['true_kriteria'] = $trueKriteria;
-                    }
+            foreach ($concordance as $kriteriaIndex => $isTrue) {
+                if ($isTrue) {
+                    $trueKriteria[] = $kriteria[$kriteriaIndex]->nama;
                 }
             }
-            $tableData[] = $rowData;
+
+            $rowData[] = [
+                'DT_RowIndex' => $pair,
+                'alternatif_1' => $alternatif[$alt1]->nama,
+                'alternatif_2' => $alternatif[$alt2]->nama,
+                'true_kriteria' => implode(', ', $trueKriteria),
+            ];
         }
-        return DataTables::of($tableData)->toJson();
+
+        return DataTables::of($rowData)->toJson();
     }
 
     private function normalisasiMatrix($matrix)
@@ -368,29 +361,30 @@ class PerhitunganController extends Controller
         return $weightedMatrix;
     }
 
-    private function generateConcordanceSubset($weightedMatrix)
+    public function calculateConcordanceMatrix($weightedMatrix)
     {
-        $concordanceSubset = [];
-        $n = count($weightedMatrix);
-        $kriteria = Kriteria::all();
+        $numAlternatives = count($weightedMatrix);
+        $concordanceMatrix = [];
 
-        for ($k = 0; $k < $n; $k++) {
-            for ($l = 0; $l < $n; $l++) {
-                if ($k != $l) {
-                    $concordance = [];
-
-                    foreach ($kriteria as $krit) {
-                        if ($weightedMatrix[$k][$krit->id_kriteria - 1] >= $weightedMatrix[$l][$krit->id_kriteria - 1]) {
-                            $concordance[] = $krit->nama;
-                        }
-                    }
-                    $concordanceSubset["$k-$l"] = $concordance;
+        for ($i = 0; $i < $numAlternatives; $i++) {
+            for ($j = 0; $j < $numAlternatives; $j++) {
+                if ($i != $j) {
+                    $concordanceMatrix["$i-$j"] = $this->calculateConcordance($weightedMatrix[$i], $weightedMatrix[$j]);
                 }
             }
         }
-        return $concordanceSubset;
+
+        return $concordanceMatrix;
     }
 
+    public function calculateConcordance($alternativeA, $alternativeB)
+    {
+        $concordanceValue = [];
+        foreach ($alternativeA as $index => $value) {
+            $concordanceValue[$index] = $value >= $alternativeB[$index];
+        }
+        return $concordanceValue;
+    }
 
     private function indexConcordanceSubset($concordanceSubset)
     {
