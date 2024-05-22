@@ -73,13 +73,30 @@ Route::middleware('auth')->group(function () {
     Route::group(['middleware' => 'users'], function () {
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-        Route::get('kriteria', [KriteriaController::class, 'index'])->name('kriteria');
-
-        Route::get('subkriteria', [SubkriteriaController::class, 'index'])->name('subkriteria');
-
         Route::get('alternatif', [AlternatifController::class, 'index'])->name('alternatif');
         Route::post('alternatif', [AlternatifController::class, 'store'])->name('training.store');
         Route::put('alternatif/update', [AlternatifController::class, 'update'])->name('training.update');
         Route::delete('alternatif/{id}', [AlternatifController::class, 'destroy'])->name('training.destroy');
+
+        Route::get('perhitungan', [PerhitunganController::class, 'index'])->name('perhitungan');
+        Route::post('perhitungan/add', [PerhitunganController::class, 'store'])->name('perhitungan.store');
+        Route::get('perhitungan/normalisasi', [PerhitunganController::class, 'normalisasi'])->name('perhitungan.normalisasi');
+        Route::get('perhitungan/pembobotan', [PerhitunganController::class, 'pembobotan'])->name('perhitungan.pembobotan');
+        Route::get('perhitungan/concordance', [PerhitunganController::class, 'concordance'])->name('perhitungan.concordance');
+        Route::get('perhitungan/discordance', [PerhitunganController::class, 'discordance'])->name('perhitungan.discordance');
+        Route::get('perhitungan/matrix-concordance', [PerhitunganController::class, 'matrixConcordance'])->name('perhitungan.matrix.concordance');
+        Route::get('perhitungan/matrix-discordance', [PerhitunganController::class, 'matrixDiscordance'])->name('perhitungan.matrix.discordance');
+        Route::get('perhitungan/matrix-dominance-concordance', [PerhitunganController::class, 'matrixDominanceConcordance'])->name('perhitungan.matrix.dominance.concordance');
+        Route::get('perhitungan/matrix-dominance-discordance', [PerhitunganController::class, 'matrixDominanceDiscordance'])->name('perhitungan.matrix.dominance.discordance');
+        Route::get('perhitungan/aggregate-matrix-dominance', [PerhitunganController::class, 'aggregateMatrixDominance'])->name('perhitungan.aggregate.matrix.dominance');
+
+        Route::get('hasil', [PerhitunganController::class, 'lessFavorable'])->name('hasil');
+        Route::get('hasil/export', [RiwayatAnalisaController::class, 'export'])->name('hasil.export');
+
+        Route::get('riwayat', [RiwayatAnalisaController::class, 'index'])->name('riwayat');
+        Route::get('riwayat/{id}', [RiwayatAnalisaController::class, 'show'])->name('riwayat.show');
+
+        Route::get('profile', [ProfileController::class, 'index'])->name('profile');
+        Route::put('profile/update', [ProfileController::class, 'update'])->name('profile.update');
     });
 });

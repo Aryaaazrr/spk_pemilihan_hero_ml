@@ -128,18 +128,6 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{ route('kriteria') }}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Kriteria</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('subkriteria') }}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>SubKriteria</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
                                 <a href="{{ route('alternatif') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Alternatif</p>
@@ -151,15 +139,36 @@
                         <a href="" class="nav-link">
                             <i class="nav-icon fas fa-chart-line"></i>
                             <p>
-                                Perhitungan
+                                Analisa
+                                <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('alternatif') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Data Alternatif</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('perhitungan') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Hasil Perhitungan</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('hasil') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Hasil Akhir</p>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                     <li class="nav-item">
-                        <a href="" class="nav-link">
+                        <a href="{{ route('riwayat') }}" class="nav-link">
                             <i class="nav-icon fas fa-book"></i>
                             <p>
-                                Hasil Akhir
+                                Riwayat Analisa
                             </p>
                         </a>
                     </li>
