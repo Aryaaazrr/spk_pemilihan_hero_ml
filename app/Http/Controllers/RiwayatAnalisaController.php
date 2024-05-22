@@ -10,15 +10,32 @@ use Dompdf\Dompdf;
 use Dompdf\Options;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Yajra\DataTables\DataTables;
 
 class RiwayatAnalisaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $riwayat = Analisa::where('id_users', Auth::id())->where('status', '1')->with('gameplay')->get();
+
+        if ($request->ajax()) {
+            $rowData = [];
+            foreach ($riwayat as $row) {
+                $gameplay = $row->gameplay;
+
+                $rowData[] = [
+                    'DT_RowIndex' => $row->id_analisa,
+                    'id_analisa' => $row->id_analisa,
+                    'gameplay' => $row->gameplay->nama
+                ];
+            }
+            return DataTables::of($rowData)->toJson();
+        }
+
+        return view('pages.riwayat.index');
     }
 
     /**
@@ -40,9 +57,46 @@ class RiwayatAnalisaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request, string $id)
     {
-        //
+        $analisa = Analisa::where('id_analisa', $id)->first();
+
+        if (!$analisa) {
+            return back()->withErrors(['error' => 'Riwayat Hasil analisa tidak ditemukan.']);
+        }
+
+        $gameplay = GameplayType::where('id_gameplay', $analisa->id_gameplay)->first();
+        $laning = $request->get('laning');
+        $cekAlternatif = Alternatif::where('id_users', Auth::id())->where('laning', $laning)->get();
+
+        $riwayat = RiwayatAnalisa::with(['alternatif', 'analisa'])
+            ->where('id_analisa', $analisa->id_analisa)
+            ->get();
+
+        if ($request->ajax()) {
+            $rowData = [];
+
+            foreach ($riwayat as $row) {
+                $alternatif = $cekAlternatif->where('id_alternatif', $row->id_alternatif)->first();
+
+                if ($alternatif) {
+                    $rowData[] = [
+                        'DT_RowIndex' => $row->id_alternatif,
+                        'id_alternatif' => $row->id_alternatif,
+                        'foto' => $alternatif->foto,
+                        'nama' => $alternatif->nama,
+                        'role' => $alternatif->role,
+                        'laning' => $alternatif->laning,
+                        'nilai' => $row->nilai,
+                        'rangking' => $row->rangking,
+                    ];
+                }
+            }
+
+            return DataTables::of($rowData)->toJson();
+        }
+
+        return view('pages.riwayat.show', ['gameplay' => $gameplay]);
     }
 
     /**

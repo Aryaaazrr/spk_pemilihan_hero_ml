@@ -79,7 +79,7 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a href="" class="nav-link">
+                        <a href="{{ route('admin.riwayat') }}" class="nav-link">
                             <i class="nav-icon fas fa-book"></i>
                             <p>
                                 Riwayat Analisa
@@ -88,7 +88,7 @@
                     </li>
                     <li class="nav-header">PENGATURAN</li>
                     <li class="nav-item">
-                        <a href="" class="nav-link">
+                        <a href="{{ route('admin.profile') }}" class="nav-link">
                             <i class="nav-icon fas fa-user"></i>
                             <p>
                                 Profile

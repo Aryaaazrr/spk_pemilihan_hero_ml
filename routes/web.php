@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KriteriaController;
 use App\Http\Controllers\PerhitunganController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RiwayatAnalisaController;
 use App\Http\Controllers\SubkriteriaController;
 use Illuminate\Support\Facades\Route;
@@ -61,6 +62,12 @@ Route::middleware('auth')->group(function () {
 
         Route::get('admin/hasil', [PerhitunganController::class, 'lessFavorable'])->name('admin.hasil');
         Route::get('admin/hasil/export', [RiwayatAnalisaController::class, 'export'])->name('admin.hasil.export');
+
+        Route::get('admin/riwayat', [RiwayatAnalisaController::class, 'index'])->name('admin.riwayat');
+        Route::get('admin/riwayat/{id}', [RiwayatAnalisaController::class, 'show'])->name('admin.riwayat.show');
+
+        Route::get('profile', [ProfileController::class, 'index'])->name('admin.profile');
+        Route::put('profile/update', [ProfileController::class, 'update'])->name('admin.profile.update');
     });
 
     Route::group(['middleware' => 'users'], function () {
