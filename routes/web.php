@@ -1,11 +1,11 @@
 <?php
 
 use App\Http\Controllers\AlternatifController;
-use App\Http\Controllers\AnalisaController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KriteriaController;
 use App\Http\Controllers\PerhitunganController;
+use App\Http\Controllers\RiwayatAnalisaController;
 use App\Http\Controllers\SubkriteriaController;
 use Illuminate\Support\Facades\Route;
 
@@ -60,6 +60,7 @@ Route::middleware('auth')->group(function () {
         Route::get('admin/perhitungan/aggregate-matrix-dominance', [PerhitunganController::class, 'aggregateMatrixDominance'])->name('admin.perhitungan.aggregate.matrix.dominance');
 
         Route::get('admin/hasil', [PerhitunganController::class, 'lessFavorable'])->name('admin.hasil');
+        Route::get('admin/hasil/export', [RiwayatAnalisaController::class, 'export'])->name('admin.hasil.export');
     });
 
     Route::group(['middleware' => 'users'], function () {

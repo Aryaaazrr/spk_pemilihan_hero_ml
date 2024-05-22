@@ -53,7 +53,7 @@ class PerhitunganController extends Controller
             return redirect()->route('admin.alternatif')->withErrors(['Lengkapi Data Alternatif dahulu. Setiap laning minimal 5 Hero.']);
         }
 
-        $analisa = Analisa::where('id_users', Auth::id())->first();
+        $analisa = Analisa::where('id_users', Auth::id())->where('status', '0')->first();
         if (!$analisa) {
             return redirect()->route('admin.alternatif')->withErrors(['Anda belum memulai analisa']);
         }
@@ -118,7 +118,7 @@ class PerhitunganController extends Controller
 
             DB::beginTransaction();
 
-            $analisa = Analisa::where('id_users', Auth::id())->first();
+            $analisa = Analisa::where('id_users', Auth::id())->where('status', '0')->first();
             if ($analisa) {
                 if ($analisa->delete()) {
                     $analisa = new Analisa();
@@ -161,16 +161,6 @@ class PerhitunganController extends Controller
                 throw new \Exception('Setiap laning minimal 5 Data Alternatif.');
             }
 
-            // foreach ($alternatif as $value) {
-            //     $riwayatAnalisa = new RiwayatAnalisa();
-            //     $riwayatAnalisa->id_analisa = $analisa->id_analisa;
-            //     $riwayatAnalisa->id_alternatif = $value->id_alternatif;
-
-            //     if (!$riwayatAnalisa->save()) {
-            //         throw new \Exception('Gagal menyimpan riwayat analisa.');
-            //     }
-            // }
-
             DB::commit();
 
             return redirect()->route('admin.perhitungan')->with('success', 'Data Hasil Perhitungan berhasil.');
@@ -179,52 +169,6 @@ class PerhitunganController extends Controller
             return back()->withErrors(['error' => $e->getMessage()]);
         }
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    // public function perhitungan(Request $request)
-    // {
-    //     $laning = $request->get('laning');
-    //     $alternatif = Alternatif::with('detail_alternatif')
-    //         ->where('laning', $laning)
-    //         ->where('id_users', Auth::id())
-    //         ->get();
-
-    //     $kriteria = Kriteria::all();
-
-    //     $matrix = [];
-    //     foreach ($alternatif as $alt) {
-    //         $row = [];
-    //         foreach ($kriteria as $krit) {
-    //             $detailAlternatif = $alt->detail_alternatif()->where('id_kriteria', $krit->id_kriteria)->first();
-    //             $subkriteria = Subkriteria::where('id_subkriteria', $detailAlternatif->id_subkriteria)->first();
-    //             $row[] = $subkriteria ? $subkriteria->nilai : 0;
-    //         }
-    //         $matrix[] = $row;
-    //     }
-
-    //     $normalisasiMatrix = $this->normalisasiMatrix($matrix);
-    //     $rowData = [];
-
-    //     foreach ($alternatif as $index => $hero) {
-    //         $subkriteriaData = [];
-    //         foreach ($kriteria as $kIndex => $krit) {
-    //             $subkriteriaData[$krit->nama] = $normalisasiMatrix[$index][$kIndex];
-    //         }
-    //         $rowData[] = [
-    //             'DT_RowIndex' => $index + 1,
-    //             'id_hero' => $hero->id_hero,
-    //             'foto' => $hero->foto,
-    //             'nama' => $hero->nama,
-    //             'role' => $hero->role,
-    //             'laning' => $hero->laning,
-    //             'subkriteria' => $subkriteriaData,
-    //         ];
-    //     }
-
-    //     return DataTables::of($rowData)->toJson();
-    // }
 
     private function getAlternatif($laning)
     {
@@ -236,7 +180,7 @@ class PerhitunganController extends Controller
 
     private function getAnalisa()
     {
-        return Analisa::where('id_users', Auth::id())->first();
+        return Analisa::where('id_users', Auth::id())->where('status', '0')->first();
     }
 
     private function getWeights($gameplay)
@@ -591,6 +535,7 @@ class PerhitunganController extends Controller
             return back()->withErrors(['error' => 'Hasil analisa tidak ditemukan.']);
         }
 
+        $gameplay = GameplayType::where('id_gameplay', $analisa->id_gameplay)->first();
         $laning = $request->get('laning');
         $cekAlternatif = Alternatif::where('id_users', Auth::id())->where('laning', $laning)->get();
 
@@ -621,7 +566,7 @@ class PerhitunganController extends Controller
             return DataTables::of($rowData)->toJson();
         }
 
-        return view('pages.hasil.index');
+        return view('pages.hasil.index', ['gameplay' => $gameplay]);
     }
 
 

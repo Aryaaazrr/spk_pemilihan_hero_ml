@@ -8,13 +8,11 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-md-6 col-sm-12 d-flex justify-content-start">
-                        <h1 class="m-0">Hasil Analisa</h1>
+                        <h1 class="m-0">Hasil Analisa Electre Strategi {{ $gameplay->nama }}</h1>
                     </div>
                     <div class="col-md-6 col-sm-12 d-flex justify-content-end">
                         <div class="card-tools">
-                            {{-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">
-                                <i class="fas fa-plus"></i> Analisa Ulang
-                            </button> --}}
+                            <a href="{{ route('admin.hasil.export') }}" class="btn btn-success">Cetak Analisa</a>
                         </div>
                     </div>
                 </div>

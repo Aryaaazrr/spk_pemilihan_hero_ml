@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreign('id_users')->references('id_users')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedBigInteger('id_gameplay');
             $table->foreign('id_gameplay')->references('id_gameplay')->on('gameplay_type')->onUpdate('cascade')->onDelete('cascade');
+            $table->enum('status', [0, 1])->default(0);
             $table->timestamps();
         });
     }
