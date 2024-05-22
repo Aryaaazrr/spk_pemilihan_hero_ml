@@ -43,62 +43,115 @@ class KriteriaController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'nama_kriteria' => 'required',
-            'keterangan_kriteria' => 'required',
-        ]);
+        if ($request->add_kriteria) {
+            $validator = Validator::make($request->all(), [
+                'nama_kriteria' => 'required',
+                'keterangan_kriteria' => 'required',
+            ]);
 
-        if ($validator->fails()) {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
-        }
-
-        try {
-            $jumlahDataGameplay = GameplayType::count();
-
-            if ($jumlahDataGameplay == 0) {
-                throw new \Exception('Data gameplay masih kosong. Silahkan isi terlebih dahulu.');
+            if ($validator->fails()) {
+                return redirect()->back()
+                    ->withErrors($validator)
+                    ->withInput();
             }
 
-            DB::beginTransaction();
+            try {
+                $jumlahDataGameplay = GameplayType::count();
 
-            $kriteria = new Kriteria();
-            $kriteria->nama = $request->nama_kriteria;
-            $kriteria->keterangan = $request->keterangan_kriteria;
+                if ($jumlahDataGameplay == 0) {
+                    throw new \Exception('Data gameplay masih kosong. Silahkan isi terlebih dahulu.');
+                }
 
-            if ($kriteria->save()) {
-                foreach ($request->all() as $key => $value) {
-                    if (strpos($key, '_bobot') !== false) {
-                        $gameplayNama = str_replace('_', ' ', preg_replace("/_bobot$/", "", $key));
-                        $gameplay = GameplayType::where('nama', $gameplayNama)->first();
-                        if ($gameplay) {
-                            $gameplayId = $gameplay->id_gameplay;
-                            $kriteriaId = $kriteria->id_kriteria;
-                            $bobot = $value;
+                DB::beginTransaction();
 
-                            $bobotKriteria = new BobotKriteria();
-                            $bobotKriteria->id_kriteria = $kriteriaId;
-                            $bobotKriteria->id_gameplay = $gameplayId;
-                            $bobotKriteria->bobot = $bobot;
-                            if (!$bobotKriteria->save()) {
-                                throw new \Exception('Gagal menyimpan bobot kriteria.');
+                $kriteria = new Kriteria();
+                $kriteria->nama = $request->nama_kriteria;
+                $kriteria->keterangan = $request->keterangan_kriteria;
+
+                if ($kriteria->save()) {
+                    foreach ($request->all() as $key => $value) {
+                        if (strpos($key, '_bobot') !== false) {
+                            $gameplayNama = str_replace('_', ' ', preg_replace("/_bobot$/", "", $key));
+                            $gameplay = GameplayType::where('nama', $gameplayNama)->first();
+                            if ($gameplay) {
+                                $gameplayId = $gameplay->id_gameplay;
+                                $kriteriaId = $kriteria->id_kriteria;
+                                $bobot = $value;
+
+                                $bobotKriteria = new BobotKriteria();
+                                $bobotKriteria->id_kriteria = $kriteriaId;
+                                $bobotKriteria->id_gameplay = $gameplayId;
+                                $bobotKriteria->bobot = $bobot;
+                                if (!$bobotKriteria->save()) {
+                                    throw new \Exception('Gagal menyimpan bobot kriteria.');
+                                }
+                            } else {
+                                throw new \Exception('Gameplay tidak ditemukan. Silahkan coba kembali.');
                             }
-                        } else {
-                            throw new \Exception('Gameplay tidak ditemukan. Silahkan coba kembali.');
                         }
                     }
+                } else {
+                    throw new \Exception('Gagal menyimpan data kriteria. Silahkan coba kembali.');
                 }
-            } else {
-                throw new \Exception('Gagal menyimpan data kriteria. Silahkan coba kembali.');
+
+                DB::commit();
+
+                return redirect()->route('admin.kriteria')->with('success', 'Data kriteria berhasil ditambahkan.');
+            } catch (\Exception $e) {
+                DB::rollback();
+                return back()->withErrors(['error' => $e->getMessage()]);
+            }
+        } else {
+            $validator = Validator::make($request->all(), [
+                'nama_gameplay' => 'required',
+            ]);
+
+            if ($validator->fails()) {
+                return redirect()->back()
+                    ->withErrors($validator)
+                    ->withInput();
             }
 
-            DB::commit();
+            try {
 
-            return redirect()->route('admin.kriteria')->with('success', 'Data kriteria berhasil ditambahkan.');
-        } catch (\Exception $e) {
-            DB::rollback();
-            return back()->withErrors(['error' => $e->getMessage()]);
+                DB::beginTransaction();
+
+                $gameplay = new GameplayType();
+                $gameplay->nama = $request->nama_gameplay;
+
+                if ($gameplay->save()) {
+                    foreach ($request->all() as $key => $value) {
+                        if (strpos($key, '_bobot') !== false) {
+                            $kriteriaNama = str_replace('_', ' ', preg_replace("/_bobot$/", "", $key));
+                            $kriteria = Kriteria::where('nama', $kriteriaNama)->first();
+                            if ($kriteria) {
+                                $kriteriaId = $kriteria->id_kriteria;
+                                $gameplayId = $gameplay->id_gameplay;
+                                $bobot = $value;
+
+                                $bobotKriteria = new BobotKriteria();
+                                $bobotKriteria->id_kriteria = $kriteriaId;
+                                $bobotKriteria->id_gameplay = $gameplayId;
+                                $bobotKriteria->bobot = $bobot;
+                                if (!$bobotKriteria->save()) {
+                                    throw new \Exception('Gagal menyimpan bobot kriteria.');
+                                }
+                            } else {
+                                throw new \Exception('Kriteria tidak ditemukan. Silahkan coba kembali.');
+                            }
+                        }
+                    }
+                } else {
+                    throw new \Exception('Gagal menyimpan data strategi. Silahkan coba kembali.');
+                }
+
+                DB::commit();
+
+                return redirect()->route('admin.kriteria')->with('success', 'Data strategi berhasil ditambahkan.');
+            } catch (\Exception $e) {
+                DB::rollback();
+                return back()->withErrors(['error' => $e->getMessage()]);
+            }
         }
     }
 
@@ -123,78 +176,130 @@ class KriteriaController extends Controller
      */
     public function update(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'id_gameplay' => 'required|exists:gameplay_type,id_gameplay',
-            'nama_gameplay' => 'required|string|max:255',
-            'nama_kriteria' => 'required|array',
-            'keterangan_kriteria' => 'required|array',
-        ]);
+        if ($request->id_gameplay) {
+            $validator = Validator::make($request->all(), [
+                'id_gameplay' => 'required|exists:gameplay_type,id_gameplay',
+                'nama_gameplay' => 'required|string|max:255'
+            ]);
 
-        if ($validator->fails()) {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
-        }
-
-        try {
-            DB::beginTransaction();
-
-            $gameplay = GameplayType::findOrFail($request->id_gameplay);
-            $gameplay->nama = $request->nama_gameplay;
-
-            if ($gameplay->save()) {
-                foreach ($request->nama_kriteria as $index => $namaKriteria) {
-                    $kriteria = Kriteria::where('nama', $namaKriteria)->first();
-                    if ($kriteria) {
-                        $kriteria->nama = $namaKriteria;
-                        $kriteria->keterangan = $request->keterangan_kriteria[$index];
-                        if ($kriteria->save()) {
-                            BobotKriteria::where('id_gameplay', $gameplay->id_gameplay)->delete();
-                        } else {
-                            throw new \Exception('Gagal menyimpan perubahan kriteria.');
-                        }
-                    } else {
-                        throw new \Exception('Gagal menyimpan data kriteria.');
-                    }
-                }
-                foreach ($request->all() as $key => $value) {
-                    if (strpos($key, '_bobot') !== false) {
-                        $kriteriaNama = str_replace('_', ' ', preg_replace("/_bobot$/", "", $key));
-                        $kriteria = Kriteria::where('nama', $kriteriaNama)->first();
-                        if ($kriteria) {
-                            $gameplayId = $gameplay->id_gameplay;
-                            $kriteriaId = $kriteria->id_kriteria;
-                            $bobot = $value;
-
-                            $bobotKriteria = new BobotKriteria();
-                            $bobotKriteria->id_kriteria = $kriteriaId;
-                            $bobotKriteria->id_gameplay = $gameplayId;
-                            $bobotKriteria->bobot = $bobot;
-                            if (!$bobotKriteria->save()) {
-                                throw new \Exception('Gagal menyimpan bobot kriteria.');
-                            }
-                        } else {
-                            throw new \Exception('Gameplay tidak ditemukan. Silahkan coba kembali.');
-                        }
-                    }
-                }
-            } else {
-                throw new \Exception('Gagal menyimpan nama strategi.');
+            if ($validator->fails()) {
+                return redirect()->back()
+                    ->withErrors($validator)
+                    ->withInput();
             }
 
-            DB::commit();
+            try {
+                DB::beginTransaction();
 
-            return redirect()->route('admin.kriteria')->with('success', 'Data kriteria berhasil diperbarui.');
-        } catch (\Exception $e) {
-            DB::rollback();
-            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+                $gameplay = GameplayType::findOrFail($request->id_gameplay);
+                $gameplay->nama = $request->nama_gameplay;
+
+                if ($gameplay->save()) {
+                    BobotKriteria::where('id_gameplay', $gameplay->id_gameplay)->delete();
+                    foreach ($request->all() as $key => $value) {
+                        if (strpos($key, '_bobot') !== false) {
+                            $kriteriaNama = str_replace('_', ' ', preg_replace("/_bobot$/", "", $key));
+                            $kriteria = Kriteria::where('nama', $kriteriaNama)->first();
+                            if ($kriteria) {
+                                $gameplayId = $gameplay->id_gameplay;
+                                $kriteriaId = $kriteria->id_kriteria;
+                                $bobot = $value;
+
+                                $bobotKriteria = new BobotKriteria();
+                                $bobotKriteria->id_kriteria = $kriteriaId;
+                                $bobotKriteria->id_gameplay = $gameplayId;
+                                $bobotKriteria->bobot = $bobot;
+                                if (!$bobotKriteria->save()) {
+                                    throw new \Exception('Gagal menyimpan bobot kriteria.');
+                                }
+                            } else {
+                                throw new \Exception('Gameplay tidak ditemukan. Silahkan coba kembali.');
+                            }
+                        }
+                    }
+                } else {
+                    throw new \Exception('Gagal menyimpan nama strategi.');
+                }
+
+                DB::commit();
+
+                return redirect()->route('admin.kriteria')->with('success', 'Data strategi berhasil diperbarui.');
+            } catch (\Exception $e) {
+                DB::rollback();
+                return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+            }
+        } else {
+            $validator = Validator::make($request->all(), [
+                'id_kriteria' => 'required|exists:kriteria,id_kriteria',
+                'nama_kriteria' => 'required|string|max:255',
+                'keterangan' => 'required|string|max:255'
+            ]);
+
+            if ($validator->fails()) {
+                return redirect()->back()
+                    ->withErrors($validator)
+                    ->withInput();
+            }
+
+            try {
+                DB::beginTransaction();
+
+                $kriteria = Kriteria::findOrFail($request->id_kriteria);
+                $kriteria->nama = $request->nama_kriteria;
+                $kriteria->keterangan = $request->keterangan;
+
+                if ($kriteria->save()) {
+                    BobotKriteria::where('id_kriteria', $kriteria->id_kriteria)->delete();
+                    foreach ($request->all() as $key => $value) {
+                        if (strpos($key, '_bobot') !== false) {
+                            $gameplayNama = str_replace('_', ' ', preg_replace("/_bobot$/", "", $key));
+                            $gameplay = GameplayType::where('nama', $gameplayNama)->first();
+                            if ($gameplay) {
+                                $gameplayId = $gameplay->id_gameplay;
+                                $kriteriaId = $kriteria->id_kriteria;
+                                $bobot = $value;
+
+                                $bobotKriteria = new BobotKriteria();
+                                $bobotKriteria->id_kriteria = $kriteriaId;
+                                $bobotKriteria->id_gameplay = $gameplayId;
+                                $bobotKriteria->bobot = $bobot;
+                                if (!$bobotKriteria->save()) {
+                                    throw new \Exception('Gagal menyimpan bobot kriteria.');
+                                }
+                            } else {
+                                throw new \Exception('Strategi tidak ditemukan. Silahkan coba kembali.');
+                            }
+                        }
+                    }
+                } else {
+                    throw new \Exception('Gagal menyimpan nama kriteria.');
+                }
+
+                DB::commit();
+
+                return redirect()->route('admin.kriteria')->with('success', 'Data kriteria berhasil diperbarui.');
+            } catch (\Exception $e) {
+                DB::rollback();
+                return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+            }
         }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroyStrategi(string $id)
+    {
+        try {
+            $gameplay = GameplayType::findOrFail($id);
+            $gameplay->delete();
+            return response()->json(['message' => 'Data gameplay berhasil dihapus'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Terjadi kesalahan saat menghapus data'], 500);
+        }
+    }
+
+    public function destroyKriteria(string $id)
     {
         try {
             $kriteria = Kriteria::findOrFail($id);

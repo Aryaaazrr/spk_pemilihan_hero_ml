@@ -34,7 +34,8 @@ Route::middleware('auth')->group(function () {
         Route::get('admin/kriteria', [KriteriaController::class, 'index'])->name('admin.kriteria');
         Route::post('admin/kriteria', [KriteriaController::class, 'store'])->name('admin.kriteria.store');
         Route::put('admin/kriteria/update', [KriteriaController::class, 'update'])->name('admin.kriteria.update');
-        Route::delete('admin/kriteria/{id}', [KriteriaController::class, 'destroy'])->name('admin.kriteria.destroy');
+        Route::delete('admin/kriteria/{id}', [KriteriaController::class, 'destroyKriteria'])->name('admin.kriteria.destroy');
+        Route::delete('admin/gameplay/{id}', [KriteriaController::class, 'destroyStrategi'])->name('admin.gameplay.destroy');
 
         Route::get('admin/subkriteria', [SubkriteriaController::class, 'index'])->name('admin.subkriteria');
         Route::post('admin/subkriteria', [SubkriteriaController::class, 'store'])->name('admin.subkriteria.store');
