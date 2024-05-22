@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_users')->required();
             $table->foreign('id_users')->references('id_users')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->string('nama')->notNull();
-            $table->string('foto')->notNull();
+            $table->string('foto')->nullable();
             $table->enum('role', ['Tank', 'Fighter', 'Assassin', 'Mage', 'Marksman', 'Support'])->notNull();
             $table->enum('laning', ['Roam', 'Jungle', 'Gold Lane', 'EXP Lane', 'Mid Lane'])->notNull();
             $table->timestamps();

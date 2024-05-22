@@ -16,6 +16,8 @@ return new class extends Migration
             $table->foreign('id_analisa')->references('id_analisa')->on('analisa')->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedBigInteger('id_alternatif');
             $table->foreign('id_alternatif')->references('id_alternatif')->on('alternatif')->onUpdate('cascade')->onDelete('cascade');
+            $table->float('nilai');
+            $table->integer('rangking');
             $table->timestamps();
         });
     }

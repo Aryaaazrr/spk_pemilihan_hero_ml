@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreign('id_alternatif')->references('id_alternatif')->on('alternatif')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedBigInteger('id_kriteria')->required();
             $table->foreign('id_kriteria')->references('id_kriteria')->on('kriteria')->onDelete('cascade')->onUpdate('cascade');
-            $table->unsignedBigInteger('id_subkriteria')->required();
+            $table->unsignedBigInteger('id_subkriteria')->nullable();
             $table->foreign('id_subkriteria')->references('id_subkriteria')->on('subkriteria')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });

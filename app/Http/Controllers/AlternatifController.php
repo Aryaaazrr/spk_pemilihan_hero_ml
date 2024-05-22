@@ -234,7 +234,7 @@ class AlternatifController extends Controller
             $alternatif->laning = $request->laning;
 
             if ($alternatif->save()) {
-                DetailAlternatif::where('id_hero', $alternatif->id_alternatif)->delete();
+                DetailAlternatif::where('id_alternatif', $alternatif->id_alternatif)->delete();
 
                 foreach ($request->all() as $key => $value) {
                     if (strpos($key, '_kriteria') !== false) {

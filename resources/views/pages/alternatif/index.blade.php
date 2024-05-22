@@ -427,8 +427,12 @@
                         data: 'foto',
                         name: 'foto',
                         render: function(data) {
-                            return '<img src="{{ asset('storage') }}/' + data +
-                                '" alt="" style="width: 50px; height: 50px;">';
+                            if (data == '') {
+                                return '<img src="{{ asset('dist/img/LOGO POLITEKNIK NEGERI  JEMBER.png') }}" alt="" style="width: 50px; height: 50px;">';
+                            } else {
+                                return '<img src="{{ asset('storage') }}/' + data +
+                                    '" alt="" style="width: 50px; height: 50px;">';
+                            }
                         }
                     },
                     {
@@ -501,8 +505,12 @@
                         data: 'foto',
                         name: 'foto',
                         render: function(data) {
-                            return '<img src="{{ asset('storage') }}/' + data +
-                                '" alt="" style="width: 50px; height: 50px;">';
+                            if (data == '') {
+                                return '<img src="{{ asset('dist/img/LOGO POLITEKNIK NEGERI  JEMBER.png') }}" alt="" style="width: 50px; height: 50px;">';
+                            } else {
+                                return '<img src="{{ asset('storage') }}/' + data +
+                                    '" alt="" style="width: 50px; height: 50px;">';
+                            }
                         }
                     },
                     {
@@ -575,8 +583,12 @@
                         data: 'foto',
                         name: 'foto',
                         render: function(data) {
-                            return '<img src="{{ asset('storage') }}/' + data +
-                                '" alt="" style="width: 50px; height: 50px;">';
+                            if (data == '') {
+                                return '<img src="{{ asset('dist/img/LOGO POLITEKNIK NEGERI  JEMBER.png') }}" alt="" style="width: 50px; height: 50px;">';
+                            } else {
+                                return '<img src="{{ asset('storage') }}/' + data +
+                                    '" alt="" style="width: 50px; height: 50px;">';
+                            }
                         }
                     },
                     {
@@ -649,8 +661,12 @@
                         data: 'foto',
                         name: 'foto',
                         render: function(data) {
-                            return '<img src="{{ asset('storage') }}/' + data +
-                                '" alt="" style="width: 50px; height: 50px;">';
+                            if (data == '') {
+                                return '<img src="{{ asset('dist/img/LOGO POLITEKNIK NEGERI  JEMBER.png') }}" alt="" style="width: 50px; height: 50px;">';
+                            } else {
+                                return '<img src="{{ asset('storage') }}/' + data +
+                                    '" alt="" style="width: 50px; height: 50px;">';
+                            }
                         }
                     },
                     {
@@ -723,8 +739,12 @@
                         data: 'foto',
                         name: 'foto',
                         render: function(data) {
-                            return '<img src="{{ asset('storage') }}/' + data +
-                                '" alt="" style="width: 50px; height: 50px;">';
+                            if (data == '') {
+                                return '<img src="{{ asset('dist/img/LOGO POLITEKNIK NEGERI  JEMBER.png') }}" alt="" style="width: 50px; height: 50px;">';
+                            } else {
+                                return '<img src="{{ asset('storage') }}/' + data +
+                                    '" alt="" style="width: 50px; height: 50px;">';
+                            }
                         }
                     },
                     {

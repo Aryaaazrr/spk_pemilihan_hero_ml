@@ -51,6 +51,14 @@ Route::middleware('auth')->group(function () {
         Route::get('admin/perhitungan/normalisasi', [PerhitunganController::class, 'normalisasi'])->name('admin.perhitungan.normalisasi');
         Route::get('admin/perhitungan/pembobotan', [PerhitunganController::class, 'pembobotan'])->name('admin.perhitungan.pembobotan');
         Route::get('admin/perhitungan/concordance', [PerhitunganController::class, 'concordance'])->name('admin.perhitungan.concordance');
+        Route::get('admin/perhitungan/discordance', [PerhitunganController::class, 'discordance'])->name('admin.perhitungan.discordance');
+        Route::get('admin/perhitungan/matrix-concordance', [PerhitunganController::class, 'matrixConcordance'])->name('admin.perhitungan.matrix.concordance');
+        Route::get('admin/perhitungan/matrix-discordance', [PerhitunganController::class, 'matrixDiscordance'])->name('admin.perhitungan.matrix.discordance');
+        Route::get('admin/perhitungan/matrix-dominance-concordance', [PerhitunganController::class, 'matrixDominanceConcordance'])->name('admin.perhitungan.matrix.dominance.concordance');
+        Route::get('admin/perhitungan/matrix-dominance-discordance', [PerhitunganController::class, 'matrixDominanceDiscordance'])->name('admin.perhitungan.matrix.dominance.discordance');
+        Route::get('admin/perhitungan/aggregate-matrix-dominance', [PerhitunganController::class, 'aggregateMatrixDominance'])->name('admin.perhitungan.aggregate.matrix.dominance');
+
+        Route::get('admin/hasil', [PerhitunganController::class, 'lessFavorable'])->name('admin.hasil');
     });
 
     Route::group(['middleware' => 'users'], function () {

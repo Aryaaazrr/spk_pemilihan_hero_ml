@@ -720,12 +720,14 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
+
+                        {{-- discordance gold lane --}}
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Himpunan Discordance</h3>
+                                <h3 class="card-title">Himpunan Discordance Gold Lane</h3>
                             </div>
                             <div class="card-body">
-                                <table id="myTableConcordanceGoldLane" class="table table-bordered table-hover">
+                                <table id="myTableDiscordanceGoldLane" class="table table-bordered table-hover">
                                     <thead>
                                         <tr>
                                             <th>Alternatif 1</th>
@@ -742,6 +744,103 @@
                             </div>
                             <!-- /.card-body -->
                         </div>
+
+                        {{-- discordance mid lane --}}
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Himpunan Discordance Mid Lane</h3>
+                            </div>
+                            <div class="card-body">
+                                <table id="myTableDiscordanceMidLane" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Alternatif 1</th>
+                                            <th>Alternatif 2</th>
+                                            <th>Kriteria yang Memenuhi</th>
+                                            {{-- @foreach ($kriteria as $item)
+                                                <th>{{ $item->nama }}</th>
+                                            @endforeach --}}
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+
+                        {{-- discordance exp lane --}}
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Himpunan Discordance EXP Lane</h3>
+                            </div>
+                            <div class="card-body">
+                                <table id="myTableDiscordanceEXPLane" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Alternatif 1</th>
+                                            <th>Alternatif 2</th>
+                                            <th>Kriteria yang Memenuhi</th>
+                                            {{-- @foreach ($kriteria as $item)
+                                                <th>{{ $item->nama }}</th>
+                                            @endforeach --}}
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+
+                        {{-- discordance roam --}}
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Himpunan Discordance Roam</h3>
+                            </div>
+                            <div class="card-body">
+                                <table id="myTableDiscordanceRoam" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Alternatif 1</th>
+                                            <th>Alternatif 2</th>
+                                            <th>Kriteria yang Memenuhi</th>
+                                            {{-- @foreach ($kriteria as $item)
+                                                <th>{{ $item->nama }}</th>
+                                            @endforeach --}}
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+
+                        {{-- discordance jungle --}}
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Himpunan Discordance Jungle</h3>
+                            </div>
+                            <div class="card-body">
+                                <table id="myTableDiscordanceJungle" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Alternatif 1</th>
+                                            <th>Alternatif 2</th>
+                                            <th>Kriteria yang Memenuhi</th>
+                                            {{-- @foreach ($kriteria as $item)
+                                                <th>{{ $item->nama }}</th>
+                                            @endforeach --}}
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+
                         <!-- /.card -->
                     </div>
                     <!-- /.col -->
@@ -757,22 +856,22 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
+
+                        {{-- gold lane --}}
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Matriks Concordance</h3>
+                                <h3 class="card-title">Matriks Concordance Gold Lane</h3>
                             </div>
                             <div class="card-body">
-                                <table id="myTableKlasifikasi" class="table table-bordered table-hover">
+                                <table id="myTableMatrixConcordanceGoldLane" class="table table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <th>No</th>
-                                            <th>Foto</th>
-                                            <th>Nama</th>
-                                            <th>Role</th>
-                                            <th>Laning</th>
-                                            @foreach ($kriteria as $item)
-                                                <th>{{ $item->nama }}</th>
-                                            @endforeach
+                                            <th>Alternatif 1</th>
+                                            <th>Alternatif 2</th>
+                                            <th>Hasil</th>
+                                            {{-- @foreach ($alternatif_gold_lane as $item)
+                                                <th>{{ $item->nama_hero }}</th>
+                                            @endforeach --}}
                                         </tr>
                                     </thead>
                                     <tbody class="text-center">
@@ -781,6 +880,103 @@
                             </div>
                             <!-- /.card-body -->
                         </div>
+
+                        {{-- mid lane --}}
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Matriks Concordance Mid Lane</h3>
+                            </div>
+                            <div class="card-body">
+                                <table id="myTableMatrixConcordanceMidLane" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Alternatif 1</th>
+                                            <th>Alternatif 2</th>
+                                            <th>Hasil</th>
+                                            {{-- @foreach ($alternatif_gold_lane as $item)
+                                                <th>{{ $item->nama_hero }}</th>
+                                            @endforeach --}}
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+
+                        {{-- exp lane --}}
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Matriks Concordance EXP Lane</h3>
+                            </div>
+                            <div class="card-body">
+                                <table id="myTableMatrixConcordanceEXPLane" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Alternatif 1</th>
+                                            <th>Alternatif 2</th>
+                                            <th>Hasil</th>
+                                            {{-- @foreach ($alternatif_gold_lane as $item)
+                                                <th>{{ $item->nama_hero }}</th>
+                                            @endforeach --}}
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+
+                        {{-- roam --}}
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Matriks Concordance Roam</h3>
+                            </div>
+                            <div class="card-body">
+                                <table id="myTableMatrixConcordanceRoam" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Alternatif 1</th>
+                                            <th>Alternatif 2</th>
+                                            <th>Hasil</th>
+                                            {{-- @foreach ($alternatif_gold_lane as $item)
+                                                <th>{{ $item->nama_hero }}</th>
+                                            @endforeach --}}
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+
+                        {{-- jungle --}}
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Matriks Concordance Jungle</h3>
+                            </div>
+                            <div class="card-body">
+                                <table id="myTableMatrixConcordanceJungle" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Alternatif 1</th>
+                                            <th>Alternatif 2</th>
+                                            <th>Hasil</th>
+                                            {{-- @foreach ($alternatif_gold_lane as $item)
+                                                <th>{{ $item->nama_hero }}</th>
+                                            @endforeach --}}
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+
                         <!-- /.card -->
                     </div>
                     <!-- /.col -->
@@ -796,22 +992,19 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
+
+                        {{-- gold lane --}}
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Matriks Discordance</h3>
+                                <h3 class="card-title">Matriks Discordance Gold Lane</h3>
                             </div>
                             <div class="card-body">
-                                <table id="myTableKlasifikasi" class="table table-bordered table-hover">
+                                <table id="myTableMatrixDiscordanceGoldLane" class="table table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <th>No</th>
-                                            <th>Foto</th>
-                                            <th>Nama</th>
-                                            <th>Role</th>
-                                            <th>Laning</th>
-                                            @foreach ($kriteria as $item)
-                                                <th>{{ $item->nama }}</th>
-                                            @endforeach
+                                            <th>Alternatif 1</th>
+                                            <th>Alternatif 2</th>
+                                            <th>Hasil</th>
                                         </tr>
                                     </thead>
                                     <tbody class="text-center">
@@ -820,6 +1013,91 @@
                             </div>
                             <!-- /.card-body -->
                         </div>
+
+                        {{-- mid lane --}}
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Matriks Discordance Mid Lane</h3>
+                            </div>
+                            <div class="card-body">
+                                <table id="myTableMatrixDiscordanceMidLane" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Alternatif 1</th>
+                                            <th>Alternatif 2</th>
+                                            <th>Hasil</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+
+                        {{-- exp lane --}}
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Matriks Discordance EXP Lane</h3>
+                            </div>
+                            <div class="card-body">
+                                <table id="myTableMatrixDiscordanceEXPLane" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Alternatif 1</th>
+                                            <th>Alternatif 2</th>
+                                            <th>Hasil</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+
+                        {{-- roam --}}
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Matriks Discordance Roam</h3>
+                            </div>
+                            <div class="card-body">
+                                <table id="myTableMatrixDiscordanceRoam" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Alternatif 1</th>
+                                            <th>Alternatif 2</th>
+                                            <th>Hasil</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+
+                        {{-- jungle --}}
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Matriks Discordance Jungle</h3>
+                            </div>
+                            <div class="card-body">
+                                <table id="myTableMatrixDiscordanceJungle" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Alternatif 1</th>
+                                            <th>Alternatif 2</th>
+                                            <th>Hasil</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+
                         <!-- /.card -->
                     </div>
                     <!-- /.col -->
@@ -835,22 +1113,20 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
+
+                        {{-- gold lane --}}
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Matriks Dominan Concordance</h3>
+                                <h3 class="card-title">Matriks Dominan Concordance Gold Lane</h3>
                             </div>
                             <div class="card-body">
-                                <table id="myTableKlasifikasi" class="table table-bordered table-hover">
+                                <table id="myTableMatrixDominanceConcordanceGoldLane"
+                                    class="table table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <th>No</th>
-                                            <th>Foto</th>
-                                            <th>Nama</th>
-                                            <th>Role</th>
-                                            <th>Laning</th>
-                                            @foreach ($kriteria as $item)
-                                                <th>{{ $item->nama }}</th>
-                                            @endforeach
+                                            <th>Alternatif 1</th>
+                                            <th>Alternatif 2</th>
+                                            <th>Hasil</th>
                                         </tr>
                                     </thead>
                                     <tbody class="text-center">
@@ -859,6 +1135,95 @@
                             </div>
                             <!-- /.card-body -->
                         </div>
+
+                        {{-- mid lane --}}
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Matriks Dominan Concordance Mid Lane</h3>
+                            </div>
+                            <div class="card-body">
+                                <table id="myTableMatrixDominanceConcordanceMidLane"
+                                    class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Alternatif 1</th>
+                                            <th>Alternatif 2</th>
+                                            <th>Hasil</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+
+                        {{-- exp lane --}}
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Matriks Dominan Concordance EXP Lane</h3>
+                            </div>
+                            <div class="card-body">
+                                <table id="myTableMatrixDominanceConcordanceEXPLane"
+                                    class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Alternatif 1</th>
+                                            <th>Alternatif 2</th>
+                                            <th>Hasil</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+
+                        {{-- roam --}}
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Matriks Dominan Concordance Roam</h3>
+                            </div>
+                            <div class="card-body">
+                                <table id="myTableMatrixDominanceConcordanceRoam"
+                                    class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Alternatif 1</th>
+                                            <th>Alternatif 2</th>
+                                            <th>Hasil</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+
+                        {{-- jungle --}}
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Matriks Dominan Concordance Jungle</h3>
+                            </div>
+                            <div class="card-body">
+                                <table id="myTableMatrixDominanceConcordanceJungle"
+                                    class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Alternatif 1</th>
+                                            <th>Alternatif 2</th>
+                                            <th>Hasil</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+
                         <!-- /.card -->
                     </div>
                     <!-- /.col -->
@@ -874,22 +1239,20 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
+
+                        {{-- gold lane --}}
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Matriks Dominan Discordance</h3>
+                                <h3 class="card-title">Matriks Dominan Discordance Gold Lane</h3>
                             </div>
                             <div class="card-body">
-                                <table id="myTableKlasifikasi" class="table table-bordered table-hover">
+                                <table id="myTableMatrixDominanceDiscordanceGoldLane"
+                                    class="table table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <th>No</th>
-                                            <th>Foto</th>
-                                            <th>Nama</th>
-                                            <th>Role</th>
-                                            <th>Laning</th>
-                                            @foreach ($kriteria as $item)
-                                                <th>{{ $item->nama }}</th>
-                                            @endforeach
+                                            <th>Alternatif 1</th>
+                                            <th>Alternatif 2</th>
+                                            <th>Hasil</th>
                                         </tr>
                                     </thead>
                                     <tbody class="text-center">
@@ -898,6 +1261,95 @@
                             </div>
                             <!-- /.card-body -->
                         </div>
+
+                        {{-- mid lane --}}
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Matriks Dominan Discordance Mid Lane</h3>
+                            </div>
+                            <div class="card-body">
+                                <table id="myTableMatrixDominanceDiscordanceMidLane"
+                                    class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Alternatif 1</th>
+                                            <th>Alternatif 2</th>
+                                            <th>Hasil</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+
+                        {{-- exp lane --}}
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Matriks Dominan Discordance EXP Lane</h3>
+                            </div>
+                            <div class="card-body">
+                                <table id="myTableMatrixDominanceDiscordanceEXPLane"
+                                    class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Alternatif 1</th>
+                                            <th>Alternatif 2</th>
+                                            <th>Hasil</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+
+                        {{-- roam --}}
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Matriks Dominan Discordance Roam</h3>
+                            </div>
+                            <div class="card-body">
+                                <table id="myTableMatrixDominanceDiscordanceRoam"
+                                    class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Alternatif 1</th>
+                                            <th>Alternatif 2</th>
+                                            <th>Hasil</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+
+                        {{-- jungle --}}
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Matriks Dominan Discordance Jungle</h3>
+                            </div>
+                            <div class="card-body">
+                                <table id="myTableMatrixDominanceDiscordanceJungle"
+                                    class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Alternatif 1</th>
+                                            <th>Alternatif 2</th>
+                                            <th>Hasil</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+
                         <!-- /.card -->
                     </div>
                     <!-- /.col -->
@@ -913,22 +1365,20 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
+
+                        {{-- gold lane --}}
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Aggregate Dominan Matriks</h3>
+                                <h3 class="card-title">Aggregate Dominan Matriks Gold Lane</h3>
                             </div>
                             <div class="card-body">
-                                <table id="myTableKlasifikasi" class="table table-bordered table-hover">
+                                <table id="myTableAggregateMatrixDominanceGoldLane"
+                                    class="table table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <th>No</th>
-                                            <th>Foto</th>
-                                            <th>Nama</th>
-                                            <th>Role</th>
-                                            <th>Laning</th>
-                                            @foreach ($kriteria as $item)
-                                                <th>{{ $item->nama }}</th>
-                                            @endforeach
+                                            <th>Alternatif 1</th>
+                                            <th>Alternatif 2</th>
+                                            <th>Hasil</th>
                                         </tr>
                                     </thead>
                                     <tbody class="text-center">
@@ -937,6 +1387,94 @@
                             </div>
                             <!-- /.card-body -->
                         </div>
+
+                        {{-- mid lane --}}
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Aggregate Dominan Matriks Mid Lane</h3>
+                            </div>
+                            <div class="card-body">
+                                <table id="myTableAggregateMatrixDominanceMidLane"
+                                    class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Alternatif 1</th>
+                                            <th>Alternatif 2</th>
+                                            <th>Hasil</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+
+                        {{-- exp lane --}}
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Aggregate Dominan Matriks EXP Lane</h3>
+                            </div>
+                            <div class="card-body">
+                                <table id="myTableAggregateMatrixDominanceEXPLane"
+                                    class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Alternatif 1</th>
+                                            <th>Alternatif 2</th>
+                                            <th>Hasil</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+
+                        {{-- roam --}}
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Aggregate Dominan Matriks Roam</h3>
+                            </div>
+                            <div class="card-body">
+                                <table id="myTableAggregateMatrixDominanceRoam" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Alternatif 1</th>
+                                            <th>Alternatif 2</th>
+                                            <th>Hasil</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+
+                        {{-- jungle --}}
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Aggregate Dominan Matriks Jungle</h3>
+                            </div>
+                            <div class="card-body">
+                                <table id="myTableAggregateMatrixDominanceJungle"
+                                    class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Alternatif 1</th>
+                                            <th>Alternatif 2</th>
+                                            <th>Hasil</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+
                         <!-- /.card -->
                     </div>
                     <!-- /.col -->
@@ -1855,6 +2393,786 @@
                         {
                             data: 'true_kriteria',
                             name: 'true_kriteria'
+                        }
+                    ]
+                });
+
+                $("#myTableDiscordanceGoldLane").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.perhitungan.discordance') }}',
+                        data: {
+                            laning: 'Gold Lane'
+                        }
+                    },
+                    columns: [{
+                            data: 'alternatif_1',
+                            name: 'alternatif_1'
+                        },
+                        {
+                            data: 'alternatif_2',
+                            name: 'alternatif_2'
+                        },
+                        {
+                            data: 'true_kriteria',
+                            name: 'true_kriteria'
+                        }
+                    ]
+                });
+
+                $("#myTableDiscordanceMidLane").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.perhitungan.discordance') }}',
+                        data: {
+                            laning: 'Mid Lane'
+                        }
+                    },
+                    columns: [{
+                            data: 'alternatif_1',
+                            name: 'alternatif_1'
+                        },
+                        {
+                            data: 'alternatif_2',
+                            name: 'alternatif_2'
+                        },
+                        {
+                            data: 'true_kriteria',
+                            name: 'true_kriteria'
+                        }
+                    ]
+                });
+
+                $("#myTableDiscordanceEXPLane").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.perhitungan.discordance') }}',
+                        data: {
+                            laning: 'EXP Lane'
+                        }
+                    },
+                    columns: [{
+                            data: 'alternatif_1',
+                            name: 'alternatif_1'
+                        },
+                        {
+                            data: 'alternatif_2',
+                            name: 'alternatif_2'
+                        },
+                        {
+                            data: 'true_kriteria',
+                            name: 'true_kriteria'
+                        }
+                    ]
+                });
+
+                $("#myTableDiscordanceRoam").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.perhitungan.discordance') }}',
+                        data: {
+                            laning: 'Roam'
+                        }
+                    },
+                    columns: [{
+                            data: 'alternatif_1',
+                            name: 'alternatif_1'
+                        },
+                        {
+                            data: 'alternatif_2',
+                            name: 'alternatif_2'
+                        },
+                        {
+                            data: 'true_kriteria',
+                            name: 'true_kriteria'
+                        }
+                    ]
+                });
+
+                $("#myTableDiscordanceJungle").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.perhitungan.discordance') }}',
+                        data: {
+                            laning: 'Jungle'
+                        }
+                    },
+                    columns: [{
+                            data: 'alternatif_1',
+                            name: 'alternatif_1'
+                        },
+                        {
+                            data: 'alternatif_2',
+                            name: 'alternatif_2'
+                        },
+                        {
+                            data: 'true_kriteria',
+                            name: 'true_kriteria'
+                        }
+                    ]
+                });
+
+                $("#myTableMatrixConcordanceGoldLane").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.perhitungan.matrix.concordance') }}',
+                        data: {
+                            laning: 'Gold Lane'
+                        }
+                    },
+                    columns: [{
+                            data: 'alternatif_1',
+                            name: 'alternatif_1'
+                        },
+                        {
+                            data: 'alternatif_2',
+                            name: 'alternatif_2'
+                        },
+                        {
+                            data: 'value',
+                            name: 'value'
+                        }
+                    ]
+                });
+
+                $("#myTableMatrixConcordanceMidLane").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.perhitungan.matrix.concordance') }}',
+                        data: {
+                            laning: 'Mid Lane'
+                        }
+                    },
+                    columns: [{
+                            data: 'alternatif_1',
+                            name: 'alternatif_1'
+                        },
+                        {
+                            data: 'alternatif_2',
+                            name: 'alternatif_2'
+                        },
+                        {
+                            data: 'value',
+                            name: 'value'
+                        }
+                    ]
+                });
+
+                $("#myTableMatrixConcordanceEXPLane").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.perhitungan.matrix.concordance') }}',
+                        data: {
+                            laning: 'EXP Lane'
+                        }
+                    },
+                    columns: [{
+                            data: 'alternatif_1',
+                            name: 'alternatif_1'
+                        },
+                        {
+                            data: 'alternatif_2',
+                            name: 'alternatif_2'
+                        },
+                        {
+                            data: 'value',
+                            name: 'value'
+                        }
+                    ]
+                });
+
+                $("#myTableMatrixConcordanceRoam").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.perhitungan.matrix.concordance') }}',
+                        data: {
+                            laning: 'Roam'
+                        }
+                    },
+                    columns: [{
+                            data: 'alternatif_1',
+                            name: 'alternatif_1'
+                        },
+                        {
+                            data: 'alternatif_2',
+                            name: 'alternatif_2'
+                        },
+                        {
+                            data: 'value',
+                            name: 'value'
+                        }
+                    ]
+                });
+
+                $("#myTableMatrixConcordanceJungle").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.perhitungan.matrix.concordance') }}',
+                        data: {
+                            laning: 'Jungle'
+                        }
+                    },
+                    columns: [{
+                            data: 'alternatif_1',
+                            name: 'alternatif_1'
+                        },
+                        {
+                            data: 'alternatif_2',
+                            name: 'alternatif_2'
+                        },
+                        {
+                            data: 'value',
+                            name: 'value'
+                        }
+                    ]
+                });
+
+                $("#myTableMatrixDiscordanceGoldLane").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.perhitungan.matrix.discordance') }}',
+                        data: {
+                            laning: 'Gold Lane'
+                        }
+                    },
+                    columns: [{
+                            data: 'alternatif_1',
+                            name: 'alternatif_1'
+                        },
+                        {
+                            data: 'alternatif_2',
+                            name: 'alternatif_2'
+                        },
+                        {
+                            data: 'value',
+                            name: 'value'
+                        }
+                    ]
+                });
+
+                $("#myTableMatrixDiscordanceMidLane").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.perhitungan.matrix.discordance') }}',
+                        data: {
+                            laning: 'Mid Lane'
+                        }
+                    },
+                    columns: [{
+                            data: 'alternatif_1',
+                            name: 'alternatif_1'
+                        },
+                        {
+                            data: 'alternatif_2',
+                            name: 'alternatif_2'
+                        },
+                        {
+                            data: 'value',
+                            name: 'value'
+                        }
+                    ]
+                });
+
+                $("#myTableMatrixDiscordanceEXPLane").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.perhitungan.matrix.discordance') }}',
+                        data: {
+                            laning: 'EXP Lane'
+                        }
+                    },
+                    columns: [{
+                            data: 'alternatif_1',
+                            name: 'alternatif_1'
+                        },
+                        {
+                            data: 'alternatif_2',
+                            name: 'alternatif_2'
+                        },
+                        {
+                            data: 'value',
+                            name: 'value'
+                        }
+                    ]
+                });
+
+                $("#myTableMatrixDiscordanceRoam").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.perhitungan.matrix.discordance') }}',
+                        data: {
+                            laning: 'Roam'
+                        }
+                    },
+                    columns: [{
+                            data: 'alternatif_1',
+                            name: 'alternatif_1'
+                        },
+                        {
+                            data: 'alternatif_2',
+                            name: 'alternatif_2'
+                        },
+                        {
+                            data: 'value',
+                            name: 'value'
+                        }
+                    ]
+                });
+
+                $("#myTableMatrixDiscordanceJungle").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.perhitungan.matrix.discordance') }}',
+                        data: {
+                            laning: 'Jungle'
+                        }
+                    },
+                    columns: [{
+                            data: 'alternatif_1',
+                            name: 'alternatif_1'
+                        },
+                        {
+                            data: 'alternatif_2',
+                            name: 'alternatif_2'
+                        },
+                        {
+                            data: 'value',
+                            name: 'value'
+                        }
+                    ]
+                });
+
+                $("#myTableMatrixDominanceConcordanceGoldLane").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.perhitungan.matrix.dominance.concordance') }}',
+                        data: {
+                            laning: 'Gold Lane'
+                        }
+                    },
+                    columns: [{
+                            data: 'alternatif_1',
+                            name: 'alternatif_1'
+                        },
+                        {
+                            data: 'alternatif_2',
+                            name: 'alternatif_2'
+                        },
+                        {
+                            data: 'value',
+                            name: 'value'
+                        }
+                    ]
+                });
+
+                $("#myTableMatrixDominanceConcordanceMidLane").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.perhitungan.matrix.dominance.concordance') }}',
+                        data: {
+                            laning: 'Mid Lane'
+                        }
+                    },
+                    columns: [{
+                            data: 'alternatif_1',
+                            name: 'alternatif_1'
+                        },
+                        {
+                            data: 'alternatif_2',
+                            name: 'alternatif_2'
+                        },
+                        {
+                            data: 'value',
+                            name: 'value'
+                        }
+                    ]
+                });
+
+                $("#myTableMatrixDominanceConcordanceEXPLane").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.perhitungan.matrix.dominance.concordance') }}',
+                        data: {
+                            laning: 'EXP Lane'
+                        }
+                    },
+                    columns: [{
+                            data: 'alternatif_1',
+                            name: 'alternatif_1'
+                        },
+                        {
+                            data: 'alternatif_2',
+                            name: 'alternatif_2'
+                        },
+                        {
+                            data: 'value',
+                            name: 'value'
+                        }
+                    ]
+                });
+
+                $("#myTableMatrixDominanceConcordanceRoam").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.perhitungan.matrix.dominance.concordance') }}',
+                        data: {
+                            laning: 'Roam'
+                        }
+                    },
+                    columns: [{
+                            data: 'alternatif_1',
+                            name: 'alternatif_1'
+                        },
+                        {
+                            data: 'alternatif_2',
+                            name: 'alternatif_2'
+                        },
+                        {
+                            data: 'value',
+                            name: 'value'
+                        }
+                    ]
+                });
+
+                $("#myTableMatrixDominanceConcordanceJungle").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.perhitungan.matrix.dominance.concordance') }}',
+                        data: {
+                            laning: 'Jungle'
+                        }
+                    },
+                    columns: [{
+                            data: 'alternatif_1',
+                            name: 'alternatif_1'
+                        },
+                        {
+                            data: 'alternatif_2',
+                            name: 'alternatif_2'
+                        },
+                        {
+                            data: 'value',
+                            name: 'value'
+                        }
+                    ]
+                });
+
+                $("#myTableMatrixDominanceDiscordanceGoldLane").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.perhitungan.matrix.dominance.discordance') }}',
+                        data: {
+                            laning: 'Gold Lane'
+                        }
+                    },
+                    columns: [{
+                            data: 'alternatif_1',
+                            name: 'alternatif_1'
+                        },
+                        {
+                            data: 'alternatif_2',
+                            name: 'alternatif_2'
+                        },
+                        {
+                            data: 'value',
+                            name: 'value'
+                        }
+                    ]
+                });
+
+                $("#myTableMatrixDominanceDiscordanceMidLane").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.perhitungan.matrix.dominance.discordance') }}',
+                        data: {
+                            laning: 'Mid Lane'
+                        }
+                    },
+                    columns: [{
+                            data: 'alternatif_1',
+                            name: 'alternatif_1'
+                        },
+                        {
+                            data: 'alternatif_2',
+                            name: 'alternatif_2'
+                        },
+                        {
+                            data: 'value',
+                            name: 'value'
+                        }
+                    ]
+                });
+
+                $("#myTableMatrixDominanceDiscordanceEXPLane").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.perhitungan.matrix.dominance.discordance') }}',
+                        data: {
+                            laning: 'EXP Lane'
+                        }
+                    },
+                    columns: [{
+                            data: 'alternatif_1',
+                            name: 'alternatif_1'
+                        },
+                        {
+                            data: 'alternatif_2',
+                            name: 'alternatif_2'
+                        },
+                        {
+                            data: 'value',
+                            name: 'value'
+                        }
+                    ]
+                });
+
+                $("#myTableMatrixDominanceDiscordanceRoam").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.perhitungan.matrix.dominance.discordance') }}',
+                        data: {
+                            laning: 'Roam'
+                        }
+                    },
+                    columns: [{
+                            data: 'alternatif_1',
+                            name: 'alternatif_1'
+                        },
+                        {
+                            data: 'alternatif_2',
+                            name: 'alternatif_2'
+                        },
+                        {
+                            data: 'value',
+                            name: 'value'
+                        }
+                    ]
+                });
+
+                $("#myTableMatrixDominanceDiscordanceJungle").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.perhitungan.matrix.dominance.discordance') }}',
+                        data: {
+                            laning: 'Jungle'
+                        }
+                    },
+                    columns: [{
+                            data: 'alternatif_1',
+                            name: 'alternatif_1'
+                        },
+                        {
+                            data: 'alternatif_2',
+                            name: 'alternatif_2'
+                        },
+                        {
+                            data: 'value',
+                            name: 'value'
+                        }
+                    ]
+                });
+
+                $("#myTableAggregateMatrixDominanceGoldLane").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.perhitungan.aggregate.matrix.dominance') }}',
+                        data: {
+                            laning: 'Gold Lane'
+                        }
+                    },
+                    columns: [{
+                            data: 'alternatif_1',
+                            name: 'alternatif_1'
+                        },
+                        {
+                            data: 'alternatif_2',
+                            name: 'alternatif_2'
+                        },
+                        {
+                            data: 'value',
+                            name: 'value'
+                        }
+                    ]
+                });
+
+                $("#myTableAggregateMatrixDominanceMidLane").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.perhitungan.aggregate.matrix.dominance') }}',
+                        data: {
+                            laning: 'Mid Lane'
+                        }
+                    },
+                    columns: [{
+                            data: 'alternatif_1',
+                            name: 'alternatif_1'
+                        },
+                        {
+                            data: 'alternatif_2',
+                            name: 'alternatif_2'
+                        },
+                        {
+                            data: 'value',
+                            name: 'value'
+                        }
+                    ]
+                });
+
+                $("#myTableAggregateMatrixDominanceEXPLane").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.perhitungan.aggregate.matrix.dominance') }}',
+                        data: {
+                            laning: 'EXP Lane'
+                        }
+                    },
+                    columns: [{
+                            data: 'alternatif_1',
+                            name: 'alternatif_1'
+                        },
+                        {
+                            data: 'alternatif_2',
+                            name: 'alternatif_2'
+                        },
+                        {
+                            data: 'value',
+                            name: 'value'
+                        }
+                    ]
+                });
+
+                $("#myTableAggregateMatrixDominanceRoam").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.perhitungan.aggregate.matrix.dominance') }}',
+                        data: {
+                            laning: 'Roam'
+                        }
+                    },
+                    columns: [{
+                            data: 'alternatif_1',
+                            name: 'alternatif_1'
+                        },
+                        {
+                            data: 'alternatif_2',
+                            name: 'alternatif_2'
+                        },
+                        {
+                            data: 'value',
+                            name: 'value'
+                        }
+                    ]
+                });
+
+                $("#myTableAggregateMatrixDominanceJungle").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.perhitungan.aggregate.matrix.dominance') }}',
+                        data: {
+                            laning: 'Jungle'
+                        }
+                    },
+                    columns: [{
+                            data: 'alternatif_1',
+                            name: 'alternatif_1'
+                        },
+                        {
+                            data: 'alternatif_2',
+                            name: 'alternatif_2'
+                        },
+                        {
+                            data: 'value',
+                            name: 'value'
                         }
                     ]
                 });
