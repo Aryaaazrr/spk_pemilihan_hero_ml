@@ -25,7 +25,7 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            <form action="{{ route('admin.kriteria.store') }}" method="POST">
+                                            <form action="{{ route('admin.perhitungan.store') }}" method="POST">
                                                 @csrf
                                                 <div class="card-body">
                                                     <div class="form-group">

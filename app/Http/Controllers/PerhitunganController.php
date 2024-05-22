@@ -53,6 +53,11 @@ class PerhitunganController extends Controller
             return redirect()->route('admin.alternatif')->withErrors(['Lengkapi Data Alternatif dahulu. Setiap laning minimal 5 Hero.']);
         }
 
+        $analisa = Analisa::where('id_users', Auth::id())->first();
+        if (!$analisa) {
+            return redirect()->route('admin.alternatif')->withErrors(['Anda belum memulai analisa']);
+        }
+
         $laning = $request->get('laning');
         $alternatif = Alternatif::with('detail_alternatif')
             ->where('laning', $laning)
@@ -113,12 +118,21 @@ class PerhitunganController extends Controller
 
             DB::beginTransaction();
 
-            $analisa = new Analisa();
-            $analisa->id_users = Auth::id();
-            $analisa->id_gameplay = $request->gameplay;
-
-            if (!$analisa->save()) {
-                throw new \Exception('Gagal menyimpan data analisa. Silahkan coba kembali.');
+            $analisa = Analisa::where('id_users', Auth::id())->first();
+            if ($analisa) {
+                if ($analisa->delete()) {
+                    $analisa = new Analisa();
+                    $analisa->id_users = Auth::id();
+                    $analisa->id_gameplay = $request->gameplay;
+                    $analisa->save();
+                } else {
+                    throw new \Exception('Analisa ganti strategi tidak berhasil. Silahkan Coba lagi');
+                }
+            } else {
+                $analisa = new Analisa();
+                $analisa->id_users = Auth::id();
+                $analisa->id_gameplay = $request->gameplay;
+                $analisa->save();
             }
 
             $alternatif = Alternatif::where('id_users', Auth::id())->get();
@@ -165,7 +179,6 @@ class PerhitunganController extends Controller
             return back()->withErrors(['error' => $e->getMessage()]);
         }
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -310,6 +323,12 @@ class PerhitunganController extends Controller
 
     public function normalisasi(Request $request)
     {
+        $analisa = $this->getAnalisa();
+
+        if (!$analisa) {
+            return redirect()->route('admin.alternatif')->withErrors(['error' => 'Analisa tidak ditemukan.']);
+        }
+
         $laning = $request->get('laning');
         $alternatif = $this->getAlternatif($laning);
         $kriteria = Kriteria::all();
@@ -330,7 +349,7 @@ class PerhitunganController extends Controller
         $analisa = $this->getAnalisa();
 
         if (!$analisa) {
-            return back()->withErrors(['error' => 'Analisa tidak ditemukan.']);
+            return redirect()->route('admin.alternatif')->withErrors(['error' => 'Analisa tidak ditemukan.']);
         }
 
         $kriteria = Kriteria::all();
@@ -569,7 +588,7 @@ class PerhitunganController extends Controller
         $analisa = $this->getAnalisa();
 
         if (!$analisa) {
-            return back()->withErrors(['error' => 'Analisa tidak ditemukan.']);
+            return back()->withErrors(['error' => 'Hasil analisa tidak ditemukan.']);
         }
 
         $laning = $request->get('laning');
