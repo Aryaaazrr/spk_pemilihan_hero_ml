@@ -168,282 +168,566 @@
         </script>
     @endif
 
-    <script>
-        $(document).ready(function() {
-            $("#myTableGoldLane").DataTable({
-                processing: true,
-                ordering: true,
-                responsive: true,
-                serverSide: true,
-                ajax: {
-                    url: '{{ route('admin.riwayat.show', ['id' => ':id']) }}'.replace(':id', window.location
-                        .href.split('/').pop()),
-                    method: 'GET',
-                    dataSrc: 'data',
-                    data: {
-                        laning: 'Gold Lane'
-                    }
-                },
-                columns: [{
-                        data: 'foto',
-                        name: 'foto',
-                        render: function(data) {
-                            if (data == '') {
-                                return '<img src="{{ asset('dist/img/LOGO POLITEKNIK NEGERI  JEMBER.png') }}" alt="" style="width: 50px; height: 50px;">';
-                            } else {
-                                return '<img src="{{ asset('storage') }}/' + data +
-                                    '" alt="" style="width: 50px; height: 50px;">';
-                            }
+    @if (Auth::user()->id_role == 1)
+        <script>
+            $(document).ready(function() {
+                $("#myTableGoldLane").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.riwayat.show', ['id' => ':id']) }}'.replace(':id', window.location
+                            .href.split('/').pop()),
+                        method: 'GET',
+                        dataSrc: 'data',
+                        data: {
+                            laning: 'Gold Lane'
                         }
                     },
-                    {
-                        data: 'nama',
-                        name: 'nama'
-                    },
-                    {
-                        data: 'role',
-                        name: 'role'
-                    },
-                    {
-                        data: 'laning',
-                        name: 'laning'
-                    },
-                    {
-                        data: 'nilai',
-                        name: 'nilai'
-                    },
-                    {
-                        data: 'rangking',
-                        name: 'rangking'
-                    }
-                ],
-                order: [
-                    [5, 'asc']
-                ]
-            });
-
-            $("#myTableMidLane").DataTable({
-                processing: true,
-                ordering: true,
-                responsive: true,
-                serverSide: true,
-                ajax: {
-                    url: '{{ route('admin.riwayat.show', ['id' => ':id']) }}'.replace(':id', window.location
-                        .href.split('/').pop()),
-                    method: 'GET',
-                    dataSrc: 'data',
-                    data: {
-                        laning: 'Mid Lane'
-                    }
-                },
-                columns: [{
-                        data: 'foto',
-                        name: 'foto',
-                        render: function(data) {
-                            if (data == '') {
-                                return '<img src="{{ asset('dist/img/LOGO POLITEKNIK NEGERI  JEMBER.png') }}" alt="" style="width: 50px; height: 50px;">';
-                            } else {
-                                return '<img src="{{ asset('storage') }}/' + data +
-                                    '" alt="" style="width: 50px; height: 50px;">';
+                    columns: [{
+                            data: 'foto',
+                            name: 'foto',
+                            render: function(data) {
+                                if (data == '') {
+                                    return '<img src="{{ asset('dist/img/LOGO POLITEKNIK NEGERI  JEMBER.png') }}" alt="" style="width: 50px; height: 50px;">';
+                                } else {
+                                    return '<img src="{{ asset('storage') }}/' + data +
+                                        '" alt="" style="width: 50px; height: 50px;">';
+                                }
                             }
+                        },
+                        {
+                            data: 'nama',
+                            name: 'nama'
+                        },
+                        {
+                            data: 'role',
+                            name: 'role'
+                        },
+                        {
+                            data: 'laning',
+                            name: 'laning'
+                        },
+                        {
+                            data: 'nilai',
+                            name: 'nilai'
+                        },
+                        {
+                            data: 'rangking',
+                            name: 'rangking'
+                        }
+                    ],
+                    order: [
+                        [5, 'asc']
+                    ]
+                });
+
+                $("#myTableMidLane").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.riwayat.show', ['id' => ':id']) }}'.replace(':id', window.location
+                            .href.split('/').pop()),
+                        method: 'GET',
+                        dataSrc: 'data',
+                        data: {
+                            laning: 'Mid Lane'
                         }
                     },
-                    {
-                        data: 'nama',
-                        name: 'nama'
-                    },
-                    {
-                        data: 'role',
-                        name: 'role'
-                    },
-                    {
-                        data: 'laning',
-                        name: 'laning'
-                    },
-                    {
-                        data: 'nilai',
-                        name: 'nilai'
-                    },
-                    {
-                        data: 'rangking',
-                        name: 'rangking'
-                    }
-                ],
-                order: [
-                    [5, 'asc']
-                ]
-            });
-
-            $("#myTableEXPLane").DataTable({
-                processing: true,
-                ordering: true,
-                responsive: true,
-                serverSide: true,
-                ajax: {
-                    url: '{{ route('admin.riwayat.show', ['id' => ':id']) }}'.replace(':id', window.location
-                        .href.split('/').pop()),
-                    method: 'GET',
-                    dataSrc: 'data',
-                    data: {
-                        laning: 'EXP Lane'
-                    }
-                },
-                columns: [{
-                        data: 'foto',
-                        name: 'foto',
-                        render: function(data) {
-                            if (data == '') {
-                                return '<img src="{{ asset('dist/img/LOGO POLITEKNIK NEGERI  JEMBER.png') }}" alt="" style="width: 50px; height: 50px;">';
-                            } else {
-                                return '<img src="{{ asset('storage') }}/' + data +
-                                    '" alt="" style="width: 50px; height: 50px;">';
+                    columns: [{
+                            data: 'foto',
+                            name: 'foto',
+                            render: function(data) {
+                                if (data == '') {
+                                    return '<img src="{{ asset('dist/img/LOGO POLITEKNIK NEGERI  JEMBER.png') }}" alt="" style="width: 50px; height: 50px;">';
+                                } else {
+                                    return '<img src="{{ asset('storage') }}/' + data +
+                                        '" alt="" style="width: 50px; height: 50px;">';
+                                }
                             }
+                        },
+                        {
+                            data: 'nama',
+                            name: 'nama'
+                        },
+                        {
+                            data: 'role',
+                            name: 'role'
+                        },
+                        {
+                            data: 'laning',
+                            name: 'laning'
+                        },
+                        {
+                            data: 'nilai',
+                            name: 'nilai'
+                        },
+                        {
+                            data: 'rangking',
+                            name: 'rangking'
+                        }
+                    ],
+                    order: [
+                        [5, 'asc']
+                    ]
+                });
+
+                $("#myTableEXPLane").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.riwayat.show', ['id' => ':id']) }}'.replace(':id', window.location
+                            .href.split('/').pop()),
+                        method: 'GET',
+                        dataSrc: 'data',
+                        data: {
+                            laning: 'EXP Lane'
                         }
                     },
-                    {
-                        data: 'nama',
-                        name: 'nama'
-                    },
-                    {
-                        data: 'role',
-                        name: 'role'
-                    },
-                    {
-                        data: 'laning',
-                        name: 'laning'
-                    },
-                    {
-                        data: 'nilai',
-                        name: 'nilai'
-                    },
-                    {
-                        data: 'rangking',
-                        name: 'rangking'
-                    }
-                ],
-                order: [
-                    [5, 'asc']
-                ]
-            });
-
-            $("#myTableRoam").DataTable({
-                processing: true,
-                ordering: true,
-                responsive: true,
-                serverSide: true,
-                ajax: {
-                    url: '{{ route('admin.riwayat.show', ['id' => ':id']) }}'.replace(':id', window
-                        .location
-                        .href.split('/').pop()),
-                    method: 'GET',
-                    dataSrc: 'data',
-                    data: {
-                        laning: 'Roam'
-                    }
-                },
-                columns: [{
-                        data: 'foto',
-                        name: 'foto',
-                        render: function(data) {
-                            if (data == '') {
-                                return '<img src="{{ asset('dist/img/LOGO POLITEKNIK NEGERI  JEMBER.png') }}" alt="" style="width: 50px; height: 50px;">';
-                            } else {
-                                return '<img src="{{ asset('storage') }}/' + data +
-                                    '" alt="" style="width: 50px; height: 50px;">';
+                    columns: [{
+                            data: 'foto',
+                            name: 'foto',
+                            render: function(data) {
+                                if (data == '') {
+                                    return '<img src="{{ asset('dist/img/LOGO POLITEKNIK NEGERI  JEMBER.png') }}" alt="" style="width: 50px; height: 50px;">';
+                                } else {
+                                    return '<img src="{{ asset('storage') }}/' + data +
+                                        '" alt="" style="width: 50px; height: 50px;">';
+                                }
                             }
+                        },
+                        {
+                            data: 'nama',
+                            name: 'nama'
+                        },
+                        {
+                            data: 'role',
+                            name: 'role'
+                        },
+                        {
+                            data: 'laning',
+                            name: 'laning'
+                        },
+                        {
+                            data: 'nilai',
+                            name: 'nilai'
+                        },
+                        {
+                            data: 'rangking',
+                            name: 'rangking'
+                        }
+                    ],
+                    order: [
+                        [5, 'asc']
+                    ]
+                });
+
+                $("#myTableRoam").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.riwayat.show', ['id' => ':id']) }}'.replace(':id', window
+                            .location
+                            .href.split('/').pop()),
+                        method: 'GET',
+                        dataSrc: 'data',
+                        data: {
+                            laning: 'Roam'
                         }
                     },
-                    {
-                        data: 'nama',
-                        name: 'nama'
-                    },
-                    {
-                        data: 'role',
-                        name: 'role'
-                    },
-                    {
-                        data: 'laning',
-                        name: 'laning'
-                    },
-                    {
-                        data: 'nilai',
-                        name: 'nilai'
-                    },
-                    {
-                        data: 'rangking',
-                        name: 'rangking'
-                    }
-                ],
-                order: [
-                    [5, 'asc']
-                ]
-            });
-
-            $("#myTableJungle").DataTable({
-                processing: true,
-                ordering: true,
-                responsive: true,
-                serverSide: true,
-                ajax: {
-                    url: '{{ route('admin.riwayat.show', ['id' => ':id']) }}'.replace(':id', window
-                        .location
-                        .href.split('/').pop()),
-                    method: 'GET',
-                    dataSrc: 'data',
-                    data: {
-                        laning: 'Jungle'
-                    }
-                },
-                columns: [{
-                        data: 'foto',
-                        name: 'foto',
-                        render: function(data) {
-                            if (data == '') {
-                                return '<img src="{{ asset('dist/img/LOGO POLITEKNIK NEGERI  JEMBER.png') }}" alt="" style="width: 50px; height: 50px;">';
-                            } else {
-                                return '<img src="{{ asset('storage') }}/' + data +
-                                    '" alt="" style="width: 50px; height: 50px;">';
+                    columns: [{
+                            data: 'foto',
+                            name: 'foto',
+                            render: function(data) {
+                                if (data == '') {
+                                    return '<img src="{{ asset('dist/img/LOGO POLITEKNIK NEGERI  JEMBER.png') }}" alt="" style="width: 50px; height: 50px;">';
+                                } else {
+                                    return '<img src="{{ asset('storage') }}/' + data +
+                                        '" alt="" style="width: 50px; height: 50px;">';
+                                }
                             }
+                        },
+                        {
+                            data: 'nama',
+                            name: 'nama'
+                        },
+                        {
+                            data: 'role',
+                            name: 'role'
+                        },
+                        {
+                            data: 'laning',
+                            name: 'laning'
+                        },
+                        {
+                            data: 'nilai',
+                            name: 'nilai'
+                        },
+                        {
+                            data: 'rangking',
+                            name: 'rangking'
+                        }
+                    ],
+                    order: [
+                        [5, 'asc']
+                    ]
+                });
+
+                $("#myTableJungle").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('admin.riwayat.show', ['id' => ':id']) }}'.replace(':id', window
+                            .location
+                            .href.split('/').pop()),
+                        method: 'GET',
+                        dataSrc: 'data',
+                        data: {
+                            laning: 'Jungle'
                         }
                     },
-                    {
-                        data: 'nama',
-                        name: 'nama'
-                    },
-                    {
-                        data: 'role',
-                        name: 'role'
-                    },
-                    {
-                        data: 'laning',
-                        name: 'laning'
-                    },
-                    {
-                        data: 'nilai',
-                        name: 'nilai'
-                    },
-                    {
-                        data: 'rangking',
-                        name: 'rangking'
-                    }
-                ],
-                order: [
-                    [5, 'asc']
-                ]
-            });
+                    columns: [{
+                            data: 'foto',
+                            name: 'foto',
+                            render: function(data) {
+                                if (data == '') {
+                                    return '<img src="{{ asset('dist/img/LOGO POLITEKNIK NEGERI  JEMBER.png') }}" alt="" style="width: 50px; height: 50px;">';
+                                } else {
+                                    return '<img src="{{ asset('storage') }}/' + data +
+                                        '" alt="" style="width: 50px; height: 50px;">';
+                                }
+                            }
+                        },
+                        {
+                            data: 'nama',
+                            name: 'nama'
+                        },
+                        {
+                            data: 'role',
+                            name: 'role'
+                        },
+                        {
+                            data: 'laning',
+                            name: 'laning'
+                        },
+                        {
+                            data: 'nilai',
+                            name: 'nilai'
+                        },
+                        {
+                            data: 'rangking',
+                            name: 'rangking'
+                        }
+                    ],
+                    order: [
+                        [5, 'asc']
+                    ]
+                });
 
-            $('.datatable-input').on('input', function() {
-                var searchText = $(this).val().toLowerCase();
+                $('.datatable-input').on('input', function() {
+                    var searchText = $(this).val().toLowerCase();
 
-                $('.table tr').each(function() {
-                    var rowData = $(this).text().toLowerCase();
-                    if (rowData.indexOf(searchText) === -1) {
-                        $(this).hide();
-                    } else {
-                        $(this).show();
-                    }
+                    $('.table tr').each(function() {
+                        var rowData = $(this).text().toLowerCase();
+                        if (rowData.indexOf(searchText) === -1) {
+                            $(this).hide();
+                        } else {
+                            $(this).show();
+                        }
+                    });
                 });
             });
-        });
-    </script>
+        </script>
+    @else
+        <script>
+            $(document).ready(function() {
+                $("#myTableGoldLane").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('riwayat.show', ['id' => ':id']) }}'.replace(':id', window
+                            .location
+                            .href.split('/').pop()),
+                        method: 'GET',
+                        dataSrc: 'data',
+                        data: {
+                            laning: 'Gold Lane'
+                        }
+                    },
+                    columns: [{
+                            data: 'foto',
+                            name: 'foto',
+                            render: function(data) {
+                                if (data == '') {
+                                    return '<img src="{{ asset('dist/img/LOGO POLITEKNIK NEGERI  JEMBER.png') }}" alt="" style="width: 50px; height: 50px;">';
+                                } else {
+                                    return '<img src="{{ asset('storage') }}/' + data +
+                                        '" alt="" style="width: 50px; height: 50px;">';
+                                }
+                            }
+                        },
+                        {
+                            data: 'nama',
+                            name: 'nama'
+                        },
+                        {
+                            data: 'role',
+                            name: 'role'
+                        },
+                        {
+                            data: 'laning',
+                            name: 'laning'
+                        },
+                        {
+                            data: 'nilai',
+                            name: 'nilai'
+                        },
+                        {
+                            data: 'rangking',
+                            name: 'rangking'
+                        }
+                    ],
+                    order: [
+                        [5, 'asc']
+                    ]
+                });
+
+                $("#myTableMidLane").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('riwayat.show', ['id' => ':id']) }}'.replace(':id', window
+                            .location
+                            .href.split('/').pop()),
+                        method: 'GET',
+                        dataSrc: 'data',
+                        data: {
+                            laning: 'Mid Lane'
+                        }
+                    },
+                    columns: [{
+                            data: 'foto',
+                            name: 'foto',
+                            render: function(data) {
+                                if (data == '') {
+                                    return '<img src="{{ asset('dist/img/LOGO POLITEKNIK NEGERI  JEMBER.png') }}" alt="" style="width: 50px; height: 50px;">';
+                                } else {
+                                    return '<img src="{{ asset('storage') }}/' + data +
+                                        '" alt="" style="width: 50px; height: 50px;">';
+                                }
+                            }
+                        },
+                        {
+                            data: 'nama',
+                            name: 'nama'
+                        },
+                        {
+                            data: 'role',
+                            name: 'role'
+                        },
+                        {
+                            data: 'laning',
+                            name: 'laning'
+                        },
+                        {
+                            data: 'nilai',
+                            name: 'nilai'
+                        },
+                        {
+                            data: 'rangking',
+                            name: 'rangking'
+                        }
+                    ],
+                    order: [
+                        [5, 'asc']
+                    ]
+                });
+
+                $("#myTableEXPLane").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('riwayat.show', ['id' => ':id']) }}'.replace(':id', window
+                            .location
+                            .href.split('/').pop()),
+                        method: 'GET',
+                        dataSrc: 'data',
+                        data: {
+                            laning: 'EXP Lane'
+                        }
+                    },
+                    columns: [{
+                            data: 'foto',
+                            name: 'foto',
+                            render: function(data) {
+                                if (data == '') {
+                                    return '<img src="{{ asset('dist/img/LOGO POLITEKNIK NEGERI  JEMBER.png') }}" alt="" style="width: 50px; height: 50px;">';
+                                } else {
+                                    return '<img src="{{ asset('storage') }}/' + data +
+                                        '" alt="" style="width: 50px; height: 50px;">';
+                                }
+                            }
+                        },
+                        {
+                            data: 'nama',
+                            name: 'nama'
+                        },
+                        {
+                            data: 'role',
+                            name: 'role'
+                        },
+                        {
+                            data: 'laning',
+                            name: 'laning'
+                        },
+                        {
+                            data: 'nilai',
+                            name: 'nilai'
+                        },
+                        {
+                            data: 'rangking',
+                            name: 'rangking'
+                        }
+                    ],
+                    order: [
+                        [5, 'asc']
+                    ]
+                });
+
+                $("#myTableRoam").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('riwayat.show', ['id' => ':id']) }}'.replace(':id', window
+                            .location
+                            .href.split('/').pop()),
+                        method: 'GET',
+                        dataSrc: 'data',
+                        data: {
+                            laning: 'Roam'
+                        }
+                    },
+                    columns: [{
+                            data: 'foto',
+                            name: 'foto',
+                            render: function(data) {
+                                if (data == '') {
+                                    return '<img src="{{ asset('dist/img/LOGO POLITEKNIK NEGERI  JEMBER.png') }}" alt="" style="width: 50px; height: 50px;">';
+                                } else {
+                                    return '<img src="{{ asset('storage') }}/' + data +
+                                        '" alt="" style="width: 50px; height: 50px;">';
+                                }
+                            }
+                        },
+                        {
+                            data: 'nama',
+                            name: 'nama'
+                        },
+                        {
+                            data: 'role',
+                            name: 'role'
+                        },
+                        {
+                            data: 'laning',
+                            name: 'laning'
+                        },
+                        {
+                            data: 'nilai',
+                            name: 'nilai'
+                        },
+                        {
+                            data: 'rangking',
+                            name: 'rangking'
+                        }
+                    ],
+                    order: [
+                        [5, 'asc']
+                    ]
+                });
+
+                $("#myTableJungle").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('riwayat.show', ['id' => ':id']) }}'.replace(':id', window
+                            .location
+                            .href.split('/').pop()),
+                        method: 'GET',
+                        dataSrc: 'data',
+                        data: {
+                            laning: 'Jungle'
+                        }
+                    },
+                    columns: [{
+                            data: 'foto',
+                            name: 'foto',
+                            render: function(data) {
+                                if (data == '') {
+                                    return '<img src="{{ asset('dist/img/LOGO POLITEKNIK NEGERI  JEMBER.png') }}" alt="" style="width: 50px; height: 50px;">';
+                                } else {
+                                    return '<img src="{{ asset('storage') }}/' + data +
+                                        '" alt="" style="width: 50px; height: 50px;">';
+                                }
+                            }
+                        },
+                        {
+                            data: 'nama',
+                            name: 'nama'
+                        },
+                        {
+                            data: 'role',
+                            name: 'role'
+                        },
+                        {
+                            data: 'laning',
+                            name: 'laning'
+                        },
+                        {
+                            data: 'nilai',
+                            name: 'nilai'
+                        },
+                        {
+                            data: 'rangking',
+                            name: 'rangking'
+                        }
+                    ],
+                    order: [
+                        [5, 'asc']
+                    ]
+                });
+
+                $('.datatable-input').on('input', function() {
+                    var searchText = $(this).val().toLowerCase();
+
+                    $('.table tr').each(function() {
+                        var rowData = $(this).text().toLowerCase();
+                        if (rowData.indexOf(searchText) === -1) {
+                            $(this).hide();
+                        } else {
+                            $(this).show();
+                        }
+                    });
+                });
+            });
+        </script>
+    @endif
 @endsection

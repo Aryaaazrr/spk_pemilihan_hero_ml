@@ -106,7 +106,6 @@
                 </ul>
             </nav>
         @else
-            {
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                     data-accordion="false">
@@ -117,23 +116,6 @@
                                 Dashboard
                             </p>
                         </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="" class="nav-link">
-                            <i class="nav-icon fas fa-table"></i>
-                            <p>
-                                Data
-                                <i class="right fas fa-angle-left"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{{ route('alternatif') }}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Alternatif</p>
-                                </a>
-                            </li>
-                        </ul>
                     </li>
                     <li class="nav-item">
                         <a href="" class="nav-link">
@@ -174,7 +156,7 @@
                     </li>
                     <li class="nav-header">PENGATURAN</li>
                     <li class="nav-item">
-                        <a href="" class="nav-link">
+                        <a href="{{ route('profile') }}" class="nav-link">
                             <i class="nav-icon fas fa-user"></i>
                             <p>
                                 Profile
@@ -191,7 +173,6 @@
                     </li>
                 </ul>
             </nav>
-            }
         @endif
     </div>
     <!-- /.sidebar -->

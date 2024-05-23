@@ -66,17 +66,17 @@ Route::middleware('auth')->group(function () {
         Route::get('admin/riwayat', [RiwayatAnalisaController::class, 'index'])->name('admin.riwayat');
         Route::get('admin/riwayat/{id}', [RiwayatAnalisaController::class, 'show'])->name('admin.riwayat.show');
 
-        Route::get('profile', [ProfileController::class, 'index'])->name('admin.profile');
-        Route::put('profile/update', [ProfileController::class, 'update'])->name('admin.profile.update');
+        Route::get('admin/profile', [ProfileController::class, 'index'])->name('admin.profile');
+        Route::put('admin/profile/update', [ProfileController::class, 'update'])->name('admin.profile.update');
     });
 
     Route::group(['middleware' => 'users'], function () {
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
         Route::get('alternatif', [AlternatifController::class, 'index'])->name('alternatif');
-        Route::post('alternatif', [AlternatifController::class, 'store'])->name('training.store');
-        Route::put('alternatif/update', [AlternatifController::class, 'update'])->name('training.update');
-        Route::delete('alternatif/{id}', [AlternatifController::class, 'destroy'])->name('training.destroy');
+        Route::post('alternatif', [AlternatifController::class, 'store'])->name('alternatif.store');
+        Route::put('alternatif/update', [AlternatifController::class, 'update'])->name('alternatif.update');
+        Route::delete('alternatif/{id}', [AlternatifController::class, 'destroy'])->name('alternatif.destroy');
 
         Route::get('perhitungan', [PerhitunganController::class, 'index'])->name('perhitungan');
         Route::post('perhitungan/add', [PerhitunganController::class, 'store'])->name('perhitungan.store');

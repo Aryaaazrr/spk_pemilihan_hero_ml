@@ -165,7 +165,11 @@ class AlternatifController extends Controller
 
             DB::commit();
 
-            return redirect()->route('admin.alternatif')->with('success', 'Data alternatif berhasil ditambahkan.');
+            if (Auth::user()->id_role == 1) {
+                return redirect()->route('admin.alternatif')->with('success', 'Data alternatif berhasil ditambahkan.');
+            } else {
+                return redirect()->route('alternatif')->with('success', 'Data alternatif berhasil ditambahkan.');
+            }
         } catch (\Exception $e) {
             DB::rollback();
             return back()->withErrors(['error' => $e->getMessage()]);
@@ -259,7 +263,11 @@ class AlternatifController extends Controller
 
             DB::commit();
 
-            return redirect()->route('admin.alternatif')->with('success', 'Data alternatif berhasil ditambahkan.');
+            if (Auth::user()->id_role == 1) {
+                return redirect()->route('admin.alternatif')->with('success', 'Data alternatif berhasil diperbarui.');
+            } else {
+                return redirect()->route('alternatif')->with('success', 'Data alternatif berhasil diperbarui.');
+            }
         } catch (\Exception $e) {
             DB::rollback();
             return back()->withErrors(['error' => $e->getMessage()]);

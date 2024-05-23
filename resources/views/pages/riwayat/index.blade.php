@@ -61,53 +61,105 @@
         </script>
     @endif
 
-    <script>
-        $(document).ready(function() {
-            $("#myTable").DataTable({
-                processing: true,
-                ordering: true,
-                responsive: true,
-                serverSide: true,
-                ajax: "{{ route('admin.riwayat') }}",
-                columns: [{
-                        data: 'DT_RowIndex',
-                        name: 'DT_RowIndex'
-                    },
-                    {
-                        data: 'gameplay',
-                        name: 'gameplay'
-                    },
-                    {
-                        data: null,
-                        render: function(data) {
-                            return '<div class="row justify-content-center">' +
-                                '<div class="col-auto">' +
-                                '<a href="{{ route('admin.riwayat.show', '') }}/' + data
-                                .id_analisa + '" class="btn btn-info m-1">Detail Hasil</a>' +
-                                '</div>' +
-                                '</div>';
+    @if (Auth::user()->id_role == 1)
+        <script>
+            $(document).ready(function() {
+                $("#myTable").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: "{{ route('admin.riwayat') }}",
+                    columns: [{
+                            data: 'DT_RowIndex',
+                            name: 'DT_RowIndex'
+                        },
+                        {
+                            data: 'gameplay',
+                            name: 'gameplay'
+                        },
+                        {
+                            data: null,
+                            render: function(data) {
+                                return '<div class="row justify-content-center">' +
+                                    '<div class="col-auto">' +
+                                    '<a href="{{ route('admin.riwayat.show', '') }}/' + data
+                                    .id_analisa + '" class="btn btn-info m-1">Detail Hasil</a>' +
+                                    '</div>' +
+                                    '</div>';
+                            }
                         }
-                    }
-                ],
-                rowCallback: function(row, data, index) {
-                    var dt = this.api();
-                    $(row).attr('data-id', data.id);
-                    $('td:eq(0)', row).html(dt.page.info().start + index + 1);
-                }
-            });
-
-            $('.datatable-input').on('input', function() {
-                var searchText = $(this).val().toLowerCase();
-
-                $('.table tr').each(function() {
-                    var rowData = $(this).text().toLowerCase();
-                    if (rowData.indexOf(searchText) === -1) {
-                        $(this).hide();
-                    } else {
-                        $(this).show();
+                    ],
+                    rowCallback: function(row, data, index) {
+                        var dt = this.api();
+                        $(row).attr('data-id', data.id);
+                        $('td:eq(0)', row).html(dt.page.info().start + index + 1);
                     }
                 });
+
+                $('.datatable-input').on('input', function() {
+                    var searchText = $(this).val().toLowerCase();
+
+                    $('.table tr').each(function() {
+                        var rowData = $(this).text().toLowerCase();
+                        if (rowData.indexOf(searchText) === -1) {
+                            $(this).hide();
+                        } else {
+                            $(this).show();
+                        }
+                    });
+                });
             });
-        });
-    </script>
+        </script>
+    @else
+        <script>
+            $(document).ready(function() {
+                $("#myTable").DataTable({
+                    processing: true,
+                    ordering: true,
+                    responsive: true,
+                    serverSide: true,
+                    ajax: "{{ route('riwayat') }}",
+                    columns: [{
+                            data: 'DT_RowIndex',
+                            name: 'DT_RowIndex'
+                        },
+                        {
+                            data: 'gameplay',
+                            name: 'gameplay'
+                        },
+                        {
+                            data: null,
+                            render: function(data) {
+                                return '<div class="row justify-content-center">' +
+                                    '<div class="col-auto">' +
+                                    '<a href="{{ route('admin.riwayat.show', '') }}/' + data
+                                    .id_analisa + '" class="btn btn-info m-1">Detail Hasil</a>' +
+                                    '</div>' +
+                                    '</div>';
+                            }
+                        }
+                    ],
+                    rowCallback: function(row, data, index) {
+                        var dt = this.api();
+                        $(row).attr('data-id', data.id);
+                        $('td:eq(0)', row).html(dt.page.info().start + index + 1);
+                    }
+                });
+
+                $('.datatable-input').on('input', function() {
+                    var searchText = $(this).val().toLowerCase();
+
+                    $('.table tr').each(function() {
+                        var rowData = $(this).text().toLowerCase();
+                        if (rowData.indexOf(searchText) === -1) {
+                            $(this).hide();
+                        } else {
+                            $(this).show();
+                        }
+                    });
+                });
+            });
+        </script>
+    @endif
 @endsection

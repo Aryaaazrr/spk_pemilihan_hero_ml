@@ -50,12 +50,20 @@ class PerhitunganController extends Controller
         })->count();
 
         if ($goldLane < 5 || $roam < 5 || $jungler < 5 || $midLane < 5 || $expLane < 5) {
-            return redirect()->route('admin.alternatif')->withErrors(['Lengkapi Data Alternatif dahulu. Setiap laning minimal 5 Hero.']);
+            if (Auth::user()->id_role == 1) {
+                return redirect()->route('admin.alternatif')->withErrors(['Lengkapi Data Alternatif dahulu. Setiap laning minimal 5 Hero.']);
+            } else {
+                return redirect()->route('alternatif')->withErrors(['Lengkapi Data Alternatif dahulu. Setiap laning minimal 5 Hero.']);
+            }
         }
 
         $analisa = Analisa::where('id_users', Auth::id())->where('status', '0')->first();
         if (!$analisa) {
-            return redirect()->route('admin.alternatif')->withErrors(['Anda belum memulai analisa']);
+            if (Auth::user()->id_role == 1) {
+                return redirect()->route('admin.alternatif')->withErrors(['Anda belum memulai analisa']);
+            } else {
+                return redirect()->route('alternatif')->withErrors(['Anda belum memulai analisa']);
+            }
         }
 
         $laning = $request->get('laning');
@@ -163,7 +171,11 @@ class PerhitunganController extends Controller
 
             DB::commit();
 
-            return redirect()->route('admin.perhitungan')->with('success', 'Data Hasil Perhitungan berhasil.');
+            if (Auth::user()->id_role == 1) {
+                return redirect()->route('admin.perhitungan')->with('success', 'Data Hasil Perhitungan berhasil.');
+            } else {
+                return redirect()->route('perhitungan')->with('success', 'Data Hasil Perhitungan berhasil.');
+            }
         } catch (\Exception $e) {
             DB::rollback();
             return back()->withErrors(['error' => $e->getMessage()]);

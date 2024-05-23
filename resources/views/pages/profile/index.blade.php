@@ -45,37 +45,44 @@
                             <div class="card-body">
                                 <div class="tab-content">
                                     <div class="active tab-pane" id="settings">
-                                        <form class="form-horizontal" action="{{ route('admin.profile.update') }}"
-                                            method="POST">
-                                            @csrf
-                                            @method('PUT')
-                                            <div class="form-group row">
-                                                <label for="username" class="col-sm-2 col-form-label">Username</label>
-                                                <div class="col-sm-10">
-                                                    <input type="text" class="form-control" name="username"
-                                                        id="username" placeholder="Username">
-                                                </div>
+                                        @if (Auth::user()->id_role == 1)
+                                            <form class="form-horizontal" action="{{ route('admin.profile.update') }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('PUT')
+                                            @else
+                                                <form class="form-horizontal" action="{{ route('profile.update') }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('PUT')
+                                        @endif
+                                        <div class="form-group row">
+                                            <label for="username" class="col-sm-2 col-form-label">Username</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" name="username" id="username"
+                                                    placeholder="Username">
                                             </div>
-                                            <div class="form-group row">
-                                                <label for="password" class="col-sm-2 col-form-label">Password</label>
-                                                <div class="col-sm-10">
-                                                    <input type="password" class="form-control" name="password"
-                                                        id="password" placeholder="Password">
-                                                </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="password" class="col-sm-2 col-form-label">Password</label>
+                                            <div class="col-sm-10">
+                                                <input type="password" class="form-control" name="password" id="password"
+                                                    placeholder="Password">
                                             </div>
-                                            <div class="form-group row">
-                                                <label for="confim-password" class="col-sm-2 col-form-label">Konfirmasi
-                                                    Password</label>
-                                                <div class="col-sm-10">
-                                                    <input type="password" class="form-control" name="confirm-password"
-                                                        id="confirm-password" placeholder="Konfirmasi Password">
-                                                </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="confim-password" class="col-sm-2 col-form-label">Konfirmasi
+                                                Password</label>
+                                            <div class="col-sm-10">
+                                                <input type="password" class="form-control" name="confirm-password"
+                                                    id="confirm-password" placeholder="Konfirmasi Password">
                                             </div>
-                                            <div class="form-group row">
-                                                <div class="offset-sm-2 col-sm-10">
-                                                    <button type="submit" class="btn btn-warning">Perbarui</button>
-                                                </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="offset-sm-2 col-sm-10">
+                                                <button type="submit" class="btn btn-warning">Perbarui</button>
                                             </div>
+                                        </div>
                                         </form>
                                     </div>
                                 </div>
