@@ -131,7 +131,7 @@ class RiwayatAnalisaController extends Controller
             return back()->withErrors(['error' => 'Data analisa tidak ditemukan. Silahkan coba kembali.']);
         }
 
-        $gameplay = GameplayType::where('id_gameplay', $data->id_analisa)->first();
+        $gameplay = GameplayType::where('id_gameplay', $data->id_gameplay)->first();
         $cekAlternatifGoldLane = Alternatif::where('id_users', Auth::id())->where('laning', 'Gold Lane')->get();
         $cekAlternatifMidLane = Alternatif::where('id_users', Auth::id())->where('laning', 'Mid Lane')->get();
         $cekAlternatifEXPLane = Alternatif::where('id_users', Auth::id())->where('laning', 'EXP Lane')->get();
