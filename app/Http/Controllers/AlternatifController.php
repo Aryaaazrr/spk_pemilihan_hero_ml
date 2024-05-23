@@ -80,7 +80,7 @@ class AlternatifController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'foto' => 'required|image|mimes:jpeg,png,jpg,webp',
-            'nama' => 'required|unique:alternatif',
+            'nama' => 'required',
             'role' => 'required',
             'laning' => 'required',
         ]);
